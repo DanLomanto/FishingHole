@@ -29,10 +29,9 @@ namespace Common
     
         public virtual DbSet<ImagePath> ImagePaths { get; set; }
         public virtual DbSet<Location> Locations { get; set; }
-        public virtual DbSet<Trip> Trips { get; set; }
-        public virtual DbSet<TripToLocation> TripToLocations { get; set; }
-        public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<LocationToTrip> LocationToTrips { get; set; }
+        public virtual DbSet<Trip> Trips { get; set; }
+        public virtual DbSet<User> Users { get; set; }
     
         public virtual int CreateLocation(Nullable<int> userID, string name, string description, string streetAddress, string cityTown, string state, Nullable<int> zipcode, string lattitudeDirection, Nullable<decimal> lattitude, string longitudeDirection, Nullable<decimal> longitude, ObjectParameter output_Result)
         {
@@ -128,7 +127,7 @@ namespace Common
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CreateTrip", userIDParameter, titleParameter, descriptionParameter, targetedSpeciesParameter, waterConditionsParameter, weatherConditionsParameter, dateOfTripParameter, fliesLuresUsedParameter, catchOfTheDayParameter, otherNotesParameter, output_Result);
         }
     
-        public virtual int CreateUpdateTripToLocation(Nullable<int> tripID, Nullable<int> locationID)
+        public virtual int CreateUpdateLocationToTrip(Nullable<int> tripID, Nullable<int> locationID)
         {
             var tripIDParameter = tripID.HasValue ?
                 new ObjectParameter("TripID", tripID) :
@@ -138,7 +137,7 @@ namespace Common
                 new ObjectParameter("LocationID", locationID) :
                 new ObjectParameter("LocationID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CreateUpdateTripToLocation", tripIDParameter, locationIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CreateUpdateLocationToTrip", tripIDParameter, locationIDParameter);
         }
     
         public virtual int CreateUser(string firstName, string lastName, string email, string password)
@@ -160,6 +159,24 @@ namespace Common
                 new ObjectParameter("Password", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CreateUser", firstNameParameter, lastNameParameter, emailParameter, passwordParameter);
+        }
+    
+        public virtual int DeleteLocationForTrip(Nullable<int> tripID)
+        {
+            var tripIDParameter = tripID.HasValue ?
+                new ObjectParameter("TripID", tripID) :
+                new ObjectParameter("TripID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteLocationForTrip", tripIDParameter);
+        }
+    
+        public virtual int DeleteTripForLocation(Nullable<int> locationID)
+        {
+            var locationIDParameter = locationID.HasValue ?
+                new ObjectParameter("LocationID", locationID) :
+                new ObjectParameter("LocationID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteTripForLocation", locationIDParameter);
         }
     
         public virtual ObjectResult<DoesLoginExist_Result> DoesLoginExist(string email, string password)
@@ -204,6 +221,15 @@ namespace Common
                 new ObjectParameter("UserID", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllTripsForUser_Result>("GetAllTripsForUser", userIDParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> GetAssociatedLocationForTrip(Nullable<int> tripID)
+        {
+            var tripIDParameter = tripID.HasValue ?
+                new ObjectParameter("TripID", tripID) :
+                new ObjectParameter("TripID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("GetAssociatedLocationForTrip", tripIDParameter);
         }
     
         public virtual ObjectResult<Nullable<int>> GetAssociatedTripForLocation(Nullable<int> locationId)
@@ -382,28 +408,6 @@ namespace Common
                 new ObjectParameter("OtherNotes", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateTrip", iDParameter, titleParameter, descriptionParameter, targetedSpeciesParameter, waterConditionsParameter, weatherConditionsParameter, dateOfTripParameter, fliesLuresUsedParameter, catchOfTheDayParameter, otherNotesParameter);
-        }
-    
-        public virtual int CreateUpdateLocationToTrip(Nullable<int> tripID, Nullable<int> locationID)
-        {
-            var tripIDParameter = tripID.HasValue ?
-                new ObjectParameter("TripID", tripID) :
-                new ObjectParameter("TripID", typeof(int));
-    
-            var locationIDParameter = locationID.HasValue ?
-                new ObjectParameter("LocationID", locationID) :
-                new ObjectParameter("LocationID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CreateUpdateLocationToTrip", tripIDParameter, locationIDParameter);
-        }
-    
-        public virtual ObjectResult<Nullable<int>> GetAssociatedLocationForTrip(Nullable<int> tripID)
-        {
-            var tripIDParameter = tripID.HasValue ?
-                new ObjectParameter("TripID", tripID) :
-                new ObjectParameter("TripID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("GetAssociatedLocationForTrip", tripIDParameter);
         }
     }
 }

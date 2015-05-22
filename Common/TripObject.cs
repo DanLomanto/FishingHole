@@ -150,7 +150,7 @@ namespace Common
 		public static bool CreateUpdateLocationForTrip(int tripId, int locationId)
 		{
 			FishEntities fishDb = new FishEntities();
-			int returnValue = fishDb.CreateUpdateTripToLocation(tripId, locationId);
+			int returnValue = fishDb.CreateUpdateLocationToTrip(tripId, locationId);
 
 			if (returnValue != 1)
 			{
@@ -176,6 +176,16 @@ namespace Common
 			}
 
 			return Convert.ToInt32(associatedTripId);
+		}
+
+		/// <summary>
+		/// Deletes the location for trip.
+		/// </summary>
+		/// <param name="tripId">The trip identifier.</param>
+		public static void DeleteLocationForTrip(int tripId)
+		{
+			FishEntities fishDb = new FishEntities();
+			fishDb.DeleteLocationForTrip(tripId);
 		}
 	}
 }

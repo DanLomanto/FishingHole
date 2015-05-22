@@ -152,5 +152,15 @@ namespace Common
 
 			return Convert.ToInt32(associatedLocationId);
 		}
+
+		/// <summary>
+		/// Deletes the trip for location.
+		/// </summary>
+		/// <param name="locationId">The location identifier.</param>
+		public static void DeleteTripForLocation(int locationId)
+		{
+			FishEntities fishDb = new FishEntities();
+			fishDb.DeleteTripForLocation(locationId);
+		}
 	}
 }

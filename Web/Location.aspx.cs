@@ -187,7 +187,14 @@ public partial class Location : Page
 			location.ID = location.CreateLocation(Master.UsersInfo.ID);
 		}
 
-		TripObject.CreateUpdateLocationForTrip(Convert.ToInt32(AssociatedTrip.Value), location.ID);
+		if (AssociatedTrip.Value == "-1")
+		{
+			LocationObject.DeleteTripForLocation(location.ID);
+		}
+		else
+		{
+			TripObject.CreateUpdateLocationForTrip(Convert.ToInt32(AssociatedTrip.Value), location.ID);
+		}
 
 		performProperRedirect(Request.QueryString["returnUrl"]);
 	}

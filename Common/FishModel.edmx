@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="FishModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="FishModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="ImagePaths">
           <Key>
             <PropertyRef Name="ID" />
@@ -163,6 +163,12 @@
           <Parameter Name="Email" Type="varchar" Mode="In" />
           <Parameter Name="Password" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="DeleteLocationForTrip" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="TripID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="DeleteTripForLocation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="LocationID" Type="int" Mode="In" />
+        </Function>
         <Function Name="DoesLoginExist" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Email" Type="varchar" Mode="In" />
           <Parameter Name="Password" Type="varchar" Mode="In" />
@@ -259,7 +265,8 @@
             <End Role="LocationToTrip" EntitySet="LocationToTrip" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="FishModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -290,8 +297,17 @@
           <Property Name="Longitude" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="User" Relationship="Self.FK_Locations_Users" FromRole="Locations" ToRole="Users" />
-          <NavigationProperty Name="TripToLocations" Relationship="Self.FK_TripToLocation_TripToLocation" FromRole="Locations" ToRole="TripToLocation" />
-          <NavigationProperty Name="LocationToTrips" Relationship="FishModel.FK_TripToLocation_TripToLocation1" FromRole="Location" ToRole="LocationToTrip" />
+          <NavigationProperty Name="LocationToTrips" Relationship="Self.FK_TripToLocation_TripToLocation" FromRole="Locations" ToRole="LocationToTrip" />
+        </EntityType>
+        <EntityType Name="LocationToTrip">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TripID" Type="Int32" Nullable="false" />
+          <Property Name="LocationID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Location" Relationship="Self.FK_TripToLocation_TripToLocation" FromRole="LocationToTrip" ToRole="Locations" />
+          <NavigationProperty Name="Trip" Relationship="Self.FK_TripToLocation_Trips" FromRole="LocationToTrip" ToRole="Trips" />
         </EntityType>
         <EntityType Name="Trip">
           <Key>
@@ -309,19 +325,8 @@
           <Property Name="CatchOfTheDay" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="OtherNotes" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="LocationToTrips" Relationship="Self.FK_TripToLocation_Trips" FromRole="Trips" ToRole="LocationToTrip" />
           <NavigationProperty Name="User" Relationship="Self.FK_Trips_Users" FromRole="Trips" ToRole="Users" />
-          <NavigationProperty Name="TripToLocations" Relationship="Self.FK_TripToLocation_Trips" FromRole="Trips" ToRole="TripToLocation" />
-          <NavigationProperty Name="LocationToTrips" Relationship="FishModel.FK_TripToLocation_Trips1" FromRole="Trip" ToRole="LocationToTrip" />
-        </EntityType>
-        <EntityType Name="TripToLocation">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TripID" Type="Int32" Nullable="false" />
-          <Property Name="LocationID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Location" Relationship="Self.FK_TripToLocation_TripToLocation" FromRole="TripToLocation" ToRole="Locations" />
-          <NavigationProperty Name="Trip" Relationship="Self.FK_TripToLocation_Trips" FromRole="TripToLocation" ToRole="Trips" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -362,13 +367,25 @@
         </Association>
         <Association Name="FK_TripToLocation_TripToLocation">
           <End Role="Locations" Type="Self.Location" Multiplicity="1" />
-          <End Role="TripToLocation" Type="Self.TripToLocation" Multiplicity="*" />
+          <End Role="LocationToTrip" Type="Self.LocationToTrip" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Locations">
               <PropertyRef Name="ID" />
             </Principal>
-            <Dependent Role="TripToLocation">
+            <Dependent Role="LocationToTrip">
               <PropertyRef Name="LocationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TripToLocation_Trips">
+          <End Role="Trips" Type="Self.Trip" Multiplicity="1" />
+          <End Role="LocationToTrip" Type="Self.LocationToTrip" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Trips">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="LocationToTrip">
+              <PropertyRef Name="TripID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -384,23 +401,11 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_TripToLocation_Trips">
-          <End Role="Trips" Type="Self.Trip" Multiplicity="1" />
-          <End Role="TripToLocation" Type="Self.TripToLocation" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Trips">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="TripToLocation">
-              <PropertyRef Name="TripID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="FishEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="ImagePaths" EntityType="Self.ImagePath" />
           <EntitySet Name="Locations" EntityType="Self.Location" />
+          <EntitySet Name="LocationToTrips" EntityType="Self.LocationToTrip" />
           <EntitySet Name="Trips" EntityType="Self.Trip" />
-          <EntitySet Name="TripToLocations" EntityType="Self.TripToLocation" />
           <EntitySet Name="Users" EntityType="Self.User" />
           <AssociationSet Name="FK_ImagePaths_Users" Association="Self.FK_ImagePaths_Users">
             <End Role="Users" EntitySet="Users" />
@@ -412,15 +417,15 @@
           </AssociationSet>
           <AssociationSet Name="FK_TripToLocation_TripToLocation" Association="Self.FK_TripToLocation_TripToLocation">
             <End Role="Locations" EntitySet="Locations" />
-            <End Role="TripToLocation" EntitySet="TripToLocations" />
+            <End Role="LocationToTrip" EntitySet="LocationToTrips" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TripToLocation_Trips" Association="Self.FK_TripToLocation_Trips">
+            <End Role="Trips" EntitySet="Trips" />
+            <End Role="LocationToTrip" EntitySet="LocationToTrips" />
           </AssociationSet>
           <AssociationSet Name="FK_Trips_Users" Association="Self.FK_Trips_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="Trips" EntitySet="Trips" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TripToLocation_Trips" Association="Self.FK_TripToLocation_Trips">
-            <End Role="Trips" EntitySet="Trips" />
-            <End Role="TripToLocation" EntitySet="TripToLocations" />
           </AssociationSet>
           <FunctionImport Name="CreateLocation">
             <Parameter Name="UserID" Mode="In" Type="Int32" />
@@ -449,7 +454,7 @@
             <Parameter Name="OtherNotes" Mode="In" Type="String" />
             <Parameter Name="Output_Result" Mode="InOut" Type="Int64" />
           </FunctionImport>
-          <FunctionImport Name="CreateUpdateTripToLocation">
+          <FunctionImport Name="CreateUpdateLocationToTrip">
             <Parameter Name="TripID" Mode="In" Type="Int32" />
             <Parameter Name="LocationID" Mode="In" Type="Int32" />
           </FunctionImport>
@@ -458,6 +463,12 @@
             <Parameter Name="LastName" Mode="In" Type="String" />
             <Parameter Name="Email" Mode="In" Type="String" />
             <Parameter Name="Password" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteLocationForTrip">
+            <Parameter Name="TripID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteTripForLocation">
+            <Parameter Name="LocationID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="DoesLoginExist" ReturnType="Collection(FishModel.DoesLoginExist_Result)">
             <Parameter Name="Email" Mode="In" Type="String" />
@@ -468,33 +479,36 @@
             <Parameter Name="Title" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetAllLocationsForUser" ReturnType="Collection(FishModel.GetAllLocationsForUser_Result)">
-          <Parameter Name="UserID" Mode="In" Type="Int32" />
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetAllTripsForUser" ReturnType="Collection(FishModel.GetAllTripsForUser_Result)">
-          <Parameter Name="UserID" Mode="In" Type="Int32" />
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetAssociatedLocationForTrip" ReturnType="Collection(Int32)">
+            <Parameter Name="TripID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetAssociatedTripForLocation" ReturnType="Collection(Int32)">
-          <Parameter Name="LocationId" Mode="In" Type="Int32" />
+            <Parameter Name="LocationId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetImagesForUser" ReturnType="Collection(String)">
-          <Parameter Name="UserID" Mode="In" Type="Int32" />
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetLocation" ReturnType="Collection(FishModel.GetLocation_Result)">
             <Parameter Name="UserID" Mode="In" Type="Int32" />
             <Parameter Name="Name" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetLocationById" ReturnType="Collection(FishModel.GetLocationById_Result)">
-          <Parameter Name="ID" Mode="In" Type="Int32" />
+            <Parameter Name="ID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetTrip" ReturnType="Collection(FishModel.GetTrip_Result)">
             <Parameter Name="UserID" Mode="In" Type="Int32" />
             <Parameter Name="Title" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetTripById" ReturnType="Collection(FishModel.GetTripById_Result)">
-          <Parameter Name="ID" Mode="In" Type="Int32" />
+            <Parameter Name="ID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetUser" ReturnType="Collection(FishModel.GetUser_Result)">
-          <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="Email" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="InsertImagePath">
             <Parameter Name="UserID" Mode="In" Type="Int32" />
@@ -524,22 +538,6 @@
             <Parameter Name="FliesLuresUsed" Mode="In" Type="String" />
             <Parameter Name="CatchOfTheDay" Mode="In" Type="String" />
             <Parameter Name="OtherNotes" Mode="In" Type="String" />
-          </FunctionImport>
-          <EntitySet Name="LocationToTrips" EntityType="FishModel.LocationToTrip" />
-          <AssociationSet Name="FK_TripToLocation_TripToLocation1" Association="FishModel.FK_TripToLocation_TripToLocation1">
-            <End Role="Location" EntitySet="Locations" />
-            <End Role="LocationToTrip" EntitySet="LocationToTrips" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TripToLocation_Trips1" Association="FishModel.FK_TripToLocation_Trips1">
-            <End Role="Trip" EntitySet="Trips" />
-            <End Role="LocationToTrip" EntitySet="LocationToTrips" />
-          </AssociationSet>
-          <FunctionImport Name="CreateUpdateLocationToTrip">
-            <Parameter Name="TripID" Mode="In" Type="Int32" />
-            <Parameter Name="LocationID" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="GetAssociatedLocationForTrip" ReturnType="Collection(Int32)">
-            <Parameter Name="TripID" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="DoesLoginExist_Result">
@@ -630,40 +628,6 @@
           <Property Type="String" Name="LastName" Nullable="false" MaxLength="255" />
           <Property Type="String" Name="Password" Nullable="false" MaxLength="255" />
         </ComplexType>
-        <EntityType Name="LocationToTrip">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TripID" Type="Int32" Nullable="false" />
-          <Property Name="LocationID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Location" Relationship="FishModel.FK_TripToLocation_TripToLocation1" FromRole="LocationToTrip" ToRole="Location" />
-          <NavigationProperty Name="Trip" Relationship="FishModel.FK_TripToLocation_Trips1" FromRole="LocationToTrip" ToRole="Trip" />
-        </EntityType>
-        <Association Name="FK_TripToLocation_TripToLocation1">
-          <End Type="FishModel.Location" Role="Location" Multiplicity="1" />
-          <End Type="FishModel.LocationToTrip" Role="LocationToTrip" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Location">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="LocationToTrip">
-              <PropertyRef Name="LocationID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TripToLocation_Trips1">
-          <End Type="FishModel.Trip" Role="Trip" Multiplicity="1" />
-          <End Type="FishModel.LocationToTrip" Role="LocationToTrip" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Trip">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="LocationToTrip">
-              <PropertyRef Name="TripID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -698,6 +662,15 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="LocationToTrips">
+            <EntityTypeMapping TypeName="FishModel.LocationToTrip">
+              <MappingFragment StoreEntitySet="LocationToTrip">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="TripID" ColumnName="TripID" />
+                <ScalarProperty Name="LocationID" ColumnName="LocationID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Trips">
             <EntityTypeMapping TypeName="FishModel.Trip">
               <MappingFragment StoreEntitySet="Trips">
@@ -729,7 +702,10 @@
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="CreateLocation" FunctionName="FishModel.Store.CreateLocation" />
           <FunctionImportMapping FunctionImportName="CreateTrip" FunctionName="FishModel.Store.CreateTrip" />
+          <FunctionImportMapping FunctionImportName="CreateUpdateLocationToTrip" FunctionName="FishModel.Store.CreateUpdateLocationToTrip" />
           <FunctionImportMapping FunctionImportName="CreateUser" FunctionName="FishModel.Store.CreateUser" />
+          <FunctionImportMapping FunctionImportName="DeleteLocationForTrip" FunctionName="FishModel.Store.DeleteLocationForTrip" />
+          <FunctionImportMapping FunctionImportName="DeleteTripForLocation" FunctionName="FishModel.Store.DeleteTripForLocation" />
           <FunctionImportMapping FunctionImportName="DoesLoginExist" FunctionName="FishModel.Store.DoesLoginExist">
             <ResultMapping>
               <ComplexTypeMapping TypeName="FishModel.DoesLoginExist_Result">
@@ -776,6 +752,7 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetAssociatedLocationForTrip" FunctionName="FishModel.Store.GetAssociatedLocationForTrip" />
           <FunctionImportMapping FunctionImportName="GetAssociatedTripForLocation" FunctionName="FishModel.Store.GetAssociatedTripForLocation" />
           <FunctionImportMapping FunctionImportName="GetImagesForUser" FunctionName="FishModel.Store.GetImagesForUser" />
           <FunctionImportMapping FunctionImportName="GetLocation" FunctionName="FishModel.Store.GetLocation">
@@ -856,17 +833,6 @@
           <FunctionImportMapping FunctionImportName="InsertImagePath" FunctionName="FishModel.Store.InsertImagePath" />
           <FunctionImportMapping FunctionImportName="UpdateLocation" FunctionName="FishModel.Store.UpdateLocation" />
           <FunctionImportMapping FunctionImportName="UpdateTrip" FunctionName="FishModel.Store.UpdateTrip" />
-          <EntitySetMapping Name="LocationToTrips">
-            <EntityTypeMapping TypeName="FishModel.LocationToTrip">
-              <MappingFragment StoreEntitySet="LocationToTrip">
-                <ScalarProperty Name="LocationID" ColumnName="LocationID" />
-                <ScalarProperty Name="TripID" ColumnName="TripID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="CreateUpdateLocationToTrip" FunctionName="FishModel.Store.CreateUpdateLocationToTrip" />
-          <FunctionImportMapping FunctionImportName="GetAssociatedLocationForTrip" FunctionName="FishModel.Store.GetAssociatedLocationForTrip" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

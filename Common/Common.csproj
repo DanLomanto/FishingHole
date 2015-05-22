@@ -152,9 +152,6 @@
     </Compile>
     <Compile Include="TripGridViewModel.cs" />
     <Compile Include="TripObject.cs" />
-    <Compile Include="TripToLocation.cs">
-      <DependentUpon>FishModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="UrlActions.cs" />
     <Compile Include="User.cs">
       <DependentUpon>FishModel.tt</DependentUpon>

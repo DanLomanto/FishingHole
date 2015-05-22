@@ -109,7 +109,14 @@ public partial class Trip : Page
 			}
 		}
 
-		TripObject.CreateUpdateLocationForTrip(trip.ID, Convert.ToInt32(AssociatedLocation.Value));
+		if (AssociatedLocation.Value == "-1")
+		{
+			TripObject.DeleteLocationForTrip(trip.ID);
+		}
+		else
+		{
+			TripObject.CreateUpdateLocationForTrip(trip.ID, Convert.ToInt32(AssociatedLocation.Value));
+		}
 
 		performProperRedirect(Request.QueryString["returnUrl"]);
 	}
@@ -124,6 +131,12 @@ public partial class Trip : Page
 		performProperRedirect(Request.QueryString["returnUrl"]);
 	}
 
+	#region Private Methods
+
+	/// <summary>
+	/// Performs the proper redirect.
+	/// </summary>
+	/// <param name="returnUrlParameter">The return URL parameter.</param>
 	private void performProperRedirect(string returnUrlParameter)
 	{
 		if (!string.IsNullOrWhiteSpace(returnUrlParameter) && returnUrlParameter.ToUpper() == "TRIPS")
@@ -134,6 +147,9 @@ public partial class Trip : Page
 		Response.Redirect("Dashboard.aspx");
 	}
 
+	/// <summary>
+	/// Populates the locations drop down.
+	/// </summary>
 	private void PopulateLocationsDropDown()
 	{
 		AssociatedLocation.Items.Add(new ListItem("Please select a Location...", "-1"));
@@ -145,4 +161,6 @@ public partial class Trip : Page
 
 		AssociatedLocation.DataBind();
 	}
+
+	#endregion Private Methods
 }
