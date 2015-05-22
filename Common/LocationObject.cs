@@ -134,5 +134,23 @@ namespace Common
 
 			return true;
 		}
+
+		/// <summary>
+		/// Gets the associated location for trip.
+		/// </summary>
+		/// <param name="tripId">The trip identifier.</param>
+		/// <returns></returns>
+		public static int GetAssociatedLocationForTrip(int tripId)
+		{
+			FishEntities fishDb = new FishEntities();
+			var associatedLocationId = fishDb.GetAssociatedLocationForTrip(tripId).FirstOrDefault(); ;
+
+			if (associatedLocationId == null)
+			{
+				return -1;
+			}
+
+			return Convert.ToInt32(associatedLocationId);
+		}
 	}
 }

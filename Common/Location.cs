@@ -17,6 +17,7 @@ namespace Common
         public Location()
         {
             this.TripToLocations = new HashSet<TripToLocation>();
+            this.LocationToTrips = new HashSet<LocationToTrip>();
         }
     
         public int ID { get; set; }
@@ -35,5 +36,6 @@ namespace Common
     
         public virtual User User { get; set; }
         public virtual ICollection<TripToLocation> TripToLocations { get; set; }
+        public virtual ICollection<LocationToTrip> LocationToTrips { get; set; }
     }
 }

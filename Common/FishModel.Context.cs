@@ -32,6 +32,7 @@ namespace Common
         public virtual DbSet<Trip> Trips { get; set; }
         public virtual DbSet<TripToLocation> TripToLocations { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<LocationToTrip> LocationToTrips { get; set; }
     
         public virtual int CreateLocation(Nullable<int> userID, string name, string description, string streetAddress, string cityTown, string state, Nullable<int> zipcode, string lattitudeDirection, Nullable<decimal> lattitude, string longitudeDirection, Nullable<decimal> longitude, ObjectParameter output_Result)
         {
@@ -381,6 +382,28 @@ namespace Common
                 new ObjectParameter("OtherNotes", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateTrip", iDParameter, titleParameter, descriptionParameter, targetedSpeciesParameter, waterConditionsParameter, weatherConditionsParameter, dateOfTripParameter, fliesLuresUsedParameter, catchOfTheDayParameter, otherNotesParameter);
+        }
+    
+        public virtual int CreateUpdateLocationToTrip(Nullable<int> tripID, Nullable<int> locationID)
+        {
+            var tripIDParameter = tripID.HasValue ?
+                new ObjectParameter("TripID", tripID) :
+                new ObjectParameter("TripID", typeof(int));
+    
+            var locationIDParameter = locationID.HasValue ?
+                new ObjectParameter("LocationID", locationID) :
+                new ObjectParameter("LocationID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CreateUpdateLocationToTrip", tripIDParameter, locationIDParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> GetAssociatedLocationForTrip(Nullable<int> tripID)
+        {
+            var tripIDParameter = tripID.HasValue ?
+                new ObjectParameter("TripID", tripID) :
+                new ObjectParameter("TripID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("GetAssociatedLocationForTrip", tripIDParameter);
         }
     }
 }

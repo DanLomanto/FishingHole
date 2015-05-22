@@ -174,8 +174,6 @@ public partial class Location : Page
 			int id = Convert.ToInt32(queryStringId);
 			if (id > 0)
 			{
-				
-
 				location.ID = id;
 				location.UpdateLocation();
 			}

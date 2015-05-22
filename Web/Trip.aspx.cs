@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Drawing;
 using System.Web.UI;
+using System.Web.UI.WebControls;
 using Common;
 
 public partial class Trip : Page
@@ -22,22 +24,37 @@ public partial class Trip : Page
 	/// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
 	protected void Page_Load(object sender, EventArgs e)
 	{
-		string queryStringId = Request.QueryString["id"];
-		if (!string.IsNullOrWhiteSpace(queryStringId))
+		if (!Page.IsPostBack)
 		{
-			int id = Convert.ToInt32(queryStringId);
-			if (id > 0)
+			PopulateLocationsDropDown();
+
+			string queryStringId = Request.QueryString["id"];
+			if (!string.IsNullOrWhiteSpace(queryStringId))
 			{
-				TripObject trip = TripObject.GetTripById(id);
-				TripTitle.Value = trip.Title;
-				Description.Value = trip.Description;
-				TargetedSpecies.Value = trip.TargetedSpecies;
-				WaterConditions.Value = trip.WaterConditions;
-				WeatherConditions.Value = trip.WeatherConditions;
-				TripDate.Value = trip.TripDate;
-				CatchOfTheDay.Value = trip.CatchOfTheDay;
-				FliesLuresUsed.Value = trip.FliesLuresUsed;
-				OtherNotes.Value = trip.OtherNotes;
+				int id = Convert.ToInt32(queryStringId);
+				if (id > 0)
+				{
+					TripObject trip = TripObject.GetTripById(id);
+					TripTitle.Value = trip.Title;
+					Description.Value = trip.Description;
+					TargetedSpecies.Value = trip.TargetedSpecies;
+					WaterConditions.Value = trip.WaterConditions;
+					WeatherConditions.Value = trip.WeatherConditions;
+					TripDate.Value = trip.TripDate;
+					CatchOfTheDay.Value = trip.CatchOfTheDay;
+					FliesLuresUsed.Value = trip.FliesLuresUsed;
+					OtherNotes.Value = trip.OtherNotes;
+
+					int associatedLocationId = LocationObject.GetAssociatedLocationForTrip(id);
+					if (associatedLocationId > 0)
+					{
+						AssociatedLocation.SelectedIndex = AssociatedLocation.Items.IndexOf(AssociatedLocation.Items.FindByValue(associatedLocationId.ToString()));
+					}
+					else
+					{
+						AssociatedLocation.SelectedIndex = 0;
+					}
+				}
 			}
 		}
 	}
@@ -66,19 +83,9 @@ public partial class Trip : Page
 
 		if (string.IsNullOrWhiteSpace(trip.Title))
 		{
-			formValidationErrors.Add("You must enter a value for the Title.");
-		}
-
-		if (TripObject.GetTrip(Master.UsersInfo.ID, trip.Title) != null)
-		{
-			formValidationErrors.Add("A Trip with this Title already exists.");
-		}
-
-		if (formValidationErrors.Count > 0)
-		{
 			formErrors.CssClass = formErrors.CssClass + " has-error";
 			formErrors.ForeColor = Color.Red;
-			formErrors.DataSource = formValidationErrors;
+			formErrors.DataSource = new List<string> { "You must enter a value for the Title." };
 			formErrors.DataBind();
 			return;
 		}
@@ -93,13 +100,16 @@ public partial class Trip : Page
 			id = Convert.ToInt32(queryStringId);
 			if (id > 0)
 			{
-				trip.UpdateTrip(id);
+				trip.ID = id;
+				trip.UpdateTrip(trip.ID);
 			}
 			else
 			{
 				id = trip.CreateTrip(Master.UsersInfo.ID);
 			}
 		}
+
+		TripObject.CreateUpdateLocationForTrip(trip.ID, Convert.ToInt32(AssociatedLocation.Value));
 
 		performProperRedirect(Request.QueryString["returnUrl"]);
 	}
@@ -122,5 +132,17 @@ public partial class Trip : Page
 		}
 
 		Response.Redirect("Dashboard.aspx");
+	}
+
+	private void PopulateLocationsDropDown()
+	{
+		AssociatedLocation.Items.Add(new ListItem("Please select a Location...", "-1"));
+
+		foreach (DataRow row in LocationObject.GetLocationsForUser(Master.UsersInfo.ID).Rows)
+		{
+			AssociatedLocation.Items.Add(new ListItem(row["Name"].ToString(), row["ID"].ToString()));
+		}
+
+		AssociatedLocation.DataBind();
 	}
 }

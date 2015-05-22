@@ -143,6 +143,9 @@
     </Compile>
     <Compile Include="LocationObject.cs" />
     <Compile Include="LocationsGridViewModel.cs" />
+    <Compile Include="LocationToTrip.cs">
+      <DependentUpon>FishModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Trip.cs">
       <DependentUpon>FishModel.tt</DependentUpon>

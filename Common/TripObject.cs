@@ -50,6 +50,12 @@ namespace Common
 			return table;
 		}
 
+		/// <summary>
+		/// Gets the trip.
+		/// </summary>
+		/// <param name="userId">The user identifier.</param>
+		/// <param name="title">The title.</param>
+		/// <returns></returns>
 		public static TripObject GetTrip(int userId, string title)
 		{
 			FishEntities fishDb = new FishEntities();
@@ -73,6 +79,11 @@ namespace Common
 			return trip;
 		}
 
+		/// <summary>
+		/// Gets the trip by identifier.
+		/// </summary>
+		/// <param name="id">The identifier.</param>
+		/// <returns></returns>
 		public static TripObject GetTripById(int id)
 		{
 			FishEntities fishDb = new FishEntities();
@@ -96,6 +107,11 @@ namespace Common
 			return trip;
 		}
 
+		/// <summary>
+		/// Updates the trip.
+		/// </summary>
+		/// <param name="id">The identifier.</param>
+		/// <returns></returns>
 		public bool UpdateTrip(int id)
 		{
 			FishEntities fishDb = new FishEntities();
@@ -110,6 +126,11 @@ namespace Common
 			return true;
 		}
 
+		/// <summary>
+		/// Creates the trip.
+		/// </summary>
+		/// <param name="userID">The user identifier.</param>
+		/// <returns></returns>
 		public int CreateTrip(int userID)
 		{
 			FishEntities fishDb = new FishEntities();
@@ -120,6 +141,12 @@ namespace Common
 			return Convert.ToInt32(Output.Value);
 		}
 
+		/// <summary>
+		/// Creates the update location for trip.
+		/// </summary>
+		/// <param name="tripId">The trip identifier.</param>
+		/// <param name="locationId">The location identifier.</param>
+		/// <returns></returns>
 		public static bool CreateUpdateLocationForTrip(int tripId, int locationId)
 		{
 			FishEntities fishDb = new FishEntities();
@@ -133,6 +160,11 @@ namespace Common
 			return true;
 		}
 
+		/// <summary>
+		/// Gets the trip identifier for location.
+		/// </summary>
+		/// <param name="locationId">The location identifier.</param>
+		/// <returns></returns>
 		public static int GetTripIdForLocation(int locationId)
 		{
 			FishEntities fishDb = new FishEntities();

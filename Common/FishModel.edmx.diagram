@@ -15,6 +15,9 @@
         <AssociationConnector Association="FishModel.FK_TripToLocation_TripToLocation" ManuallyRouted="false" />
         <AssociationConnector Association="FishModel.FK_Trips_Users" ManuallyRouted="false" />
         <AssociationConnector Association="FishModel.FK_TripToLocation_Trips" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="FishModel.LocationToTrip" Width="1.5" PointX="5.25" PointY="10.125" />
+        <AssociationConnector Association="FishModel.FK_TripToLocation_TripToLocation1" />
+        <AssociationConnector Association="FishModel.FK_TripToLocation_Trips1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
