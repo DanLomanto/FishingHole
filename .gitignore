@@ -47,3 +47,5 @@ Temporary Items
 Common/bin/
 Web/bin/
 Web/Uploads/
+Common/obj/
+Web/obj/
