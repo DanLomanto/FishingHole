@@ -1,0 +1,838 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="FishModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ImagePaths">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="ImagePath" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Locations">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="text" />
+          <Property Name="StreetAddress" Type="varchar" MaxLength="255" />
+          <Property Name="CityTown" Type="varchar" MaxLength="255" />
+          <Property Name="State" Type="varchar" MaxLength="2" />
+          <Property Name="Zipcode" Type="int" />
+          <Property Name="LattitudeDirection" Type="varchar" MaxLength="1" />
+          <Property Name="Lattitude" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="LongitudeDirection" Type="varchar" MaxLength="1" />
+          <Property Name="Longitude" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Trips">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Description" Type="text" />
+          <Property Name="TargetedSpecies" Type="varchar" MaxLength="255" />
+          <Property Name="WaterConditions" Type="varchar" MaxLength="255" />
+          <Property Name="WeatherConditions" Type="varchar" MaxLength="255" />
+          <Property Name="DateOfTrip" Type="varchar" MaxLength="10" />
+          <Property Name="FliesLuresUsed" Type="varchar" MaxLength="255" />
+          <Property Name="CatchOfTheDay" Type="varchar" MaxLength="255" />
+          <Property Name="OtherNotes" Type="text" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TripToLocation">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TripID" Type="int" Nullable="false" />
+          <Property Name="LocationID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_ImagePaths_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="ImagePaths" Type="Self.ImagePaths" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ImagePaths">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Locations_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Locations" Type="Self.Locations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Locations">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Trips_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Trips" Type="Self.Trips" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Trips">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TripToLocation_Trips">
+          <End Role="Trips" Type="Self.Trips" Multiplicity="1" />
+          <End Role="TripToLocation" Type="Self.TripToLocation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Trips">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TripToLocation">
+              <PropertyRef Name="TripID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TripToLocation_TripToLocation">
+          <End Role="Locations" Type="Self.Locations" Multiplicity="1" />
+          <End Role="TripToLocation" Type="Self.TripToLocation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Locations">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TripToLocation">
+              <PropertyRef Name="LocationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="CreateLocation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserID" Type="int" Mode="In" />
+          <Parameter Name="Name" Type="varchar" Mode="In" />
+          <Parameter Name="Description" Type="text" Mode="In" />
+          <Parameter Name="StreetAddress" Type="varchar" Mode="In" />
+          <Parameter Name="CityTown" Type="varchar" Mode="In" />
+          <Parameter Name="State" Type="varchar" Mode="In" />
+          <Parameter Name="Zipcode" Type="int" Mode="In" />
+          <Parameter Name="LattitudeDirection" Type="varchar" Mode="In" />
+          <Parameter Name="Lattitude" Type="decimal" Mode="In" />
+          <Parameter Name="LongitudeDirection" Type="varchar" Mode="In" />
+          <Parameter Name="Longitude" Type="decimal" Mode="In" />
+          <Parameter Name="Output_Result" Type="bigint" Mode="InOut" />
+        </Function>
+        <Function Name="CreateTrip" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserID" Type="int" Mode="In" />
+          <Parameter Name="Title" Type="varchar" Mode="In" />
+          <Parameter Name="Description" Type="text" Mode="In" />
+          <Parameter Name="TargetedSpecies" Type="varchar" Mode="In" />
+          <Parameter Name="WaterConditions" Type="varchar" Mode="In" />
+          <Parameter Name="WeatherConditions" Type="varchar" Mode="In" />
+          <Parameter Name="DateOfTrip" Type="varchar" Mode="In" />
+          <Parameter Name="FliesLuresUsed" Type="varchar" Mode="In" />
+          <Parameter Name="CatchOfTheDay" Type="varchar" Mode="In" />
+          <Parameter Name="OtherNotes" Type="text" Mode="In" />
+          <Parameter Name="Output_Result" Type="bigint" Mode="InOut" />
+        </Function>
+        <Function Name="CreateUpdateTripToLocation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="TripID" Type="int" Mode="In" />
+          <Parameter Name="LocationID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="CreateUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="FirstName" Type="varchar" Mode="In" />
+          <Parameter Name="LastName" Type="varchar" Mode="In" />
+          <Parameter Name="Email" Type="varchar" Mode="In" />
+          <Parameter Name="Password" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="DoesLoginExist" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Email" Type="varchar" Mode="In" />
+          <Parameter Name="Password" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="DoesTripTitleExistForUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserID" Type="int" Mode="In" />
+          <Parameter Name="Title" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="GetAllLocationsForUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetAllTripsForUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetAssociatedTripForLocation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="LocationId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetImagesForUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetLocation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserID" Type="int" Mode="In" />
+          <Parameter Name="Name" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="GetLocationById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetTrip" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserID" Type="int" Mode="In" />
+          <Parameter Name="Title" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="GetTripById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Email" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="InsertImagePath" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserID" Type="int" Mode="In" />
+          <Parameter Name="ImagePath" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="UpdateLocation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID" Type="int" Mode="In" />
+          <Parameter Name="Name" Type="varchar" Mode="In" />
+          <Parameter Name="Description" Type="text" Mode="In" />
+          <Parameter Name="StreetAddress" Type="varchar" Mode="In" />
+          <Parameter Name="CityTown" Type="varchar" Mode="In" />
+          <Parameter Name="State" Type="varchar" Mode="In" />
+          <Parameter Name="Zipcode" Type="int" Mode="In" />
+          <Parameter Name="LattitudeDirection" Type="varchar" Mode="In" />
+          <Parameter Name="Lattitude" Type="decimal" Mode="In" />
+          <Parameter Name="LongitudeDirection" Type="varchar" Mode="In" />
+          <Parameter Name="Longitude" Type="decimal" Mode="In" />
+        </Function>
+        <Function Name="UpdateTrip" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID" Type="int" Mode="In" />
+          <Parameter Name="Title" Type="varchar" Mode="In" />
+          <Parameter Name="Description" Type="text" Mode="In" />
+          <Parameter Name="TargetedSpecies" Type="varchar" Mode="In" />
+          <Parameter Name="WaterConditions" Type="varchar" Mode="In" />
+          <Parameter Name="WeatherConditions" Type="varchar" Mode="In" />
+          <Parameter Name="DateOfTrip" Type="varchar" Mode="In" />
+          <Parameter Name="FliesLuresUsed" Type="varchar" Mode="In" />
+          <Parameter Name="CatchOfTheDay" Type="varchar" Mode="In" />
+          <Parameter Name="OtherNotes" Type="text" Mode="In" />
+        </Function>
+        <EntityContainer Name="FishModelStoreContainer">
+          <EntitySet Name="ImagePaths" EntityType="Self.ImagePaths" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Locations" EntityType="Self.Locations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Trips" EntityType="Self.Trips" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TripToLocation" EntityType="Self.TripToLocation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_ImagePaths_Users" Association="Self.FK_ImagePaths_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="ImagePaths" EntitySet="ImagePaths" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Locations_Users" Association="Self.FK_Locations_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Locations" EntitySet="Locations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Trips_Users" Association="Self.FK_Trips_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Trips" EntitySet="Trips" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TripToLocation_Trips" Association="Self.FK_TripToLocation_Trips">
+            <End Role="Trips" EntitySet="Trips" />
+            <End Role="TripToLocation" EntitySet="TripToLocation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TripToLocation_TripToLocation" Association="Self.FK_TripToLocation_TripToLocation">
+            <End Role="Locations" EntitySet="Locations" />
+            <End Role="TripToLocation" EntitySet="TripToLocation" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="FishModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ImagePath">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="ImagePath1" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="Self.FK_ImagePaths_Users" FromRole="ImagePaths" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Location">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="StreetAddress" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="CityTown" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="State" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="Zipcode" Type="Int32" />
+          <Property Name="LattitudeDirection" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Lattitude" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="LongitudeDirection" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Longitude" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Locations_Users" FromRole="Locations" ToRole="Users" />
+          <NavigationProperty Name="TripToLocations" Relationship="Self.FK_TripToLocation_TripToLocation" FromRole="Locations" ToRole="TripToLocation" />
+        </EntityType>
+        <EntityType Name="Trip">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="TargetedSpecies" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="WaterConditions" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="WeatherConditions" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="DateOfTrip" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="FliesLuresUsed" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="CatchOfTheDay" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="OtherNotes" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Trips_Users" FromRole="Trips" ToRole="Users" />
+          <NavigationProperty Name="TripToLocations" Relationship="Self.FK_TripToLocation_Trips" FromRole="Trips" ToRole="TripToLocation" />
+        </EntityType>
+        <EntityType Name="TripToLocation">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TripID" Type="Int32" Nullable="false" />
+          <Property Name="LocationID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Location" Relationship="Self.FK_TripToLocation_TripToLocation" FromRole="TripToLocation" ToRole="Locations" />
+          <NavigationProperty Name="Trip" Relationship="Self.FK_TripToLocation_Trips" FromRole="TripToLocation" ToRole="Trips" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="ImagePaths" Relationship="Self.FK_ImagePaths_Users" FromRole="Users" ToRole="ImagePaths" />
+          <NavigationProperty Name="Locations" Relationship="Self.FK_Locations_Users" FromRole="Users" ToRole="Locations" />
+          <NavigationProperty Name="Trips" Relationship="Self.FK_Trips_Users" FromRole="Users" ToRole="Trips" />
+        </EntityType>
+        <Association Name="FK_ImagePaths_Users">
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="ImagePaths" Type="Self.ImagePath" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ImagePaths">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Locations_Users">
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="Locations" Type="Self.Location" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Locations">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TripToLocation_TripToLocation">
+          <End Role="Locations" Type="Self.Location" Multiplicity="1" />
+          <End Role="TripToLocation" Type="Self.TripToLocation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Locations">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TripToLocation">
+              <PropertyRef Name="LocationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Trips_Users">
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="Trips" Type="Self.Trip" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Trips">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TripToLocation_Trips">
+          <End Role="Trips" Type="Self.Trip" Multiplicity="1" />
+          <End Role="TripToLocation" Type="Self.TripToLocation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Trips">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TripToLocation">
+              <PropertyRef Name="TripID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FishEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ImagePaths" EntityType="Self.ImagePath" />
+          <EntitySet Name="Locations" EntityType="Self.Location" />
+          <EntitySet Name="Trips" EntityType="Self.Trip" />
+          <EntitySet Name="TripToLocations" EntityType="Self.TripToLocation" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <AssociationSet Name="FK_ImagePaths_Users" Association="Self.FK_ImagePaths_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="ImagePaths" EntitySet="ImagePaths" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Locations_Users" Association="Self.FK_Locations_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Locations" EntitySet="Locations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TripToLocation_TripToLocation" Association="Self.FK_TripToLocation_TripToLocation">
+            <End Role="Locations" EntitySet="Locations" />
+            <End Role="TripToLocation" EntitySet="TripToLocations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Trips_Users" Association="Self.FK_Trips_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Trips" EntitySet="Trips" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TripToLocation_Trips" Association="Self.FK_TripToLocation_Trips">
+            <End Role="Trips" EntitySet="Trips" />
+            <End Role="TripToLocation" EntitySet="TripToLocations" />
+          </AssociationSet>
+          <FunctionImport Name="CreateLocation">
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
+            <Parameter Name="Name" Mode="In" Type="String" />
+            <Parameter Name="Description" Mode="In" Type="String" />
+            <Parameter Name="StreetAddress" Mode="In" Type="String" />
+            <Parameter Name="CityTown" Mode="In" Type="String" />
+            <Parameter Name="State" Mode="In" Type="String" />
+            <Parameter Name="Zipcode" Mode="In" Type="Int32" />
+            <Parameter Name="LattitudeDirection" Mode="In" Type="String" />
+            <Parameter Name="Lattitude" Mode="In" Type="Decimal" />
+            <Parameter Name="LongitudeDirection" Mode="In" Type="String" />
+            <Parameter Name="Longitude" Mode="In" Type="Decimal" />
+            <Parameter Name="Output_Result" Mode="InOut" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="CreateTrip">
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
+            <Parameter Name="Title" Mode="In" Type="String" />
+            <Parameter Name="Description" Mode="In" Type="String" />
+            <Parameter Name="TargetedSpecies" Mode="In" Type="String" />
+            <Parameter Name="WaterConditions" Mode="In" Type="String" />
+            <Parameter Name="WeatherConditions" Mode="In" Type="String" />
+            <Parameter Name="DateOfTrip" Mode="In" Type="String" />
+            <Parameter Name="FliesLuresUsed" Mode="In" Type="String" />
+            <Parameter Name="CatchOfTheDay" Mode="In" Type="String" />
+            <Parameter Name="OtherNotes" Mode="In" Type="String" />
+            <Parameter Name="Output_Result" Mode="InOut" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="CreateUpdateTripToLocation">
+            <Parameter Name="TripID" Mode="In" Type="Int32" />
+            <Parameter Name="LocationID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="CreateUser">
+            <Parameter Name="FirstName" Mode="In" Type="String" />
+            <Parameter Name="LastName" Mode="In" Type="String" />
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="Password" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="DoesLoginExist" ReturnType="Collection(FishModel.DoesLoginExist_Result)">
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="Password" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="DoesTripTitleExistForUser" ReturnType="Collection(Int32)">
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
+            <Parameter Name="Title" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetAllLocationsForUser" ReturnType="Collection(FishModel.GetAllLocationsForUser_Result)">
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetAllTripsForUser" ReturnType="Collection(FishModel.GetAllTripsForUser_Result)">
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetAssociatedTripForLocation" ReturnType="Collection(Int32)">
+            <Parameter Name="LocationId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetImagesForUser" ReturnType="Collection(String)">
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetLocation" ReturnType="Collection(FishModel.GetLocation_Result)">
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
+            <Parameter Name="Name" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetLocationById" ReturnType="Collection(FishModel.GetLocationById_Result)">
+            <Parameter Name="ID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetTrip" ReturnType="Collection(FishModel.GetTrip_Result)">
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
+            <Parameter Name="Title" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetTripById" ReturnType="Collection(FishModel.GetTripById_Result)">
+            <Parameter Name="ID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetUser" ReturnType="Collection(FishModel.GetUser_Result)">
+            <Parameter Name="Email" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="InsertImagePath">
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
+            <Parameter Name="ImagePath" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateLocation">
+            <Parameter Name="ID" Mode="In" Type="Int32" />
+            <Parameter Name="Name" Mode="In" Type="String" />
+            <Parameter Name="Description" Mode="In" Type="String" />
+            <Parameter Name="StreetAddress" Mode="In" Type="String" />
+            <Parameter Name="CityTown" Mode="In" Type="String" />
+            <Parameter Name="State" Mode="In" Type="String" />
+            <Parameter Name="Zipcode" Mode="In" Type="Int32" />
+            <Parameter Name="LattitudeDirection" Mode="In" Type="String" />
+            <Parameter Name="Lattitude" Mode="In" Type="Decimal" />
+            <Parameter Name="LongitudeDirection" Mode="In" Type="String" />
+            <Parameter Name="Longitude" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateTrip">
+            <Parameter Name="ID" Mode="In" Type="Int32" />
+            <Parameter Name="Title" Mode="In" Type="String" />
+            <Parameter Name="Description" Mode="In" Type="String" />
+            <Parameter Name="TargetedSpecies" Mode="In" Type="String" />
+            <Parameter Name="WaterConditions" Mode="In" Type="String" />
+            <Parameter Name="WeatherConditions" Mode="In" Type="String" />
+            <Parameter Name="DateOfTrip" Mode="In" Type="String" />
+            <Parameter Name="FliesLuresUsed" Mode="In" Type="String" />
+            <Parameter Name="CatchOfTheDay" Mode="In" Type="String" />
+            <Parameter Name="OtherNotes" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="DoesLoginExist_Result">
+          <Property Type="String" Name="Email" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="FirstName" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="LastName" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="Password" Nullable="false" MaxLength="255" />
+        </ComplexType>
+        <ComplexType Name="GetAllLocationsForUser_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Description" Nullable="true" MaxLength="Max" />
+          <Property Type="String" Name="StreetAddress" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="CityTown" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="State" Nullable="true" MaxLength="2" />
+          <Property Type="Int32" Name="Zipcode" Nullable="true" />
+          <Property Type="String" Name="LattitudeDirection" Nullable="true" MaxLength="1" />
+          <Property Type="Decimal" Name="Lattitude" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="String" Name="LongitudeDirection" Nullable="true" MaxLength="1" />
+          <Property Type="Decimal" Name="Longitude" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="DateTime" Name="CreateDate" Nullable="false" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="GetAllTripsForUser_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Title" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="Description" Nullable="true" MaxLength="Max" />
+          <Property Type="String" Name="TargetedSpecies" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="WaterConditions" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="WeatherConditions" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="DateOfTrip" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="FliesLuresUsed" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="CatchOfTheDay" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="OtherNotes" Nullable="true" MaxLength="Max" />
+          <Property Type="DateTime" Name="CreateDate" Nullable="false" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="GetLocation_Result">
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Description" Nullable="true" MaxLength="Max" />
+          <Property Type="String" Name="StreetAddress" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="CityTown" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="State" Nullable="true" MaxLength="2" />
+          <Property Type="Int32" Name="Zipcode" Nullable="true" />
+          <Property Type="String" Name="LattitudeDirection" Nullable="true" MaxLength="1" />
+          <Property Type="Decimal" Name="Lattitude" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="String" Name="LongitudeDirection" Nullable="true" MaxLength="1" />
+          <Property Type="Decimal" Name="Longitude" Nullable="true" Precision="18" Scale="0" />
+        </ComplexType>
+        <ComplexType Name="GetLocationById_Result">
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Description" Nullable="true" MaxLength="Max" />
+          <Property Type="String" Name="StreetAddress" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="CityTown" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="State" Nullable="true" MaxLength="2" />
+          <Property Type="Int32" Name="Zipcode" Nullable="true" />
+          <Property Type="String" Name="LattitudeDirection" Nullable="true" MaxLength="1" />
+          <Property Type="Decimal" Name="Lattitude" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="String" Name="LongitudeDirection" Nullable="true" MaxLength="1" />
+          <Property Type="Decimal" Name="Longitude" Nullable="true" Precision="18" Scale="0" />
+        </ComplexType>
+        <ComplexType Name="GetTrip_Result">
+          <Property Type="String" Name="Title" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="Description" Nullable="true" MaxLength="Max" />
+          <Property Type="String" Name="TargetedSpecies" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="WaterConditions" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="WeatherConditions" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="DateOfTrip" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="FliesLuresUsed" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="CatchOfTheDay" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="OtherNotes" Nullable="true" MaxLength="Max" />
+          <Property Type="DateTime" Name="CreateDate" Nullable="false" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="GetTripById_Result">
+          <Property Type="String" Name="Title" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="Description" Nullable="true" MaxLength="Max" />
+          <Property Type="String" Name="TargetedSpecies" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="WaterConditions" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="WeatherConditions" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="DateOfTrip" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="FliesLuresUsed" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="CatchOfTheDay" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="OtherNotes" Nullable="true" MaxLength="Max" />
+          <Property Type="DateTime" Name="CreateDate" Nullable="false" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="GetUser_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Email" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="FirstName" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="LastName" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="Password" Nullable="false" MaxLength="255" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="FishModelStoreContainer" CdmEntityContainer="FishEntities">
+          <EntitySetMapping Name="ImagePaths">
+            <EntityTypeMapping TypeName="FishModel.ImagePath">
+              <MappingFragment StoreEntitySet="ImagePaths">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="ImagePath1" ColumnName="ImagePath" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Locations">
+            <EntityTypeMapping TypeName="FishModel.Location">
+              <MappingFragment StoreEntitySet="Locations">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="StreetAddress" ColumnName="StreetAddress" />
+                <ScalarProperty Name="CityTown" ColumnName="CityTown" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Zipcode" ColumnName="Zipcode" />
+                <ScalarProperty Name="LattitudeDirection" ColumnName="LattitudeDirection" />
+                <ScalarProperty Name="Lattitude" ColumnName="Lattitude" />
+                <ScalarProperty Name="LongitudeDirection" ColumnName="LongitudeDirection" />
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Trips">
+            <EntityTypeMapping TypeName="FishModel.Trip">
+              <MappingFragment StoreEntitySet="Trips">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="TargetedSpecies" ColumnName="TargetedSpecies" />
+                <ScalarProperty Name="WaterConditions" ColumnName="WaterConditions" />
+                <ScalarProperty Name="WeatherConditions" ColumnName="WeatherConditions" />
+                <ScalarProperty Name="DateOfTrip" ColumnName="DateOfTrip" />
+                <ScalarProperty Name="FliesLuresUsed" ColumnName="FliesLuresUsed" />
+                <ScalarProperty Name="CatchOfTheDay" ColumnName="CatchOfTheDay" />
+                <ScalarProperty Name="OtherNotes" ColumnName="OtherNotes" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TripToLocations">
+            <EntityTypeMapping TypeName="FishModel.TripToLocation">
+              <MappingFragment StoreEntitySet="TripToLocation">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="TripID" ColumnName="TripID" />
+                <ScalarProperty Name="LocationID" ColumnName="LocationID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="FishModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="CreateLocation" FunctionName="FishModel.Store.CreateLocation" />
+          <FunctionImportMapping FunctionImportName="CreateTrip" FunctionName="FishModel.Store.CreateTrip" />
+          <FunctionImportMapping FunctionImportName="CreateUpdateTripToLocation" FunctionName="FishModel.Store.CreateUpdateTripToLocation" />
+          <FunctionImportMapping FunctionImportName="CreateUser" FunctionName="FishModel.Store.CreateUser" />
+          <FunctionImportMapping FunctionImportName="DoesLoginExist" FunctionName="FishModel.Store.DoesLoginExist">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="FishModel.DoesLoginExist_Result">
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="DoesTripTitleExistForUser" FunctionName="FishModel.Store.DoesTripTitleExistForUser" />
+          <FunctionImportMapping FunctionImportName="GetAllLocationsForUser" FunctionName="FishModel.Store.GetAllLocationsForUser">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="FishModel.GetAllLocationsForUser_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="StreetAddress" ColumnName="StreetAddress" />
+                <ScalarProperty Name="CityTown" ColumnName="CityTown" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Zipcode" ColumnName="Zipcode" />
+                <ScalarProperty Name="LattitudeDirection" ColumnName="LattitudeDirection" />
+                <ScalarProperty Name="Lattitude" ColumnName="Lattitude" />
+                <ScalarProperty Name="LongitudeDirection" ColumnName="LongitudeDirection" />
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetAllTripsForUser" FunctionName="FishModel.Store.GetAllTripsForUser">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="FishModel.GetAllTripsForUser_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="TargetedSpecies" ColumnName="TargetedSpecies" />
+                <ScalarProperty Name="WaterConditions" ColumnName="WaterConditions" />
+                <ScalarProperty Name="WeatherConditions" ColumnName="WeatherConditions" />
+                <ScalarProperty Name="DateOfTrip" ColumnName="DateOfTrip" />
+                <ScalarProperty Name="FliesLuresUsed" ColumnName="FliesLuresUsed" />
+                <ScalarProperty Name="CatchOfTheDay" ColumnName="CatchOfTheDay" />
+                <ScalarProperty Name="OtherNotes" ColumnName="OtherNotes" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetAssociatedTripForLocation" FunctionName="FishModel.Store.GetAssociatedTripForLocation" />
+          <FunctionImportMapping FunctionImportName="GetImagesForUser" FunctionName="FishModel.Store.GetImagesForUser" />
+          <FunctionImportMapping FunctionImportName="GetLocation" FunctionName="FishModel.Store.GetLocation">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="FishModel.GetLocation_Result">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="StreetAddress" ColumnName="StreetAddress" />
+                <ScalarProperty Name="CityTown" ColumnName="CityTown" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Zipcode" ColumnName="Zipcode" />
+                <ScalarProperty Name="LattitudeDirection" ColumnName="LattitudeDirection" />
+                <ScalarProperty Name="Lattitude" ColumnName="Lattitude" />
+                <ScalarProperty Name="LongitudeDirection" ColumnName="LongitudeDirection" />
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetLocationById" FunctionName="FishModel.Store.GetLocationById">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="FishModel.GetLocationById_Result">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="StreetAddress" ColumnName="StreetAddress" />
+                <ScalarProperty Name="CityTown" ColumnName="CityTown" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Zipcode" ColumnName="Zipcode" />
+                <ScalarProperty Name="LattitudeDirection" ColumnName="LattitudeDirection" />
+                <ScalarProperty Name="Lattitude" ColumnName="Lattitude" />
+                <ScalarProperty Name="LongitudeDirection" ColumnName="LongitudeDirection" />
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetTrip" FunctionName="FishModel.Store.GetTrip">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="FishModel.GetTrip_Result">
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="TargetedSpecies" ColumnName="TargetedSpecies" />
+                <ScalarProperty Name="WaterConditions" ColumnName="WaterConditions" />
+                <ScalarProperty Name="WeatherConditions" ColumnName="WeatherConditions" />
+                <ScalarProperty Name="DateOfTrip" ColumnName="DateOfTrip" />
+                <ScalarProperty Name="FliesLuresUsed" ColumnName="FliesLuresUsed" />
+                <ScalarProperty Name="CatchOfTheDay" ColumnName="CatchOfTheDay" />
+                <ScalarProperty Name="OtherNotes" ColumnName="OtherNotes" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetTripById" FunctionName="FishModel.Store.GetTripById">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="FishModel.GetTripById_Result">
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="TargetedSpecies" ColumnName="TargetedSpecies" />
+                <ScalarProperty Name="WaterConditions" ColumnName="WaterConditions" />
+                <ScalarProperty Name="WeatherConditions" ColumnName="WeatherConditions" />
+                <ScalarProperty Name="DateOfTrip" ColumnName="DateOfTrip" />
+                <ScalarProperty Name="FliesLuresUsed" ColumnName="FliesLuresUsed" />
+                <ScalarProperty Name="CatchOfTheDay" ColumnName="CatchOfTheDay" />
+                <ScalarProperty Name="OtherNotes" ColumnName="OtherNotes" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetUser" FunctionName="FishModel.Store.GetUser">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="FishModel.GetUser_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="InsertImagePath" FunctionName="FishModel.Store.InsertImagePath" />
+          <FunctionImportMapping FunctionImportName="UpdateLocation" FunctionName="FishModel.Store.UpdateLocation" />
+          <FunctionImportMapping FunctionImportName="UpdateTrip" FunctionName="FishModel.Store.UpdateTrip" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

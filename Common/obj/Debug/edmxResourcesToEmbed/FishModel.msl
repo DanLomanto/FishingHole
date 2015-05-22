@@ -1,0 +1,201 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="FishModelStoreContainer" CdmEntityContainer="FishEntities">
+    <EntitySetMapping Name="ImagePaths">
+      <EntityTypeMapping TypeName="FishModel.ImagePath">
+        <MappingFragment StoreEntitySet="ImagePaths">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="ImagePath1" ColumnName="ImagePath" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Locations">
+      <EntityTypeMapping TypeName="FishModel.Location">
+        <MappingFragment StoreEntitySet="Locations">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="StreetAddress" ColumnName="StreetAddress" />
+          <ScalarProperty Name="CityTown" ColumnName="CityTown" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="Zipcode" ColumnName="Zipcode" />
+          <ScalarProperty Name="LattitudeDirection" ColumnName="LattitudeDirection" />
+          <ScalarProperty Name="Lattitude" ColumnName="Lattitude" />
+          <ScalarProperty Name="LongitudeDirection" ColumnName="LongitudeDirection" />
+          <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Trips">
+      <EntityTypeMapping TypeName="FishModel.Trip">
+        <MappingFragment StoreEntitySet="Trips">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="TargetedSpecies" ColumnName="TargetedSpecies" />
+          <ScalarProperty Name="WaterConditions" ColumnName="WaterConditions" />
+          <ScalarProperty Name="WeatherConditions" ColumnName="WeatherConditions" />
+          <ScalarProperty Name="DateOfTrip" ColumnName="DateOfTrip" />
+          <ScalarProperty Name="FliesLuresUsed" ColumnName="FliesLuresUsed" />
+          <ScalarProperty Name="CatchOfTheDay" ColumnName="CatchOfTheDay" />
+          <ScalarProperty Name="OtherNotes" ColumnName="OtherNotes" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TripToLocations">
+      <EntityTypeMapping TypeName="FishModel.TripToLocation">
+        <MappingFragment StoreEntitySet="TripToLocation">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="TripID" ColumnName="TripID" />
+          <ScalarProperty Name="LocationID" ColumnName="LocationID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="FishModel.User">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="CreateLocation" FunctionName="FishModel.Store.CreateLocation" />
+    <FunctionImportMapping FunctionImportName="CreateTrip" FunctionName="FishModel.Store.CreateTrip" />
+    <FunctionImportMapping FunctionImportName="CreateUpdateTripToLocation" FunctionName="FishModel.Store.CreateUpdateTripToLocation" />
+    <FunctionImportMapping FunctionImportName="CreateUser" FunctionName="FishModel.Store.CreateUser" />
+    <FunctionImportMapping FunctionImportName="DoesLoginExist" FunctionName="FishModel.Store.DoesLoginExist">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="FishModel.DoesLoginExist_Result">
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="DoesTripTitleExistForUser" FunctionName="FishModel.Store.DoesTripTitleExistForUser" />
+    <FunctionImportMapping FunctionImportName="GetAllLocationsForUser" FunctionName="FishModel.Store.GetAllLocationsForUser">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="FishModel.GetAllLocationsForUser_Result">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="StreetAddress" ColumnName="StreetAddress" />
+          <ScalarProperty Name="CityTown" ColumnName="CityTown" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="Zipcode" ColumnName="Zipcode" />
+          <ScalarProperty Name="LattitudeDirection" ColumnName="LattitudeDirection" />
+          <ScalarProperty Name="Lattitude" ColumnName="Lattitude" />
+          <ScalarProperty Name="LongitudeDirection" ColumnName="LongitudeDirection" />
+          <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetAllTripsForUser" FunctionName="FishModel.Store.GetAllTripsForUser">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="FishModel.GetAllTripsForUser_Result">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="TargetedSpecies" ColumnName="TargetedSpecies" />
+          <ScalarProperty Name="WaterConditions" ColumnName="WaterConditions" />
+          <ScalarProperty Name="WeatherConditions" ColumnName="WeatherConditions" />
+          <ScalarProperty Name="DateOfTrip" ColumnName="DateOfTrip" />
+          <ScalarProperty Name="FliesLuresUsed" ColumnName="FliesLuresUsed" />
+          <ScalarProperty Name="CatchOfTheDay" ColumnName="CatchOfTheDay" />
+          <ScalarProperty Name="OtherNotes" ColumnName="OtherNotes" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetAssociatedTripForLocation" FunctionName="FishModel.Store.GetAssociatedTripForLocation" />
+    <FunctionImportMapping FunctionImportName="GetImagesForUser" FunctionName="FishModel.Store.GetImagesForUser" />
+    <FunctionImportMapping FunctionImportName="GetLocation" FunctionName="FishModel.Store.GetLocation">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="FishModel.GetLocation_Result">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="StreetAddress" ColumnName="StreetAddress" />
+          <ScalarProperty Name="CityTown" ColumnName="CityTown" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="Zipcode" ColumnName="Zipcode" />
+          <ScalarProperty Name="LattitudeDirection" ColumnName="LattitudeDirection" />
+          <ScalarProperty Name="Lattitude" ColumnName="Lattitude" />
+          <ScalarProperty Name="LongitudeDirection" ColumnName="LongitudeDirection" />
+          <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetLocationById" FunctionName="FishModel.Store.GetLocationById">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="FishModel.GetLocationById_Result">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="StreetAddress" ColumnName="StreetAddress" />
+          <ScalarProperty Name="CityTown" ColumnName="CityTown" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="Zipcode" ColumnName="Zipcode" />
+          <ScalarProperty Name="LattitudeDirection" ColumnName="LattitudeDirection" />
+          <ScalarProperty Name="Lattitude" ColumnName="Lattitude" />
+          <ScalarProperty Name="LongitudeDirection" ColumnName="LongitudeDirection" />
+          <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetTrip" FunctionName="FishModel.Store.GetTrip">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="FishModel.GetTrip_Result">
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="TargetedSpecies" ColumnName="TargetedSpecies" />
+          <ScalarProperty Name="WaterConditions" ColumnName="WaterConditions" />
+          <ScalarProperty Name="WeatherConditions" ColumnName="WeatherConditions" />
+          <ScalarProperty Name="DateOfTrip" ColumnName="DateOfTrip" />
+          <ScalarProperty Name="FliesLuresUsed" ColumnName="FliesLuresUsed" />
+          <ScalarProperty Name="CatchOfTheDay" ColumnName="CatchOfTheDay" />
+          <ScalarProperty Name="OtherNotes" ColumnName="OtherNotes" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetTripById" FunctionName="FishModel.Store.GetTripById">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="FishModel.GetTripById_Result">
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="TargetedSpecies" ColumnName="TargetedSpecies" />
+          <ScalarProperty Name="WaterConditions" ColumnName="WaterConditions" />
+          <ScalarProperty Name="WeatherConditions" ColumnName="WeatherConditions" />
+          <ScalarProperty Name="DateOfTrip" ColumnName="DateOfTrip" />
+          <ScalarProperty Name="FliesLuresUsed" ColumnName="FliesLuresUsed" />
+          <ScalarProperty Name="CatchOfTheDay" ColumnName="CatchOfTheDay" />
+          <ScalarProperty Name="OtherNotes" ColumnName="OtherNotes" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetUser" FunctionName="FishModel.Store.GetUser">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="FishModel.GetUser_Result">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="InsertImagePath" FunctionName="FishModel.Store.InsertImagePath" />
+    <FunctionImportMapping FunctionImportName="UpdateLocation" FunctionName="FishModel.Store.UpdateLocation" />
+    <FunctionImportMapping FunctionImportName="UpdateTrip" FunctionName="FishModel.Store.UpdateTrip" />
+  </EntityContainerMapping>
+</Mapping>
