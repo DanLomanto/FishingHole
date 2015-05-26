@@ -4,6 +4,10 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="Server">
     <div class="col-md-8 col-md-offset-2">
+        <div class="checkbox-inline">
+            <asp:CheckBoxList runat="server" ID="photoGalleryChecklist" CssClass="checkbox-inline CheckboxLabel" OnDataBound="photoGalleryChecklist_DataBound" RepeatDirection="Horizontal">
+            </asp:CheckBoxList>
+        </div>
         <div class="panel panel-default">
             <div class="panel-heading clearfix">
                 <div class="btn-group pull-right" style="padding-top: 15px;">
@@ -14,20 +18,22 @@
             <div class="panel-body">
                 <div class="row">
                     <div class="col-md-2 pull-left">
-                        <asp:LinkButton runat="server" ID="prevTwentyImages" CssClass="btn btn-default text-center" OnClick="prevTwentyImages_Click"><i class="glyphicon glyphicon-chevron-left"></i>&nbsp;Previous 8</asp:LinkButton>
+                        <asp:LinkButton runat="server" ID="prevTwentyImages" CssClass="btn btn-default text-center" OnClick="prevTwentyImages_Click"><i class="glyphicon glyphicon-chevron-left"></i>&nbsp;Previous 20</asp:LinkButton>
                     </div>
                     <div class="col-md-3 col-md-offset-7">
-                        <asp:LinkButton runat="server" ID="nextTwentyImages" CssClass="btn btn-default pull-right" OnClick="nextTwentyImages_Click">Next 8&nbsp;<span class="glyphicon glyphicon-chevron-right" /></asp:LinkButton>
+                        <asp:LinkButton runat="server" ID="nextTwentyImages" CssClass="btn btn-default pull-right" OnClick="nextTwentyImages_Click">Next 20&nbsp;<span class="glyphicon glyphicon-chevron-right" /></asp:LinkButton>
                     </div>
                 </div>
                 <div class="top-buffer">
-                    <ul id="photoGallery" class="row" runat="server">
-                    </ul>
+                    <asp:Panel ID="PhotoGalleryPanel" runat="server">
+                        <ul id="photoGallery" class="row" runat="server">
+                        </ul>
+                    </asp:Panel>
                 </div>
             </div>
+        </div>
     </div>
-    </div>
-    <div id="lightbox" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div id="lightbox" class="modal fade text-center" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-body">
@@ -48,7 +54,7 @@
             var $lightbox = $('#lightbox');
 
             $('[data-target="#lightbox"]').on('click', function (event) {
-                var $img = $(this).find('img'),
+                var $img = $(this),
                     src = $img.attr('src'),
                     alt = $img.attr('alt'),
                     css = {
@@ -63,7 +69,7 @@
             });
 
             $lightbox.on('shown.bs.modal', function (e) {
-                var $img = $lightbox.find('img');
+                var $img = $lightbox;
 
                 $lightbox.find('.modal-dialog').css({ 'width': $img.width() });
                 $lightbox.find('.close').removeClass('hidden');

@@ -27,9 +27,6 @@
     <!-- Personalized Styles -->
     <link href="Content/styles.css" rel="stylesheet" />
 
-    <!-- Bootstrap Core JavaScript
-    <script src="Scripts/bootstrap.min.js"></script>-->
-
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -38,13 +35,15 @@
     <![endif]-->
 
     <!-- PikaDay -->
-
-    <!--<link href="Content/PikaDay/site.css" rel="stylesheet" />-->
     <link href="Content/PikaDay/pikaday.css" rel="stylesheet" />
+
+    <!-- Image Picker -->
+    <link href="Content/image-picker.css" rel="stylesheet" />
+    <script src="Scripts/image-picker.js"></script>
 </head>
 <body>
     <form id="form1" runat="server">
-        <nav id="navMenu" class="navbar navbar-default">
+        <nav id="navMenu" class="navbar navbar-default" style="height: 31px">
             <div class="container-fluid">
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
@@ -66,7 +65,7 @@
                 </div>
             </div>
         </nav>
-        <div class="top-buffer col-md-10 col-md-offset-1">
+        <div class="top-buffer">
             <asp:ContentPlaceHolder ID="MainContent" runat="server">
             </asp:ContentPlaceHolder>
         </div>

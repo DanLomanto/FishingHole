@@ -36,9 +36,16 @@ public partial class PhotoGallery : Page
 	/// </summary>
 	private const int numberOfImagesDisplayedInGallery = 20;
 
+	/// <summary>
+	/// Handles the Load event of the Page control.
+	/// </summary>
+	/// <param name="sender">The source of the event.</param>
+	/// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
 	protected void Page_Load(object sender, EventArgs e)
 	{
 		LoadPhotoGalleryImages();
+
+		LoadPhotosInChecklist();
 	}
 
 	/// <summary>
@@ -90,18 +97,10 @@ public partial class PhotoGallery : Page
 		foreach (string imagePath in twentyImagesToDisplay)
 		{
 			HtmlGenericControl li = new HtmlGenericControl("li");
+			li.Attributes.Add("class", "col-md-3 text-center");
+			li.InnerHtml = "<img src='" + imagePath + "' height='100px' width='100px' data-target=\"#lightbox\" data-toggle=\"modal\" />";
 
 			photoGallery.Controls.Add(li);
-			li.Attributes.Add("class", "col-md-3");
-
-			HtmlGenericControl anchor = new HtmlGenericControl("a");
-			anchor.Attributes.Add("data-target", "#lightbox");
-			anchor.Attributes.Add("data-toggle", "modal");
-			anchor.Attributes.Add("href", "#");
-			//anchor.Attributes.Add("onclick", "showLightBox('" + imagePath + "')");
-			anchor.InnerHtml = "<img src='" + imagePath + "' height='100' width='100' />";
-
-			li.Controls.AddAt(0, anchor);
 		}
 	}
 
@@ -127,5 +126,64 @@ public partial class PhotoGallery : Page
 		photoGalleryIndex = photoGalleryIndex - numberOfImagesDisplayedInGallery;
 		nextTwentyImages.Visible = true;
 		LoadPhotoGalleryImages();
+	}
+
+	protected void photoGalleryChecklist_DataBound(object sender, EventArgs e)
+	{
+		LoadPhotosInChecklist();
+		
+	}
+
+	private void LoadPhotosInChecklist()
+	{
+		List<string> usersPhotoGallery = UserActions.GetImagesForUser(Master.UsersInfo.ID);
+
+		List<string> twentyImagesToDisplay = new List<string>();
+
+		if (usersPhotoGallery.Count < numberOfImagesDisplayedInGallery)
+		{
+			twentyImagesToDisplay = usersPhotoGallery.GetRange(photoGalleryIndex, usersPhotoGallery.Count);
+
+			nextTwentyImages.Visible = false;
+			prevTwentyImages.Visible = false;
+		}
+		else
+		{
+			if (photoGalleryIndex == 0)
+			{
+				prevTwentyImages.Visible = false;
+			}
+
+			if ((usersPhotoGallery.Count / (numberOfImagesDisplayedInGallery + photoGalleryIndex)) >= 1)
+			{
+				twentyImagesToDisplay = usersPhotoGallery.GetRange(photoGalleryIndex, numberOfImagesDisplayedInGallery);
+			}
+			else
+			{
+				twentyImagesToDisplay = usersPhotoGallery.GetRange(photoGalleryIndex, usersPhotoGallery.Count % numberOfImagesDisplayedInGallery);
+				nextTwentyImages.Visible = false;
+			}
+		}
+
+		// Remove any existing images in the photo gallery so we can add only the ones we want to display.
+		for (int i = 0; i < numberOfImagesDisplayedInGallery; i++)
+		{
+			if (photoGallery.HasControls())
+			{
+				photoGallery.Controls.RemoveAt(0);
+			}
+			else
+			{ break; }
+		}
+
+		// Add the images we want to display in the gallery.
+		foreach (string imagePath in twentyImagesToDisplay)
+		{
+			HtmlGenericControl li = new HtmlGenericControl("li");
+			li.Attributes.Add("class", "col-md-3 text-center");
+			li.InnerHtml = "<input type=\"checkbox\" style=\"vertical-align: top; margin-right:5px\" value=\"" + imagePath + "\" /><img src='" + imagePath + "' height='100px' width='100px' data-target=\"#lightbox\" data-toggle=\"modal\" />";
+
+			photoGallery.Controls.Add(li);
+		}
 	}
 }

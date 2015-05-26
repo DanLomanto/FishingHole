@@ -221,18 +221,10 @@ public partial class Dashboard : Page
 		foreach (string imagePath in twentyImagesToDisplay)
 		{
 			HtmlGenericControl li = new HtmlGenericControl("li");
+			li.Attributes.Add("class", "col-md-3 text-center");
+			li.InnerHtml = "<img src='" + imagePath + "' height='100px' width='100px' data-target=\"#lightbox\" data-toggle=\"modal\" />";
 
 			photoGallery.Controls.Add(li);
-			li.Attributes.Add("class", "col-md-3");
-
-			HtmlGenericControl anchor = new HtmlGenericControl("a");
-			anchor.Attributes.Add("data-target", "#lightbox");
-			anchor.Attributes.Add("data-toggle", "modal");
-			anchor.Attributes.Add("href", "#");
-			//anchor.Attributes.Add("onclick", "showLightBox('" + imagePath + "')");
-			anchor.InnerHtml = "<img src='" + imagePath + "' height='100' width='100'/>";
-
-			li.Controls.AddAt(0, anchor);
 		}
 	}
 
