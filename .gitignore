@@ -54,3 +54,16 @@ Common/obj/Debug/Common.csproj.FileListAbsolute.txt
 Common/obj/Debug/Common.csprojResolveAssemblyReference.cache
 bin/
 obj/
+Common/bin/Common.dll
+Common/bin/Common.pdb
+Common/obj/Debug/Common.csproj.FileListAbsolute.txt
+Common/obj/Debug/Common.dll
+Common/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
+Common/obj/Debug/Common.pdb
+Common/obj/Debug/edmxResourcesToEmbed/FishModel.msl
+Common/obj/Debug/edmxResourcesToEmbed/FishModel.csdl
+Common/obj/Debug/edmxResourcesToEmbed/FishModel.ssdl
+Common/obj/Debug/TempPE/FishModel.cs.dll
+Common/obj/Debug/TempPE/FishModel.Designer.cs.dll
+Web/bin/Common.dll
+Web/bin/Common.pdb
