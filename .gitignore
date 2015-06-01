@@ -52,3 +52,5 @@ Web/obj/
 Common/obj/Debug/Common.csproj.FileListAbsolute.txt
 Common/obj/Debug/Common.csproj.FileListAbsolute.txt
 Common/obj/Debug/Common.csprojResolveAssemblyReference.cache
+bin/
+obj/
