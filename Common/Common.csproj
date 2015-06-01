@@ -120,10 +120,16 @@
     <Compile Include="GetAllTripsForUser_Result.cs">
       <DependentUpon>FishModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="GetImagesForUser_Result.cs">
+      <DependentUpon>FishModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="GetLocationById_Result.cs">
       <DependentUpon>FishModel.tt</DependentUpon>
     </Compile>
     <Compile Include="GetLocation_Result.cs">
+      <DependentUpon>FishModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetPhotosForTrip_Result.cs">
       <DependentUpon>FishModel.tt</DependentUpon>
     </Compile>
     <Compile Include="GetTripById_Result.cs">
@@ -146,12 +152,16 @@
     <Compile Include="LocationToTrip.cs">
       <DependentUpon>FishModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="PhotoActions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Trip.cs">
       <DependentUpon>FishModel.tt</DependentUpon>
     </Compile>
     <Compile Include="TripGridViewModel.cs" />
     <Compile Include="TripObject.cs" />
+    <Compile Include="TripsToPhoto.cs">
+      <DependentUpon>FishModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="UrlActions.cs" />
     <Compile Include="User.cs">
       <DependentUpon>FishModel.tt</DependentUpon>

@@ -4,17 +4,20 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="df3760ca42b2498eada85596fad785e5" Name="Diagram1">
+      <Diagram DiagramId="42e8137a805241ae8b6d7efdf602f330" Name="Diagram1">
         <EntityTypeShape EntityType="FishModel.ImagePath" Width="1.5" PointX="3" PointY="1.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="FishModel.Location" Width="1.5" PointX="3" PointY="3.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="FishModel.LocationToTrip" Width="1.5" PointX="5.25" PointY="7.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="FishModel.Trip" Width="1.5" PointX="3" PointY="8.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="FishModel.User" Width="1.5" PointX="0.75" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="FishModel.Location" Width="1.5" PointX="3" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="FishModel.LocationToTrip" Width="1.5" PointX="5.25" PointY="9.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="FishModel.Trip" Width="1.5" PointX="3" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FishModel.TripsToPhoto" Width="1.5" PointX="5.25" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="FishModel.User" Width="1.5" PointX="0.75" PointY="5.75" IsExpanded="true" />
         <AssociationConnector Association="FishModel.FK_ImagePaths_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="FishModel.FK_TripsToPhotos_ImagePaths" ManuallyRouted="false" />
         <AssociationConnector Association="FishModel.FK_Locations_Users" ManuallyRouted="false" />
         <AssociationConnector Association="FishModel.FK_TripToLocation_TripToLocation" ManuallyRouted="false" />
         <AssociationConnector Association="FishModel.FK_TripToLocation_Trips" ManuallyRouted="false" />
         <AssociationConnector Association="FishModel.FK_Trips_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="FishModel.FK_TripsToPhotos_Trips" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

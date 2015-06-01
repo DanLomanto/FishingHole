@@ -10,20 +10,10 @@
 namespace Common
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class ImagePath
+    public partial class GetImagesForUser_Result
     {
-        public ImagePath()
-        {
-            this.TripsToPhotos = new HashSet<TripsToPhoto>();
-        }
-    
         public int ID { get; set; }
-        public int UserID { get; set; }
-        public string ImagePath1 { get; set; }
-    
-        public virtual User User { get; set; }
-        public virtual ICollection<TripsToPhoto> TripsToPhotos { get; set; }
+        public string ImagePath { get; set; }
     }
 }

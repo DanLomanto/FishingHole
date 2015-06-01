@@ -186,9 +186,9 @@ public partial class Dashboard : Page
 	/// </summary>
 	private void LoadPhotoGalleryImages()
 	{
-		List<string> usersPhotoGallery = UserActions.GetImagesForUser(Master.UsersInfo.ID);
+		List<KeyValuePair<int, string>> usersPhotoGallery = UserActions.GetImagesForUser(Master.UsersInfo.ID);
 
-		List<string> twentyImagesToDisplay = new List<string>();
+		List<KeyValuePair<int, string>> twentyImagesToDisplay = new List<KeyValuePair<int, string>>();
 
 		if (usersPhotoGallery.Count < numberOfImagesDisplayedInGallery)
 		{
@@ -218,11 +218,11 @@ public partial class Dashboard : Page
 		}
 
 		// Add the images we want to display in the gallery.
-		foreach (string imagePath in twentyImagesToDisplay)
+		foreach (KeyValuePair<int, string> imagePath in twentyImagesToDisplay)
 		{
 			HtmlGenericControl li = new HtmlGenericControl("li");
 			li.Attributes.Add("class", "col-md-3 text-center");
-			li.InnerHtml = "<img src='" + imagePath + "' height='100px' width='100px' data-target=\"#lightbox\" data-toggle=\"modal\" />";
+			li.InnerHtml = "<img src='" + imagePath.Value + "' height='100px' width='100px' data-target=\"#lightbox\" data-toggle=\"modal\" />";
 
 			photoGallery.Controls.Add(li);
 		}

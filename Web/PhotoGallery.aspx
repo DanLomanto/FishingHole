@@ -24,11 +24,23 @@
                         <asp:LinkButton runat="server" ID="nextTwentyImages" CssClass="btn btn-default pull-right" OnClick="nextTwentyImages_Click">Next 20&nbsp;<span class="glyphicon glyphicon-chevron-right" /></asp:LinkButton>
                     </div>
                 </div>
-                <div class="top-buffer">
-                    <asp:Panel ID="PhotoGalleryPanel" runat="server">
-                        <ul id="photoGallery" class="row" runat="server">
-                        </ul>
-                    </asp:Panel>
+                <div class="top-buffer row">
+                    <div class="form-inline col-md-offset-1">
+                        <label for="FilterByTripDropDown">Filter Photos by Trip:</label>
+                        <asp:DropDownList ID="FilterByTripDropDown" runat="server" class="form-control"></asp:DropDownList>
+                        <asp:LinkButton ID="FilterPhotosBtn" runat="server" CssClass="btn btn-primary" OnClick="FilterPhotosBtn_Click">Filter</asp:LinkButton>
+                    </div>
+                </div>
+                <div class="top-buffer row">
+                    <ul id="photoGallery" runat="server">
+                    </ul>
+                </div>
+                <div class="top-buffer row">
+                    <div class="form-inline col-md-offset-1">
+                        <label for="TripAssociationDropDown">Associate selected photos to Trip:</label>
+                        <asp:DropDownList ID="TripAssociationDropDown" runat="server" class="form-control"></asp:DropDownList>
+                        <asp:LinkButton ID="ApplyTripAssociation" runat="server" CssClass="btn btn-primary" OnClick="ApplyTripAssociation_Click">Apply</asp:LinkButton>
+                    </div>
                 </div>
             </div>
         </div>

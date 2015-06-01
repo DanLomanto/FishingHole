@@ -31,6 +31,7 @@ namespace Common
         public virtual DbSet<Location> Locations { get; set; }
         public virtual DbSet<LocationToTrip> LocationToTrips { get; set; }
         public virtual DbSet<Trip> Trips { get; set; }
+        public virtual DbSet<TripsToPhoto> TripsToPhotos { get; set; }
         public virtual DbSet<User> Users { get; set; }
     
         public virtual int CreateLocation(Nullable<int> userID, string name, string description, string streetAddress, string cityTown, string state, Nullable<int> zipcode, string lattitudeDirection, Nullable<decimal> lattitude, string longitudeDirection, Nullable<decimal> longitude, ObjectParameter output_Result)
@@ -125,6 +126,19 @@ namespace Common
                 new ObjectParameter("OtherNotes", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CreateTrip", userIDParameter, titleParameter, descriptionParameter, targetedSpeciesParameter, waterConditionsParameter, weatherConditionsParameter, dateOfTripParameter, fliesLuresUsedParameter, catchOfTheDayParameter, otherNotesParameter, output_Result);
+        }
+    
+        public virtual int CreateTripToPhoto(Nullable<int> tripId, Nullable<int> photoId)
+        {
+            var tripIdParameter = tripId.HasValue ?
+                new ObjectParameter("TripId", tripId) :
+                new ObjectParameter("TripId", typeof(int));
+    
+            var photoIdParameter = photoId.HasValue ?
+                new ObjectParameter("PhotoId", photoId) :
+                new ObjectParameter("PhotoId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CreateTripToPhoto", tripIdParameter, photoIdParameter);
         }
     
         public virtual int CreateUpdateLocationToTrip(Nullable<int> tripID, Nullable<int> locationID)
@@ -241,13 +255,13 @@ namespace Common
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("GetAssociatedTripForLocation", locationIdParameter);
         }
     
-        public virtual ObjectResult<string> GetImagesForUser(Nullable<int> userID)
+        public virtual ObjectResult<GetImagesForUser_Result> GetImagesForUser(Nullable<int> userID)
         {
             var userIDParameter = userID.HasValue ?
                 new ObjectParameter("UserID", userID) :
                 new ObjectParameter("UserID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("GetImagesForUser", userIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetImagesForUser_Result>("GetImagesForUser", userIDParameter);
         }
     
         public virtual ObjectResult<GetLocation_Result> GetLocation(Nullable<int> userID, string name)
@@ -270,6 +284,15 @@ namespace Common
                 new ObjectParameter("ID", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetLocationById_Result>("GetLocationById", iDParameter);
+        }
+    
+        public virtual ObjectResult<GetPhotosForTrip_Result> GetPhotosForTrip(Nullable<int> tripId)
+        {
+            var tripIdParameter = tripId.HasValue ?
+                new ObjectParameter("TripId", tripId) :
+                new ObjectParameter("TripId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetPhotosForTrip_Result>("GetPhotosForTrip", tripIdParameter);
         }
     
         public virtual ObjectResult<GetTrip_Result> GetTrip(Nullable<int> userID, string title)

@@ -12,18 +12,13 @@ namespace Common
     using System;
     using System.Collections.Generic;
     
-    public partial class ImagePath
+    public partial class TripsToPhoto
     {
-        public ImagePath()
-        {
-            this.TripsToPhotos = new HashSet<TripsToPhoto>();
-        }
-    
         public int ID { get; set; }
-        public int UserID { get; set; }
-        public string ImagePath1 { get; set; }
+        public int TripID { get; set; }
+        public int PhotoID { get; set; }
     
-        public virtual User User { get; set; }
-        public virtual ICollection<TripsToPhoto> TripsToPhotos { get; set; }
+        public virtual ImagePath ImagePath { get; set; }
+        public virtual Trip Trip { get; set; }
     }
 }

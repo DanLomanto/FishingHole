@@ -109,10 +109,16 @@ namespace Common
 		/// </summary>
 		/// <param name="userId">The user identifier.</param>
 		/// <returns></returns>
-		public static List<string> GetImagesForUser(int userId)
+		public static List<KeyValuePair<int, string>> GetImagesForUser(int userId)
 		{
 			FishEntities fishDB = new FishEntities();
-			List<string> listOfImages = fishDB.GetImagesForUser(userId).ToList();
+			var result = fishDB.GetImagesForUser(userId);
+
+			List<KeyValuePair<int, string>> listOfImages = new List<KeyValuePair<int, string>>();
+			foreach (GetImagesForUser_Result item in result)
+			{
+				listOfImages.Add(new KeyValuePair<int, string>(item.ID, item.ImagePath));
+			}
 
 			return listOfImages;
 		}

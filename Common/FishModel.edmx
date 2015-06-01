@@ -56,6 +56,14 @@
           <Property Name="OtherNotes" Type="text" />
           <Property Name="CreateDate" Type="datetime" Nullable="false" />
         </EntityType>
+        <EntityType Name="TripsToPhotos">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TripID" Type="int" Nullable="false" />
+          <Property Name="PhotoID" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Users">
           <Key>
             <PropertyRef Name="ID" />
@@ -99,6 +107,30 @@
             </Principal>
             <Dependent Role="Trips">
               <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TripsToPhotos_ImagePaths">
+          <End Role="ImagePaths" Type="Self.ImagePaths" Multiplicity="1" />
+          <End Role="TripsToPhotos" Type="Self.TripsToPhotos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ImagePaths">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TripsToPhotos">
+              <PropertyRef Name="PhotoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TripsToPhotos_Trips">
+          <End Role="Trips" Type="Self.Trips" Multiplicity="1" />
+          <End Role="TripsToPhotos" Type="Self.TripsToPhotos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Trips">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TripsToPhotos">
+              <PropertyRef Name="TripID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -153,6 +185,10 @@
           <Parameter Name="OtherNotes" Type="text" Mode="In" />
           <Parameter Name="Output_Result" Type="bigint" Mode="InOut" />
         </Function>
+        <Function Name="CreateTripToPhoto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="TripId" Type="int" Mode="In" />
+          <Parameter Name="PhotoId" Type="int" Mode="In" />
+        </Function>
         <Function Name="CreateUpdateLocationToTrip" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="TripID" Type="int" Mode="In" />
           <Parameter Name="LocationID" Type="int" Mode="In" />
@@ -199,6 +235,9 @@
         <Function Name="GetLocationById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ID" Type="int" Mode="In" />
         </Function>
+        <Function Name="GetPhotosForTrip" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="TripId" Type="int" Mode="In" />
+        </Function>
         <Function Name="GetTrip" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="UserID" Type="int" Mode="In" />
           <Parameter Name="Title" Type="varchar" Mode="In" />
@@ -243,6 +282,7 @@
           <EntitySet Name="Locations" EntityType="Self.Locations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LocationToTrip" EntityType="Self.LocationToTrip" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Trips" EntityType="Self.Trips" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TripsToPhotos" EntityType="Self.TripsToPhotos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_ImagePaths_Users" Association="Self.FK_ImagePaths_Users">
             <End Role="Users" EntitySet="Users" />
@@ -255,6 +295,14 @@
           <AssociationSet Name="FK_Trips_Users" Association="Self.FK_Trips_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="Trips" EntitySet="Trips" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TripsToPhotos_ImagePaths" Association="Self.FK_TripsToPhotos_ImagePaths">
+            <End Role="ImagePaths" EntitySet="ImagePaths" />
+            <End Role="TripsToPhotos" EntitySet="TripsToPhotos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TripsToPhotos_Trips" Association="Self.FK_TripsToPhotos_Trips">
+            <End Role="Trips" EntitySet="Trips" />
+            <End Role="TripsToPhotos" EntitySet="TripsToPhotos" />
           </AssociationSet>
           <AssociationSet Name="FK_TripToLocation_Trips" Association="Self.FK_TripToLocation_Trips">
             <End Role="Trips" EntitySet="Trips" />
@@ -278,6 +326,7 @@
           <Property Name="UserID" Type="Int32" Nullable="false" />
           <Property Name="ImagePath1" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="User" Relationship="Self.FK_ImagePaths_Users" FromRole="ImagePaths" ToRole="Users" />
+          <NavigationProperty Name="TripsToPhotos" Relationship="Self.FK_TripsToPhotos_ImagePaths" FromRole="ImagePaths" ToRole="TripsToPhotos" />
         </EntityType>
         <EntityType Name="Location">
           <Key>
@@ -327,6 +376,17 @@
           <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="LocationToTrips" Relationship="Self.FK_TripToLocation_Trips" FromRole="Trips" ToRole="LocationToTrip" />
           <NavigationProperty Name="User" Relationship="Self.FK_Trips_Users" FromRole="Trips" ToRole="Users" />
+          <NavigationProperty Name="TripsToPhotos" Relationship="Self.FK_TripsToPhotos_Trips" FromRole="Trips" ToRole="TripsToPhotos" />
+        </EntityType>
+        <EntityType Name="TripsToPhoto">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TripID" Type="Int32" Nullable="false" />
+          <Property Name="PhotoID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ImagePath" Relationship="Self.FK_TripsToPhotos_ImagePaths" FromRole="TripsToPhotos" ToRole="ImagePaths" />
+          <NavigationProperty Name="Trip" Relationship="Self.FK_TripsToPhotos_Trips" FromRole="TripsToPhotos" ToRole="Trips" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -350,6 +410,18 @@
             </Principal>
             <Dependent Role="ImagePaths">
               <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TripsToPhotos_ImagePaths">
+          <End Role="ImagePaths" Type="Self.ImagePath" Multiplicity="1" />
+          <End Role="TripsToPhotos" Type="Self.TripsToPhoto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ImagePaths">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TripsToPhotos">
+              <PropertyRef Name="PhotoID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -401,15 +473,32 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_TripsToPhotos_Trips">
+          <End Role="Trips" Type="Self.Trip" Multiplicity="1" />
+          <End Role="TripsToPhotos" Type="Self.TripsToPhoto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Trips">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TripsToPhotos">
+              <PropertyRef Name="TripID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="FishEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="ImagePaths" EntityType="Self.ImagePath" />
           <EntitySet Name="Locations" EntityType="Self.Location" />
           <EntitySet Name="LocationToTrips" EntityType="Self.LocationToTrip" />
           <EntitySet Name="Trips" EntityType="Self.Trip" />
+          <EntitySet Name="TripsToPhotos" EntityType="Self.TripsToPhoto" />
           <EntitySet Name="Users" EntityType="Self.User" />
           <AssociationSet Name="FK_ImagePaths_Users" Association="Self.FK_ImagePaths_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="ImagePaths" EntitySet="ImagePaths" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TripsToPhotos_ImagePaths" Association="Self.FK_TripsToPhotos_ImagePaths">
+            <End Role="ImagePaths" EntitySet="ImagePaths" />
+            <End Role="TripsToPhotos" EntitySet="TripsToPhotos" />
           </AssociationSet>
           <AssociationSet Name="FK_Locations_Users" Association="Self.FK_Locations_Users">
             <End Role="Users" EntitySet="Users" />
@@ -426,6 +515,10 @@
           <AssociationSet Name="FK_Trips_Users" Association="Self.FK_Trips_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="Trips" EntitySet="Trips" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TripsToPhotos_Trips" Association="Self.FK_TripsToPhotos_Trips">
+            <End Role="Trips" EntitySet="Trips" />
+            <End Role="TripsToPhotos" EntitySet="TripsToPhotos" />
           </AssociationSet>
           <FunctionImport Name="CreateLocation">
             <Parameter Name="UserID" Mode="In" Type="Int32" />
@@ -453,6 +546,10 @@
             <Parameter Name="CatchOfTheDay" Mode="In" Type="String" />
             <Parameter Name="OtherNotes" Mode="In" Type="String" />
             <Parameter Name="Output_Result" Mode="InOut" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="CreateTripToPhoto">
+            <Parameter Name="TripId" Mode="In" Type="Int32" />
+            <Parameter Name="PhotoId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="CreateUpdateLocationToTrip">
             <Parameter Name="TripID" Mode="In" Type="Int32" />
@@ -490,7 +587,7 @@
           <FunctionImport Name="GetAssociatedTripForLocation" ReturnType="Collection(Int32)">
             <Parameter Name="LocationId" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="GetImagesForUser" ReturnType="Collection(String)">
+          <FunctionImport Name="GetImagesForUser" ReturnType="Collection(FishModel.GetImagesForUser_Result)">
             <Parameter Name="UserID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetLocation" ReturnType="Collection(FishModel.GetLocation_Result)">
@@ -499,6 +596,9 @@
           </FunctionImport>
           <FunctionImport Name="GetLocationById" ReturnType="Collection(FishModel.GetLocationById_Result)">
             <Parameter Name="ID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetPhotosForTrip" ReturnType="Collection(FishModel.GetPhotosForTrip_Result)">
+            <Parameter Name="TripId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetTrip" ReturnType="Collection(FishModel.GetTrip_Result)">
             <Parameter Name="UserID" Mode="In" Type="Int32" />
@@ -573,6 +673,10 @@
           <Property Type="String" Name="OtherNotes" Nullable="true" MaxLength="Max" />
           <Property Type="DateTime" Name="CreateDate" Nullable="false" Precision="23" />
         </ComplexType>
+        <ComplexType Name="GetImagesForUser_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="ImagePath" Nullable="false" MaxLength="255" />
+        </ComplexType>
         <ComplexType Name="GetLocation_Result">
           <Property Type="String" Name="Name" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="Description" Nullable="true" MaxLength="Max" />
@@ -596,6 +700,10 @@
           <Property Type="Decimal" Name="Lattitude" Nullable="true" Precision="18" Scale="0" />
           <Property Type="String" Name="LongitudeDirection" Nullable="true" MaxLength="1" />
           <Property Type="Decimal" Name="Longitude" Nullable="true" Precision="18" Scale="0" />
+        </ComplexType>
+        <ComplexType Name="GetPhotosForTrip_Result">
+          <Property Type="Int32" Name="PhotoID" Nullable="false" />
+          <Property Type="String" Name="ImagePath" Nullable="false" MaxLength="255" />
         </ComplexType>
         <ComplexType Name="GetTrip_Result">
           <Property Type="String" Name="Title" Nullable="false" MaxLength="255" />
@@ -689,6 +797,15 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="TripsToPhotos">
+            <EntityTypeMapping TypeName="FishModel.TripsToPhoto">
+              <MappingFragment StoreEntitySet="TripsToPhotos">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="TripID" ColumnName="TripID" />
+                <ScalarProperty Name="PhotoID" ColumnName="PhotoID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="FishModel.User">
               <MappingFragment StoreEntitySet="Users">
@@ -702,6 +819,7 @@
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="CreateLocation" FunctionName="FishModel.Store.CreateLocation" />
           <FunctionImportMapping FunctionImportName="CreateTrip" FunctionName="FishModel.Store.CreateTrip" />
+          <FunctionImportMapping FunctionImportName="CreateTripToPhoto" FunctionName="FishModel.Store.CreateTripToPhoto" />
           <FunctionImportMapping FunctionImportName="CreateUpdateLocationToTrip" FunctionName="FishModel.Store.CreateUpdateLocationToTrip" />
           <FunctionImportMapping FunctionImportName="CreateUser" FunctionName="FishModel.Store.CreateUser" />
           <FunctionImportMapping FunctionImportName="DeleteLocationForTrip" FunctionName="FishModel.Store.DeleteLocationForTrip" />
@@ -754,7 +872,14 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="GetAssociatedLocationForTrip" FunctionName="FishModel.Store.GetAssociatedLocationForTrip" />
           <FunctionImportMapping FunctionImportName="GetAssociatedTripForLocation" FunctionName="FishModel.Store.GetAssociatedTripForLocation" />
-          <FunctionImportMapping FunctionImportName="GetImagesForUser" FunctionName="FishModel.Store.GetImagesForUser" />
+          <FunctionImportMapping FunctionImportName="GetImagesForUser" FunctionName="FishModel.Store.GetImagesForUser">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="FishModel.GetImagesForUser_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="GetLocation" FunctionName="FishModel.Store.GetLocation">
             <ResultMapping>
               <ComplexTypeMapping TypeName="FishModel.GetLocation_Result">
@@ -784,6 +909,14 @@
                 <ScalarProperty Name="Lattitude" ColumnName="Lattitude" />
                 <ScalarProperty Name="LongitudeDirection" ColumnName="LongitudeDirection" />
                 <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetPhotosForTrip" FunctionName="FishModel.Store.GetPhotosForTrip">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="FishModel.GetPhotosForTrip_Result">
+                <ScalarProperty Name="PhotoID" ColumnName="PhotoID" />
+                <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
