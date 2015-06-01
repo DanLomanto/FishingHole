@@ -131,6 +131,9 @@ public partial class Trip : Page
 		performProperRedirect(Request.QueryString["returnUrl"]);
 	}
 
+	protected void UploadPhoto(object sender, EventArgs e)
+	{ }
+
 	#region Private Methods
 
 	/// <summary>

@@ -114,6 +114,11 @@ public partial class Dashboard : Page
 		LoadPhotoGalleryImages();
 	}
 
+	/// <summary>
+	/// Handles the Sorting event of the LocationsGrid control.
+	/// </summary>
+	/// <param name="sender">The source of the event.</param>
+	/// <param name="e">The <see cref="GridViewSortEventArgs"/> instance containing the event data.</param>
 	protected void LocationsGrid_Sorting(object sender, GridViewSortEventArgs e)
 	{
 		//Retrieve the table from the session object.
@@ -128,6 +133,11 @@ public partial class Dashboard : Page
 		}
 	}
 
+	/// <summary>
+	/// Handles the Sorting event of the TripsDataGrid control.
+	/// </summary>
+	/// <param name="sender">The source of the event.</param>
+	/// <param name="e">The <see cref="GridViewSortEventArgs"/> instance containing the event data.</param>
 	protected void TripsDataGrid_Sorting(object sender, GridViewSortEventArgs e)
 	{
 		//Retrieve the table from the session object.
@@ -142,6 +152,11 @@ public partial class Dashboard : Page
 		}
 	}
 
+	/// <summary>
+	/// Called when [trips row data bound].
+	/// </summary>
+	/// <param name="sender">The sender.</param>
+	/// <param name="e">The <see cref="GridViewRowEventArgs"/> instance containing the event data.</param>
 	protected void OnTripsRowDataBound(object sender, GridViewRowEventArgs e)
 	{
 		if (e.Row.RowType == DataControlRowType.DataRow)
@@ -151,6 +166,11 @@ public partial class Dashboard : Page
 		}
 	}
 
+	/// <summary>
+	/// Called when [locations row data bound].
+	/// </summary>
+	/// <param name="sender">The sender.</param>
+	/// <param name="e">The <see cref="GridViewRowEventArgs"/> instance containing the event data.</param>
 	protected void OnLocationsRowDataBound(object sender, GridViewRowEventArgs e)
 	{
 		if (e.Row.RowType == DataControlRowType.DataRow)
@@ -160,6 +180,11 @@ public partial class Dashboard : Page
 		}
 	}
 
+	/// <summary>
+	/// Called when [locations selected index changed].
+	/// </summary>
+	/// <param name="sender">The sender.</param>
+	/// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
 	protected void OnLocationsSelectedIndexChanged(object sender, EventArgs e)
 	{
 		string id = LocationsGrid.SelectedRow.Cells[0].Text;
@@ -167,6 +192,11 @@ public partial class Dashboard : Page
 		Response.Redirect("Location?id=" + id);
 	}
 
+	/// <summary>
+	/// Called when [trips selected index changed].
+	/// </summary>
+	/// <param name="sender">The sender.</param>
+	/// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
 	protected void OnTripsSelectedIndexChanged(object sender, EventArgs e)
 	{
 		string id = TripsDataGrid.SelectedRow.Cells[0].Text;
@@ -174,6 +204,11 @@ public partial class Dashboard : Page
 		Response.Redirect("Trip?id=" + id);
 	}
 
+	/// <summary>
+	/// Handles the Click event of the AddTrip control.
+	/// </summary>
+	/// <param name="sender">The source of the event.</param>
+	/// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
 	protected void AddTrip_Click(object sender, EventArgs e)
 	{
 		Response.Redirect("Trip?id=0");

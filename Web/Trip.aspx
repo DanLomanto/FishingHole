@@ -110,14 +110,25 @@
                             <div id="collapseTwo" class="panel-collapse collapse" aria-expanded="false">
                                 <div class="panel-body">
                                     <div class="row">
-                                        <span>Select a Location:</span>
+                                        <div class="form-inline">
+                                            <label for="photoUploader">Upload Photo(s):</label>
+                                            <div class="row col-md-offset-3">
+                                                <asp:FileUpload runat="server" ID="photoUploader" AllowMultiple="true" CssClass="form-control" />
+                                            </div>
+                                            <div class="row top-buffer">
+                                                <asp:LinkButton CssClass="btn btn-primary" runat="server" ID="uploadPhotoButton" OnClick="UploadPhoto"><i class="glyphicon glyphicon-cloud-upload"></i>&nbsp;Upload Photo</asp:LinkButton>
+                                            </div>
+                                            <div class="row top-buffer">
+                                                <div id="returnMessage" runat="server" class=""></div>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="row">
                                         <span>Or</span>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-offset-2 col-md-8">
-                                            <a id="SaveAndCreatePhotos" runat="server" href="#" class="btn btn-success btn-block">Save & Upload New Photos</a>
+                                            <a id="SaveAndCreatePhotos" runat="server" href="PhotoGallery.aspx" class="btn btn-success btn-block">Associate existing pictures with trip&nbsp;<i class="glyphicon glyphicon-expand"></i></a>
                                         </div>
                                     </div>
                                 </div>
@@ -128,19 +139,18 @@
                 <br />
                 <br />
                 <br />
-                <br />
-                <div class="container">
-                    <div class="row">
-                        <div class="form-group">
-                            <div class="text-center">
-                                <div class="top-buffer">
-                                    <asp:Button ID="SaveButton" runat="server" Text="Save" CssClass="btn btn-m btn-primary" OnClick="SaveButton_Click"></asp:Button>
-                                    <asp:Button ID="CancelButton" runat="server" Text="Cancel" CssClass="btn btn-m btn-default" OnClick="CancelButton_Click"></asp:Button>
-                                </div>
+                <br />              
+                <div class="row">
+                    <div class="form-group">
+                        <div class="text-center">
+                            <div class="top-buffer">
+                                <asp:Button ID="SaveButton" runat="server" Text="Save" CssClass="btn btn-m btn-primary" OnClick="SaveButton_Click"></asp:Button>
+                                <asp:Button ID="CancelButton" runat="server" Text="Cancel" CssClass="btn btn-m btn-default" OnClick="CancelButton_Click"></asp:Button>
                             </div>
                         </div>
                     </div>
                 </div>
+                
             </div>
         </div>
     </div>
