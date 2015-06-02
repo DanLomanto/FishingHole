@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Web;
 using System.Web.Configuration;
 using Common;
 
@@ -51,51 +50,10 @@ public partial class UploadPhotos : System.Web.UI.Page
 	/// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
 	protected void UploadPhoto(object sender, EventArgs e)
 	{
-		Boolean fileOK = false;
+		KeyValuePair<string, string> returnStatus = PhotoActions.UploadPhotos(photoUploader.PostedFiles, localPathForSaving, partialUrlToImage, Master.UsersInfo.ID);
 
-		foreach (HttpPostedFile uploadedImage in photoUploader.PostedFiles)
-		{
-			if (!string.IsNullOrEmpty(uploadedImage.FileName))
-			{
-				string fileExtension = Path.GetExtension(uploadedImage.FileName).ToLower();
-				List<string> allowedExtensions = new List<string> { ".gif", ".png", ".jpeg", ".jpg" };
-				foreach (string extension in allowedExtensions)
-				{
-					if (fileExtension == extension)
-					{
-						fileOK = true;
-						break;
-					}
-				}
-			}
-
-			if (fileOK)
-			{
-				try
-				{
-					fullPathToUploadedFile = localPathForSaving + Path.GetFileName(uploadedImage.FileName);
-					// Overwrite file if it already exists...
-					if (File.Exists(fullPathToUploadedFile))
-					{
-						File.Delete(fullPathToUploadedFile);
-					}
-					photoUploader.PostedFile.SaveAs(fullPathToUploadedFile);
-					returnMessage.InnerText = "File uploaded!";
-					returnMessage.Attributes["class"] = "text-success";
-					UserActions.InsertImageForUser(Master.UsersInfo.ID, partialUrlToImage + Path.GetFileName(uploadedImage.FileName));
-				}
-				catch (Exception ex)
-				{
-					returnMessage.InnerText = "File could not be uploaded.";
-					returnMessage.Attributes["class"] = "text-danger";
-				}
-			}
-			else
-			{
-				returnMessage.InnerText = "Cannot accept files of this type.";
-				returnMessage.Attributes["class"] = "text-danger";
-			}
-		}
+		returnMessage.InnerText = returnStatus.Key;
+		returnMessage.Attributes["class"] = returnStatus.Value;
 	}
 
 	/// <summary>

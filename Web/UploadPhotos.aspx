@@ -26,7 +26,7 @@
                         <asp:LinkButton CssClass="btn btn-primary" runat="server" ID="uploadPhotoButton" OnClick="UploadPhoto"><i class="glyphicon glyphicon-cloud-upload"></i>&nbsp;Upload Photo</asp:LinkButton>
                     </div>
                     <div class="row top-buffer">
-                        <div id="returnMessage" runat="server" class=""></div>
+                        <div id="returnMessage" runat="server"></div>
                     </div>
                 </div>
             </div>

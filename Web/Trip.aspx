@@ -150,7 +150,8 @@
                                             <asp:LinkButton CssClass="btn btn-primary" runat="server" ID="uploadPhotoButton" OnClick="UploadPhoto"><i class="glyphicon glyphicon-cloud-upload"></i>&nbsp;Upload Photo</asp:LinkButton>
                                         </div>
                                         <div class="row top-buffer">
-                                            <div id="returnMessage" runat="server" class=""></div>
+                                            <br />
+                                            <div id="returnMessage" runat="server" class="col-md-8 text-center"></div>
                                         </div>
                                     </div>
                                     <div class="row text-center top-buffer">
@@ -160,6 +161,8 @@
                                         <div class="col-md-offset-3 col-md-6">
                                             <asp:LinkButton ID="SaveAndCreatePhotos" runat="server" OnClick="SaveAndCreatePhotos_Click" CssClass="btn btn-success btn-block">Save & attach existing pictures to trip&nbsp;<i class="glyphicon glyphicon-expand"></i></asp:LinkButton>
                                         </div>
+                                    </div>
+                                    <div class="row top-buffer">
                                     </div>
                                 </div>
                             </div>

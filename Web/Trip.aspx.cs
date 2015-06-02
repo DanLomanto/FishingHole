@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Web.Configuration;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
@@ -17,6 +19,16 @@ public partial class Trip : Page
 	/// </summary>
 	private List<string> formValidationErrors;
 
+	/// <summary>
+	/// The partial URL to image
+	/// </summary>
+	private string partialUrlToImage;
+
+	/// <summary>
+	/// The local path for saving
+	/// </summary>
+	private string localPathForSaving;
+
 	#endregion Properties
 
 	/// <summary>
@@ -26,44 +38,56 @@ public partial class Trip : Page
 	/// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
 	protected void Page_Load(object sender, EventArgs e)
 	{
+		// Get the local path to save the image to.
+		partialUrlToImage = "/Uploads/" + WebConfigurationManager.AppSettings["PhotoUploadDir"];
+		partialUrlToImage = partialUrlToImage.Replace("#USERID#", Master.UsersInfo.ID.ToString());
+		localPathForSaving = Server.MapPath(partialUrlToImage);
+
+		if (!Directory.Exists(localPathForSaving))
+		{
+			Directory.CreateDirectory(localPathForSaving);
+		}
+
 		if (!Page.IsPostBack)
 		{
 			PopulateLocationsDropDown();
 
-			int id = GetIdFromQueryString();
-			if (id > 0)
+		}
+
+		int id = GetIdFromQueryString();
+		if (id > 0)
+		{
+			TripObject trip = TripObject.GetTripById(id);
+			TripTitle.Value = trip.Title;
+			Description.Value = trip.Description;
+			TargetedSpecies.Value = trip.TargetedSpecies;
+			WaterConditions.Value = trip.WaterConditions;
+			WeatherConditions.Value = trip.WeatherConditions;
+			TripDate.Value = trip.TripDate;
+			CatchOfTheDay.Value = trip.CatchOfTheDay;
+			FliesLuresUsed.Value = trip.FliesLuresUsed;
+			OtherNotes.Value = trip.OtherNotes;
+
+			int associatedLocationId = LocationObject.GetAssociatedLocationForTrip(id);
+			if (associatedLocationId > 0)
 			{
-				TripObject trip = TripObject.GetTripById(id);
-				TripTitle.Value = trip.Title;
-				Description.Value = trip.Description;
-				TargetedSpecies.Value = trip.TargetedSpecies;
-				WaterConditions.Value = trip.WaterConditions;
-				WeatherConditions.Value = trip.WeatherConditions;
-				TripDate.Value = trip.TripDate;
-				CatchOfTheDay.Value = trip.CatchOfTheDay;
-				FliesLuresUsed.Value = trip.FliesLuresUsed;
-				OtherNotes.Value = trip.OtherNotes;
-
-				int associatedLocationId = LocationObject.GetAssociatedLocationForTrip(id);
-				if (associatedLocationId > 0)
-				{
-					AssociatedLocation.SelectedIndex = AssociatedLocation.Items.IndexOf(AssociatedLocation.Items.FindByValue(associatedLocationId.ToString()));
-				}
-				else
-				{
-					AssociatedLocation.SelectedIndex = 0;
-				}
-
-				LoadImagesInCarousel(id);
+				AssociatedLocation.SelectedIndex = AssociatedLocation.Items.IndexOf(AssociatedLocation.Items.FindByValue(associatedLocationId.ToString()));
 			}
 			else
 			{
-				NoPhotosAttachedMessage.Visible = true;
-				CarouselImages.Visible = false;
-				leftCarouselControl.Visible = false;
-				rightCarouselControl.Visible = false;
+				AssociatedLocation.SelectedIndex = 0;
 			}
+
+			LoadImagesInCarousel(id);
 		}
+		else
+		{
+			NoPhotosAttachedMessage.Visible = true;
+			CarouselImages.Visible = false;
+			leftCarouselControl.Visible = false;
+			rightCarouselControl.Visible = false;
+		}
+		
 	}
 
 	/// <summary>
@@ -97,7 +121,12 @@ public partial class Trip : Page
 	/// <param name="sender">The sender.</param>
 	/// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
 	protected void UploadPhoto(object sender, EventArgs e)
-	{ }
+	{
+		KeyValuePair<string, string> returnStatus = PhotoActions.UploadPhotos(photoUploader.PostedFiles, localPathForSaving, partialUrlToImage, Master.UsersInfo.ID);
+
+		returnMessage.InnerText = returnStatus.Key;
+		returnMessage.Attributes["class"] = "col-md-10 col-md-offset-1 text-center " + returnStatus.Value;
+	}
 
 	/// <summary>
 	/// Handles the Click event of the SaveAndCreatePhotos control.
