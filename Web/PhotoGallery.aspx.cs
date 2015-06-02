@@ -133,7 +133,6 @@ public partial class PhotoGallery : Page
 
 	#region Private Methods
 
-
 	/// <summary>
 	/// Loads the photo gallery images.
 	/// </summary>
@@ -148,7 +147,7 @@ public partial class PhotoGallery : Page
 		}
 		else
 		{
-			usersPhotoGallery = UserActions.GetImagesForUser(Master.UsersInfo.ID);
+			usersPhotoGallery = PhotoActions.GetImagesForUser(Master.UsersInfo.ID);
 		}
 
 		List<KeyValuePair<int, string>> twentyImagesToDisplay = new List<KeyValuePair<int, string>>();

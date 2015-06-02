@@ -221,7 +221,7 @@ public partial class Dashboard : Page
 	/// </summary>
 	private void LoadPhotoGalleryImages()
 	{
-		List<KeyValuePair<int, string>> usersPhotoGallery = UserActions.GetImagesForUser(Master.UsersInfo.ID);
+		List<KeyValuePair<int, string>> usersPhotoGallery = PhotoActions.GetImagesForUser(Master.UsersInfo.ID);
 
 		List<KeyValuePair<int, string>> twentyImagesToDisplay = new List<KeyValuePair<int, string>>();
 

@@ -326,7 +326,7 @@ namespace Common
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetUser_Result>("GetUser", emailParameter);
         }
     
-        public virtual int InsertImagePath(Nullable<int> userID, string imagePath)
+        public virtual int InsertImagePath(Nullable<int> userID, string imagePath, ObjectParameter output_Result)
         {
             var userIDParameter = userID.HasValue ?
                 new ObjectParameter("UserID", userID) :
@@ -336,7 +336,7 @@ namespace Common
                 new ObjectParameter("ImagePath", imagePath) :
                 new ObjectParameter("ImagePath", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertImagePath", userIDParameter, imagePathParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertImagePath", userIDParameter, imagePathParameter, output_Result);
         }
     
         public virtual int UpdateLocation(Nullable<int> iD, string name, string description, string streetAddress, string cityTown, string state, Nullable<int> zipcode, string lattitudeDirection, Nullable<decimal> lattitude, string longitudeDirection, Nullable<decimal> longitude)

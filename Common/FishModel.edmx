@@ -251,6 +251,7 @@
         <Function Name="InsertImagePath" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="UserID" Type="int" Mode="In" />
           <Parameter Name="ImagePath" Type="varchar" Mode="In" />
+          <Parameter Name="Output_Result" Type="bigint" Mode="InOut" />
         </Function>
         <Function Name="UpdateLocation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ID" Type="int" Mode="In" />
@@ -613,6 +614,7 @@
           <FunctionImport Name="InsertImagePath">
             <Parameter Name="UserID" Mode="In" Type="Int32" />
             <Parameter Name="ImagePath" Mode="In" Type="String" />
+            <Parameter Name="Output_Result" Mode="InOut" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="UpdateLocation">
             <Parameter Name="ID" Mode="In" Type="Int32" />
