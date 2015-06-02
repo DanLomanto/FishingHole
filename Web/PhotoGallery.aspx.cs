@@ -50,7 +50,6 @@ public partial class PhotoGallery : Page
 	/// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
 	protected void Page_Load(object sender, EventArgs e)
 	{
-		LoadPhotoGalleryImages();
 		if (!Page.IsPostBack)
 		{
 			PopulateFilterByTripDropDown();
@@ -58,13 +57,17 @@ public partial class PhotoGallery : Page
 			PopulateTripsDropDown();
 		}
 
-		if (Page.IsPostBack)
+		string queryStringTripId = Request.QueryString["tripId"];
+		if (!string.IsNullOrWhiteSpace(queryStringTripId))
 		{
-			if (FilterByTripDropDown.SelectedItem.Text != "All")
+			int id = Convert.ToInt32(queryStringTripId);
+			if (id > 0)
 			{
-				LoadPhotoGalleryImages(Convert.ToInt32(FilterByTripDropDown.SelectedValue));
+				FilterByTripDropDown.SelectedIndex = FilterByTripDropDown.Items.IndexOf(FilterByTripDropDown.Items.FindByValue(queryStringTripId.ToString()));
 			}
 		}
+
+		LoadPhotoGalleryImages();
 	}
 
 	/// <summary>
@@ -130,28 +133,22 @@ public partial class PhotoGallery : Page
 
 	#region Private Methods
 
-	/// <summary>
-	/// Loads the photos in checklist.
-	/// </summary>
-	private void LoadPhotoGalleryImages()
-	{
-		LoadPhotoGalleryImages(0);
-	}
 
 	/// <summary>
 	/// Loads the photo gallery images.
 	/// </summary>
 	/// <param name="assocTripId">The assoc trip identifier.</param>
-	private void LoadPhotoGalleryImages(int assocTripId)
+	private void LoadPhotoGalleryImages()
 	{
 		List<KeyValuePair<int, string>> usersPhotoGallery = null;
-		if (assocTripId == 0)
+		int assocTripId = Convert.ToInt32(FilterByTripDropDown.SelectedValue);
+		if (assocTripId > 0)
 		{
-			usersPhotoGallery = UserActions.GetImagesForUser(Master.UsersInfo.ID);
+			usersPhotoGallery = PhotoActions.GetPhotosForTrip(assocTripId);
 		}
 		else
 		{
-			usersPhotoGallery = PhotoActions.GetPhotosForTrip(assocTripId);
+			usersPhotoGallery = UserActions.GetImagesForUser(Master.UsersInfo.ID);
 		}
 
 		List<KeyValuePair<int, string>> twentyImagesToDisplay = new List<KeyValuePair<int, string>>();
