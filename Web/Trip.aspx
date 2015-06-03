@@ -134,7 +134,7 @@
                                         <p id="NoPhotosAttachedMessage" runat="server" visible="false"><em>You have not attached any photos to this trip yet...</em></p>
                                     </div>
                                     <div class="row top-buffer">
-                                        <div id="myCarousel" class="carousel slide">
+                                        <div id="myCarousel" class="carousel slide col-md-offset-2 col-md-8">
                                             <div id="CarouselImages" runat="server" class="carousel-inner" role="listbox">
                                             </div>
                                             <a class="left carousel-control" href="#myCarousel" data-slide="prev"><span runat="server" id="leftCarouselControl" class="glyphicon glyphicon-chevron-left"></span></a>
@@ -147,7 +147,7 @@
                                         <div class="form-inline col-md-8 col-md-offset-2">
                                             <label for="photoUploader">Upload Photo(s):</label>
                                             <asp:FileUpload runat="server" ID="photoUploader" AllowMultiple="true" CssClass="form-control" />
-                                            <asp:LinkButton CssClass="btn btn-primary" runat="server" ID="uploadPhotoButton" OnClick="UploadPhoto"><i class="glyphicon glyphicon-cloud-upload"></i>&nbsp;Upload Photo</asp:LinkButton>
+                                            <asp:LinkButton CssClass="btn btn-primary" runat="server" ID="uploadPhotoButton" OnClick="UploadPhoto"><i class="glyphicon glyphicon-cloud-upload"></i>&nbsp;Save & Upload Photo</asp:LinkButton>
                                         </div>
                                         <div class="row top-buffer">
                                             <br />
@@ -184,7 +184,46 @@
             </div>
         </div>
     </div>
+    <div id="lightbox" class="modal fade text-center" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <img src="#" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <script type="text/javascript">
+        $(document).ready(function () {
+
+            var $lightbox = $('#lightbox');
+
+            $('[data-target="#lightbox"]').on('click', function (event) {
+                var $img = $(this),
+                    src = $img.attr('src'),
+                    alt = $img.attr('alt'),
+                    css = {
+                        'maxWidth': $(window).width() - 300,
+                        'maxHeight': $(window).height() - 300
+                    };
+
+                $lightbox.find('.close').addClass('hidden');
+                $lightbox.find('img').attr('src', src);
+                $lightbox.find('img').attr('alt', alt);
+                $lightbox.find('img').css(css);
+            });
+
+            $lightbox.on('shown.bs.modal', function (e) {
+                var $img = $lightbox;
+
+                $lightbox.find('.modal-dialog').css({ 'width': $img.width() });
+                $lightbox.find('.close').removeClass('hidden');
+            });
+        });
+
         $('#MainContent_TripDate').datepicker();
 
         $('#MainContent_TripDate').on("change", function () {

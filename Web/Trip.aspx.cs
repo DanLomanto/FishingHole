@@ -51,7 +51,6 @@ public partial class Trip : Page
 		if (!Page.IsPostBack)
 		{
 			PopulateLocationsDropDown();
-
 		}
 
 		int id = GetIdFromQueryString();
@@ -87,7 +86,6 @@ public partial class Trip : Page
 			leftCarouselControl.Visible = false;
 			rightCarouselControl.Visible = false;
 		}
-		
 	}
 
 	/// <summary>
@@ -122,10 +120,17 @@ public partial class Trip : Page
 	/// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
 	protected void UploadPhoto(object sender, EventArgs e)
 	{
-		KeyValuePair<string, string> returnStatus = PhotoActions.UploadPhotos(photoUploader.PostedFiles, localPathForSaving, partialUrlToImage, Master.UsersInfo.ID);
+		int tripId = SaveTrip();
 
-		returnMessage.InnerText = returnStatus.Key;
-		returnMessage.Attributes["class"] = "col-md-10 col-md-offset-1 text-center " + returnStatus.Value;
+		if (tripId > 0)
+		{
+			KeyValuePair<string, string> returnStatus = PhotoActions.UploadPhotosForTrip(photoUploader.PostedFiles, localPathForSaving, partialUrlToImage, Master.UsersInfo.ID, tripId);
+
+			LoadImagesInCarousel(tripId);
+
+			returnMessage.InnerText = returnStatus.Key;
+			returnMessage.Attributes["class"] = "col-md-10 col-md-offset-1 text-center " + returnStatus.Value;
+		}
 	}
 
 	/// <summary>
@@ -257,6 +262,20 @@ public partial class Trip : Page
 			usersPhotoGallery = PhotoActions.GetPhotosForTrip(assocTripId);
 		}
 
+		// Remove any existing images in the photo gallery so we can add only the ones we want to display.
+		int numberOfImagesInCarousel = CarouselImages.Controls.Count;
+		for (int i = 0; i < numberOfImagesInCarousel; i++)
+		{
+			if (CarouselImages.HasControls())
+			{
+				CarouselImages.Controls.RemoveAt(0);
+			}
+			else
+			{ break; }
+
+			numberOfImagesInCarousel = CarouselImages.Controls.Count;
+		}
+
 		// Add the images we want to display in the carousel.
 		foreach (KeyValuePair<int, string> imageInfo in usersPhotoGallery)
 		{
@@ -273,6 +292,8 @@ public partial class Trip : Page
 			HtmlImage image = new HtmlImage();
 			image.Src = imageInfo.Value;
 			image.Attributes.Add("class", "thumbnail");
+			image.Attributes.Add("data-target", "#lightbox");
+			image.Attributes.Add("data-toggle", "modal");
 
 			div.Controls.Add(image);
 			CarouselImages.Controls.Add(div);
