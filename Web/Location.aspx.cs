@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
 using System.Drawing;
 using System.Web.UI;
@@ -65,7 +64,7 @@ public partial class Location : Page
 						Longitude.Value = string.Empty;
 						LongitudeDropDown.SelectedIndex = 0;
 
-						SetGoogleMapsUrl(location.StreetAddress + " " + location.CityTown + " " + location.State + " " + location.Zipcode.ToString());
+						SetGoogleMapsUrl(location);
 					}
 					else if (location.Lattitude != null || location.Lattitude > 0)
 					{
@@ -75,7 +74,7 @@ public partial class Location : Page
 						States.SelectedIndex = 0;
 						ZipCode.Value = string.Empty;
 
-						SetGoogleMapsUrl(formatCoordinates(location.LattitudeDirection, location.Lattitude, location.LongitudeDirection, location.Longitude));
+						SetGoogleMapsUrl(location);
 					}
 					else
 					{
@@ -202,37 +201,12 @@ public partial class Location : Page
 	#region Private Methods
 
 	/// <summary>
-	/// Formats the coordinates into the text that will be appended onto the Google Maps API link.
-	/// </summary>
-	/// <param name="latDirection">The lat direction.</param>
-	/// <param name="lattitude">The lattitude.</param>
-	/// <param name="longDirection">The long direction.</param>
-	/// <param name="longitude">The longitude.</param>
-	/// <returns></returns>
-	private string formatCoordinates(string latDirection, decimal? lattitude, string longDirection, decimal? longitude)
-	{
-		string actualLattitude = lattitude.ToString();
-		if (latDirection == "S")
-		{
-			actualLattitude = "-" + actualLattitude;
-		}
-
-		string actualLongitude = longitude.ToString();
-		if (longDirection == "W")
-		{
-			actualLongitude = "-" + actualLongitude;
-		}
-
-		return actualLattitude + "," + actualLongitude;
-	}
-
-	/// <summary>
 	/// Sets the google maps URL.
 	/// </summary>
 	/// <param name="locationToAppendOnLink">The location to append on link.</param>
-	private void SetGoogleMapsUrl(string locationToAppendOnLink)
+	private void SetGoogleMapsUrl(LocationObject location)
 	{
-		GoogleMap.Src = "https://www.google.com/maps/embed/v1/place?key=" + ConfigurationManager.AppSettings["GoogleAPIKey"].ToString() + "&q=" + locationToAppendOnLink;
+		GoogleMap.Src = location.GetGoogleMapsUrl();
 		GoogleMap.Visible = true;
 	}
 
@@ -250,6 +224,9 @@ public partial class Location : Page
 		Response.Redirect("Dashboard.aspx");
 	}
 
+	/// <summary>
+	/// Populates the trips drop down.
+	/// </summary>
 	private void PopulateTripsDropDown()
 	{
 		AssociatedTrip.Items.Add(new ListItem("Please select a Trip...", "-1"));

@@ -432,5 +432,14 @@ namespace Common
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateTrip", iDParameter, titleParameter, descriptionParameter, targetedSpeciesParameter, waterConditionsParameter, weatherConditionsParameter, dateOfTripParameter, fliesLuresUsedParameter, catchOfTheDayParameter, otherNotesParameter);
         }
+    
+        public virtual int DeletePhoto(Nullable<int> photoId)
+        {
+            var photoIdParameter = photoId.HasValue ?
+                new ObjectParameter("PhotoId", photoId) :
+                new ObjectParameter("PhotoId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeletePhoto", photoIdParameter);
+        }
     }
 }

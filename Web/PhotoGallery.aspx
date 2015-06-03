@@ -32,15 +32,22 @@
                     </div>
                 </div>
                 <div class="top-buffer row">
+                    <p id="NoPhotosAssociatedMessage" runat="server" visible="false" class="col-md-offset-2"><em>You have not associated any photos to this trip yet...</em></p>
                     <ul id="photoGallery" runat="server">
                     </ul>
                 </div>
                 <div class="top-buffer row">
-                    <div class="form-inline col-md-offset-1">
+                    <div class="form-inline text-center">
                         <label for="TripAssociationDropDown">Associate selected photos to Trip:</label>
                         <asp:DropDownList ID="TripAssociationDropDown" runat="server" class="form-control"></asp:DropDownList>
                         <asp:LinkButton ID="ApplyTripAssociation" runat="server" CssClass="btn btn-primary" OnClick="ApplyTripAssociation_Click">Apply</asp:LinkButton>
                     </div>
+                </div>
+                <div class="top-buffer row text-center">
+                    <span>Or</span>
+                </div>
+                <div class="top-buffer row text-center">
+                    <a href="#confirmDeletionModal" id="deletePhotosBtn" class="btn btn-primary">Delete Selected Photo(s)</a>
                 </div>
             </div>
         </div>
@@ -57,9 +64,35 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="confirmDeletionModal">
+        <div class="modal-dialog" style="max-width: 375px; max-height: 200px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">Delete Confirmation</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete the selected photo(s)?</p>
+                </div>
+                <div class="modal-footer">
+                    <asp:LinkButton ID="DeleteSelectedPhotos" runat="server" CssClass="btn btn-primary" OnClick="DeletePhotos">Confirm</asp:LinkButton>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <script type="text/javascript">
 
         $(document).ready(function () {
+
+            if ($('#form1 input:checkbox:checked').length > 0) {
+                $('#deletePhotosBtn').removeClass("disabled");
+                $('#MainContent_ApplyTripAssociation').removeClass("disabled");
+            }
+            else {
+                $('#deletePhotosBtn').addClass("disabled");
+                $('#MainContent_ApplyTripAssociation').addClass("disabled");
+            }
 
             document.getElementById("PhotoGalleryNavItem").className = "active";
 
@@ -85,6 +118,21 @@
 
                 $lightbox.find('.modal-dialog').css({ 'width': $img.width() });
                 $lightbox.find('.close').removeClass('hidden');
+            });
+
+            $('#deletePhotosBtn').on('click', function (event) {
+                $('#confirmDeletionModal').modal({});
+            });
+
+            $('[type="checkbox"]').on('click', function (event) {
+                if ($('#form1 input:checkbox:checked').length > 0) {
+                    $('#deletePhotosBtn').removeClass("disabled");
+                    $('#MainContent_ApplyTripAssociation').removeClass("disabled");
+                }
+                else {
+                    $('#deletePhotosBtn').addClass("disabled");
+                    $('#MainContent_ApplyTripAssociation').addClass("disabled");
+                }
             });
         });
     </script>

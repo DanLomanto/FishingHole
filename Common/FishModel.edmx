@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="FishModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="FishModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="ImagePaths">
           <Key>
             <PropertyRef Name="ID" />
@@ -202,6 +202,9 @@
         <Function Name="DeleteLocationForTrip" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="TripID" Type="int" Mode="In" />
         </Function>
+        <Function Name="DeletePhoto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PhotoId" Type="int" Mode="In" />
+        </Function>
         <Function Name="DeleteTripForLocation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="LocationID" Type="int" Mode="In" />
         </Function>
@@ -314,8 +317,7 @@
             <End Role="LocationToTrip" EntitySet="LocationToTrip" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="FishModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -563,10 +565,10 @@
             <Parameter Name="Password" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="DeleteLocationForTrip">
-            <Parameter Name="TripID" Mode="In" Type="Int32" />
+          <Parameter Name="TripID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="DeleteTripForLocation">
-            <Parameter Name="LocationID" Mode="In" Type="Int32" />
+          <Parameter Name="LocationID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="DoesLoginExist" ReturnType="Collection(FishModel.DoesLoginExist_Result)">
             <Parameter Name="Email" Mode="In" Type="String" />
@@ -577,39 +579,39 @@
             <Parameter Name="Title" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetAllLocationsForUser" ReturnType="Collection(FishModel.GetAllLocationsForUser_Result)">
-            <Parameter Name="UserID" Mode="In" Type="Int32" />
+          <Parameter Name="UserID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetAllTripsForUser" ReturnType="Collection(FishModel.GetAllTripsForUser_Result)">
-            <Parameter Name="UserID" Mode="In" Type="Int32" />
+          <Parameter Name="UserID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetAssociatedLocationForTrip" ReturnType="Collection(Int32)">
-            <Parameter Name="TripID" Mode="In" Type="Int32" />
+          <Parameter Name="TripID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetAssociatedTripForLocation" ReturnType="Collection(Int32)">
-            <Parameter Name="LocationId" Mode="In" Type="Int32" />
+          <Parameter Name="LocationId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetImagesForUser" ReturnType="Collection(FishModel.GetImagesForUser_Result)">
-            <Parameter Name="UserID" Mode="In" Type="Int32" />
+          <Parameter Name="UserID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetLocation" ReturnType="Collection(FishModel.GetLocation_Result)">
             <Parameter Name="UserID" Mode="In" Type="Int32" />
             <Parameter Name="Name" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetLocationById" ReturnType="Collection(FishModel.GetLocationById_Result)">
-            <Parameter Name="ID" Mode="In" Type="Int32" />
+          <Parameter Name="ID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetPhotosForTrip" ReturnType="Collection(FishModel.GetPhotosForTrip_Result)">
-            <Parameter Name="TripId" Mode="In" Type="Int32" />
+          <Parameter Name="TripId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetTrip" ReturnType="Collection(FishModel.GetTrip_Result)">
             <Parameter Name="UserID" Mode="In" Type="Int32" />
             <Parameter Name="Title" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetTripById" ReturnType="Collection(FishModel.GetTripById_Result)">
-            <Parameter Name="ID" Mode="In" Type="Int32" />
+          <Parameter Name="ID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetUser" ReturnType="Collection(FishModel.GetUser_Result)">
-            <Parameter Name="Email" Mode="In" Type="String" />
+          <Parameter Name="Email" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="InsertImagePath">
             <Parameter Name="UserID" Mode="In" Type="Int32" />
@@ -640,6 +642,9 @@
             <Parameter Name="FliesLuresUsed" Mode="In" Type="String" />
             <Parameter Name="CatchOfTheDay" Mode="In" Type="String" />
             <Parameter Name="OtherNotes" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="DeletePhoto">
+            <Parameter Name="PhotoId" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="DoesLoginExist_Result">
@@ -968,6 +973,7 @@
           <FunctionImportMapping FunctionImportName="InsertImagePath" FunctionName="FishModel.Store.InsertImagePath" />
           <FunctionImportMapping FunctionImportName="UpdateLocation" FunctionName="FishModel.Store.UpdateLocation" />
           <FunctionImportMapping FunctionImportName="UpdateTrip" FunctionName="FishModel.Store.UpdateTrip" />
+          <FunctionImportMapping FunctionImportName="DeletePhoto" FunctionName="FishModel.Store.DeletePhoto" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

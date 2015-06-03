@@ -131,6 +131,20 @@ public partial class PhotoGallery : Page
 		// Just cause a post back
 	}
 
+	/// <summary>
+	/// Deletes the selected photos.
+	/// </summary>
+	/// <param name="sender">The sender.</param>
+	/// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+	protected void DeletePhotos(object sender, EventArgs e)
+	{
+		List<int> selectedImages = GetIdsOfSelectedImages();
+		foreach (int imageId in selectedImages)
+		{
+			PhotoActions.DeletePhoto(imageId);
+		}
+	}
+
 	#region Private Methods
 
 	/// <summary>
@@ -210,6 +224,15 @@ public partial class PhotoGallery : Page
 			li.Controls.Add(image);
 			photoGallery.Controls.Add(li);
 		}
+
+		if (twentyImagesToDisplay.Count == 0)
+		{
+			NoPhotosAssociatedMessage.Visible = true;
+		}
+		else
+		{
+			NoPhotosAssociatedMessage.Visible = false;
+		}
 	}
 
 	/// <summary>
@@ -220,22 +243,36 @@ public partial class PhotoGallery : Page
 	{
 		List<int> selectedImages = new List<int>();
 
+		foreach (System.Web.UI.HtmlControls.HtmlInputCheckBox checkbox in GetAllCheckboxes())
+		{
+			if (checkbox.Checked)
+			{
+				selectedImages.Add(Convert.ToInt32(checkbox.Value));
+			}
+		}
+
+		return selectedImages;
+	}
+
+	/// <summary>
+	/// Gets all the checkboxes on the page.
+	/// </summary>
+	/// <returns></returns>
+	private List<System.Web.UI.HtmlControls.HtmlInputCheckBox> GetAllCheckboxes()
+	{
+		List<System.Web.UI.HtmlControls.HtmlInputCheckBox> allCheckboxes = new List<HtmlInputCheckBox>();
 		foreach (Control listItem in photoGallery.Controls)
 		{
 			foreach (Control possibleCheckbox in listItem.Controls)
 			{
 				if (possibleCheckbox is System.Web.UI.HtmlControls.HtmlInputCheckBox)
 				{
-					System.Web.UI.HtmlControls.HtmlInputCheckBox checkbox = (System.Web.UI.HtmlControls.HtmlInputCheckBox)possibleCheckbox;
-					if (checkbox.Checked)
-					{
-						selectedImages.Add(Convert.ToInt32(checkbox.Value));
-					}
+					allCheckboxes.Add((System.Web.UI.HtmlControls.HtmlInputCheckBox)possibleCheckbox);
 				}
 			}
 		}
 
-		return selectedImages;
+		return allCheckboxes;
 	}
 
 	/// <summary>

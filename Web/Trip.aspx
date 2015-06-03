@@ -100,11 +100,13 @@
                             </div>
                             <div id="LocationAccordian" class="panel-collapse collapse" aria-expanded="false">
                                 <div class="panel-body">
+                                    <div class="row col-md-offset-1 top-buffer">
+                                        <label for="AssociatedLocation" class="col-md-4 control-label">Associated Location:</label>
+                                    </div>
                                     <div class="row">
-                                        <div class="form-inline col-md-8 col-md-offset-2">
-                                            <label for="AssociatedLocation" class="col-md-4 control-label">Location:</label>
-                                            <select id="AssociatedLocation" runat="server" class="form-control">
-                                            </select>
+                                        <div class="form-inline col-md-8 col-md-offset-2 text-center">                                            
+                                            <asp:DropDownList ID="AssociatedLocation" runat="server" class="form-control"></asp:DropDownList>
+                                            <asp:LinkButton ID="SaveAndViewLocationBtn" runat="server" CssClass="btn btn-primary" OnClick="SaveAndViewLocationBtn_Click">Save & view location&nbsp;<i class="glyphicon glyphicon-expand"></i></asp:LinkButton>
                                         </div>
                                     </div>
                                     <div class="row text-center top-buffer">
@@ -112,7 +114,7 @@
                                     </div>
                                     <div class="row top-buffer">
                                         <div class="col-md-offset-3 col-md-6">
-                                            <a id="SaveAndCreateLocation" runat="server" href="#" class="btn btn-success btn-block">Save & attach new location to trip&nbsp;<i class="glyphicon glyphicon-expand"></i></a>
+                                            <a id="SaveAndCreateLocation" runat="server" href="#" class="btn btn-info btn-block">Save & attach new location to trip&nbsp;<i class="glyphicon glyphicon-expand"></i></a>
                                         </div>
                                     </div>
                                 </div>
@@ -128,7 +130,7 @@
                             <div id="PhotosAccordian" class="panel-collapse collapse" aria-expanded="false">
                                 <div class="panel-body">
                                     <div class="top-buffer row col-md-offset-1">
-                                        <label>Attached Photos:</label>
+                                        <label>Attached Photo(s):</label>
                                     </div>
                                     <div class="top-buffer row col-md-8 col-md-offset-2">
                                         <p id="NoPhotosAttachedMessage" runat="server" visible="false"><em>You have not attached any photos to this trip yet...</em></p>
@@ -144,7 +146,7 @@
                                 </div>
                                 <div class="container">
                                     <div class="top-buffer row">
-                                        <div class="form-inline col-md-8 col-md-offset-2">
+                                        <div class="form-inline col-md-8 col-md-offset-2 text-center">
                                             <label for="photoUploader">Upload Photo(s):</label>
                                             <asp:FileUpload runat="server" ID="photoUploader" AllowMultiple="true" CssClass="form-control" />
                                             <asp:LinkButton CssClass="btn btn-primary" runat="server" ID="uploadPhotoButton" OnClick="UploadPhoto"><i class="glyphicon glyphicon-cloud-upload"></i>&nbsp;Save & Upload Photo</asp:LinkButton>
@@ -159,7 +161,7 @@
                                     </div>
                                     <div class="row top-buffer">
                                         <div class="col-md-offset-3 col-md-6">
-                                            <asp:LinkButton ID="SaveAndCreatePhotos" runat="server" OnClick="SaveAndCreatePhotos_Click" CssClass="btn btn-success btn-block">Save & attach existing pictures to trip&nbsp;<i class="glyphicon glyphicon-expand"></i></asp:LinkButton>
+                                            <asp:LinkButton ID="SaveAndCreatePhotos" runat="server" OnClick="SaveAndCreatePhotos_Click" CssClass="btn btn-info btn-block">Save & attach existing pictures to trip&nbsp;<i class="glyphicon glyphicon-expand"></i></asp:LinkButton>
                                         </div>
                                     </div>
                                     <div class="row top-buffer">

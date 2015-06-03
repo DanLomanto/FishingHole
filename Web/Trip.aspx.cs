@@ -48,11 +48,6 @@ public partial class Trip : Page
 			Directory.CreateDirectory(localPathForSaving);
 		}
 
-		if (!Page.IsPostBack)
-		{
-			PopulateLocationsDropDown();
-		}
-
 		int id = GetIdFromQueryString();
 		if (id > 0)
 		{
@@ -67,6 +62,20 @@ public partial class Trip : Page
 			FliesLuresUsed.Value = trip.FliesLuresUsed;
 			OtherNotes.Value = trip.OtherNotes;
 
+			LoadImagesInCarousel(id);
+		}
+		else
+		{
+			NoPhotosAttachedMessage.Visible = true;
+			CarouselImages.Visible = false;
+			leftCarouselControl.Visible = false;
+			rightCarouselControl.Visible = false;
+		}
+
+		if (!Page.IsPostBack)
+		{
+			PopulateLocationsDropDown();
+
 			int associatedLocationId = LocationObject.GetAssociatedLocationForTrip(id);
 			if (associatedLocationId > 0)
 			{
@@ -76,15 +85,6 @@ public partial class Trip : Page
 			{
 				AssociatedLocation.SelectedIndex = 0;
 			}
-
-			LoadImagesInCarousel(id);
-		}
-		else
-		{
-			NoPhotosAttachedMessage.Visible = true;
-			CarouselImages.Visible = false;
-			leftCarouselControl.Visible = false;
-			rightCarouselControl.Visible = false;
 		}
 	}
 
@@ -145,6 +145,23 @@ public partial class Trip : Page
 		if (tripId > 0)
 		{
 			Response.Redirect("PhotoGallery.aspx?tripId=" + tripId.ToString());
+		}
+	}
+
+	protected void SaveAndViewLocationBtn_Click(object sender, EventArgs e)
+	{
+		int tripId = SaveTrip();
+
+		if (tripId > 0)
+		{
+			if (Convert.ToInt32(AssociatedLocation.SelectedValue) > 0)
+			{
+				Response.Redirect("Location.aspx?id=" + AssociatedLocation.SelectedValue);
+			}
+			else
+			{
+				BindErrorList(new List<string> { "You must select a valid location first." });
+			}
 		}
 	}
 
@@ -218,13 +235,13 @@ public partial class Trip : Page
 			}
 		}
 
-		if (AssociatedLocation.Value == "-1")
+		if (AssociatedLocation.SelectedValue == "-1")
 		{
 			TripObject.DeleteLocationForTrip(trip.ID);
 		}
 		else
 		{
-			TripObject.CreateUpdateLocationForTrip(trip.ID, Convert.ToInt32(AssociatedLocation.Value));
+			TripObject.CreateUpdateLocationForTrip(trip.ID, Convert.ToInt32(AssociatedLocation.SelectedValue));
 		}
 
 		return trip.ID;
@@ -240,14 +257,23 @@ public partial class Trip : Page
 
 		if (string.IsNullOrWhiteSpace(TripTitle.Value.Trim()))
 		{
-			formErrors.CssClass = formErrors.CssClass + " has-error";
-			formErrors.ForeColor = Color.Red;
-			formErrors.DataSource = new List<string> { "You must enter a value for the Title." };
-			formErrors.DataBind();
+			BindErrorList(new List<string> { "You must enter a value for the Title." });
 			return false;
 		}
 
 		return true;
+	}
+
+	/// <summary>
+	/// Binds the error list.
+	/// </summary>
+	/// <param name="errors">The errors.</param>
+	private void BindErrorList(List<string> errors)
+	{
+		formErrors.CssClass = formErrors.CssClass + " has-error";
+		formErrors.ForeColor = Color.Red;
+		formErrors.DataSource = errors;
+		formErrors.DataBind();
 	}
 
 	/// <summary>

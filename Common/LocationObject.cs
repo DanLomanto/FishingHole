@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Data.Entity.Core.Objects;
 using System.Linq;
 
@@ -162,5 +163,55 @@ namespace Common
 			FishEntities fishDb = new FishEntities();
 			fishDb.DeleteTripForLocation(locationId);
 		}
+
+		/// <summary>
+		/// Gets the google maps URL.
+		/// </summary>
+		/// <returns></returns>
+		public string GetGoogleMapsUrl()
+		{
+			string locationToAppendOnLink = string.Empty;
+			if (!string.IsNullOrWhiteSpace(this.StreetAddress))
+			{
+				// Street Address
+				locationToAppendOnLink = this.StreetAddress + " " + this.CityTown + " " + this.State + " " + this.Zipcode.ToString();
+			}
+			else
+			{
+				// Lat/Long Coordinates
+				locationToAppendOnLink = formatCoordinates(this.LattitudeDirection, this.Lattitude, this.LongitudeDirection, this.Longitude);
+			}
+
+			return "https://www.google.com/maps/embed/v1/place?key=" + ConfigurationManager.AppSettings["GoogleAPIKey"].ToString() + "&q=" + locationToAppendOnLink;
+		}
+
+		#region Private Methods
+
+		/// <summary>
+		/// Formats the coordinates into the text that will be appended onto the Google Maps API link.
+		/// </summary>
+		/// <param name="latDirection">The lat direction.</param>
+		/// <param name="lattitude">The lattitude.</param>
+		/// <param name="longDirection">The long direction.</param>
+		/// <param name="longitude">The longitude.</param>
+		/// <returns></returns>
+		private string formatCoordinates(string latDirection, decimal? lattitude, string longDirection, decimal? longitude)
+		{
+			string actualLattitude = lattitude.ToString();
+			if (latDirection == "S")
+			{
+				actualLattitude = "-" + actualLattitude;
+			}
+
+			string actualLongitude = longitude.ToString();
+			if (longDirection == "W")
+			{
+				actualLongitude = "-" + actualLongitude;
+			}
+
+			return actualLattitude + "," + actualLongitude;
+		}
+
+		#endregion Private Methods
 	}
 }

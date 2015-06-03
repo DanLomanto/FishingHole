@@ -149,5 +149,23 @@ namespace Common
 
 			return listOfImages;
 		}
+
+		/// <summary>
+		/// Deletes the specified photo.
+		/// </summary>
+		/// <param name="photoId">The photo identifier.</param>
+		/// <returns></returns>
+		public static bool DeletePhoto(int photoId)
+		{
+			FishEntities fishDB = new FishEntities();
+			int returnValue = fishDB.DeletePhoto(photoId);
+
+			if (returnValue != 1)
+			{
+				return false;
+			}
+
+			return true;
+		}
 	}
 }

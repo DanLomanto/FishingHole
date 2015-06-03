@@ -140,7 +140,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row top-buffer  text-center">
+                <div class="row top-buffer text-center">
                     <iframe id="GoogleMap" runat="server" visible="false"
                         width="600"
                         height="450"
