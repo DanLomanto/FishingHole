@@ -104,7 +104,7 @@
                                         <label for="AssociatedLocation" class="col-md-4 control-label">Associated Location:</label>
                                     </div>
                                     <div class="row">
-                                        <div class="form-inline col-md-8 col-md-offset-2 text-center">                                            
+                                        <div class="form-inline col-md-8 col-md-offset-2 text-center">
                                             <asp:DropDownList ID="AssociatedLocation" runat="server" class="form-control"></asp:DropDownList>
                                             <asp:LinkButton ID="SaveAndViewLocationBtn" runat="server" CssClass="btn btn-primary" OnClick="SaveAndViewLocationBtn_Click">Save & view location&nbsp;<i class="glyphicon glyphicon-expand"></i></asp:LinkButton>
                                         </div>
@@ -171,15 +171,13 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <br />
-            <br />
-            <div class="container-fluid top-buffer col-md-10 col-md-offset-1">
-                <div class="form-group">
-                    <div class="text-center">
-                        <div class="top-buffer">
-                            <asp:Button ID="SaveButton" runat="server" Text="Save" CssClass="btn btn-m btn-primary" OnClick="SaveButton_Click"></asp:Button>
-                            <asp:Button ID="CancelButton" runat="server" Text="Cancel" CssClass="btn btn-m btn-default" OnClick="CancelButton_Click"></asp:Button>
+                <div class="container-fluid top-buffer col-md-10 col-md-offset-1">
+                    <div class="form-group">
+                        <div class="text-center">
+                            <div class="top-buffer">
+                                <asp:Button ID="SaveButton" runat="server" Text="Save" CssClass="btn btn-m btn-primary" OnClick="SaveButton_Click"></asp:Button>
+                                <asp:Button ID="CancelButton" runat="server" Text="Cancel" CssClass="btn btn-m btn-default" OnClick="CancelButton_Click"></asp:Button>
+                            </div>
                         </div>
                     </div>
                 </div>

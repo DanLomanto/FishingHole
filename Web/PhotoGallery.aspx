@@ -17,18 +17,18 @@
             </div>
             <div class="panel-body">
                 <div class="row">
+                    <div class="form-inline col-md-offset-1">
+                        <label for="FilterByTripDropDown">Filter Photos by Trip:</label>
+                        <asp:DropDownList ID="FilterByTripDropDown" runat="server" class="form-control"></asp:DropDownList>
+                        <asp:LinkButton ID="FilterPhotosBtn" runat="server" CssClass="btn btn-primary" OnClick="FilterPhotosBtn_Click">Filter</asp:LinkButton>
+                    </div>
+                </div>
+                <div class="row top-buffer">
                     <div class="col-md-2 pull-left">
                         <asp:LinkButton runat="server" ID="prevTwentyImages" CssClass="btn btn-default text-center" OnClick="prevTwentyImages_Click"><i class="glyphicon glyphicon-chevron-left"></i>&nbsp;Previous 20</asp:LinkButton>
                     </div>
                     <div class="col-md-3 col-md-offset-7">
                         <asp:LinkButton runat="server" ID="nextTwentyImages" CssClass="btn btn-default pull-right" OnClick="nextTwentyImages_Click">Next 20&nbsp;<span class="glyphicon glyphicon-chevron-right" /></asp:LinkButton>
-                    </div>
-                </div>
-                <div class="top-buffer row">
-                    <div class="form-inline col-md-offset-1">
-                        <label for="FilterByTripDropDown">Filter Photos by Trip:</label>
-                        <asp:DropDownList ID="FilterByTripDropDown" runat="server" class="form-control"></asp:DropDownList>
-                        <asp:LinkButton ID="FilterPhotosBtn" runat="server" CssClass="btn btn-primary" OnClick="FilterPhotosBtn_Click">Filter</asp:LinkButton>
                     </div>
                 </div>
                 <div class="top-buffer row">

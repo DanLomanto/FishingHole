@@ -57,14 +57,9 @@ public partial class PhotoGallery : Page
 			PopulateTripsDropDown();
 		}
 
-		string queryStringTripId = Request.QueryString["tripId"];
-		if (!string.IsNullOrWhiteSpace(queryStringTripId))
+		if (GetTripIdFromQueryString() > 0)
 		{
-			int id = Convert.ToInt32(queryStringTripId);
-			if (id > 0)
-			{
-				FilterByTripDropDown.SelectedIndex = FilterByTripDropDown.Items.IndexOf(FilterByTripDropDown.Items.FindByValue(queryStringTripId.ToString()));
-			}
+			FilterByTripDropDown.SelectedIndex = FilterByTripDropDown.Items.IndexOf(FilterByTripDropDown.Items.FindByValue(GetTripIdFromQueryString().ToString()));
 		}
 
 		LoadPhotoGalleryImages();
@@ -143,6 +138,13 @@ public partial class PhotoGallery : Page
 		{
 			PhotoActions.DeletePhoto(imageId);
 		}
+
+		if (GetTripIdFromQueryString() > 0)
+		{
+			Response.Redirect("Photogallery.aspx?tripId=" + GetTripIdFromQueryString().ToString());
+		}
+
+		Response.Redirect("Photogallery.aspx");
 	}
 
 	#region Private Methods
@@ -261,6 +263,7 @@ public partial class PhotoGallery : Page
 	private List<System.Web.UI.HtmlControls.HtmlInputCheckBox> GetAllCheckboxes()
 	{
 		List<System.Web.UI.HtmlControls.HtmlInputCheckBox> allCheckboxes = new List<HtmlInputCheckBox>();
+
 		foreach (Control listItem in photoGallery.Controls)
 		{
 			foreach (Control possibleCheckbox in listItem.Controls)
@@ -303,6 +306,25 @@ public partial class PhotoGallery : Page
 		}
 
 		FilterByTripDropDown.DataBind();
+	}
+
+	/// <summary>
+	/// Gets the trip identifier from query string.
+	/// </summary>
+	/// <returns></returns>
+	private int GetTripIdFromQueryString()
+	{
+		string queryStringTripId = Request.QueryString["tripId"];
+		if (!string.IsNullOrWhiteSpace(queryStringTripId))
+		{
+			int id = Convert.ToInt32(queryStringTripId);
+			if (id > 0)
+			{
+				return id;
+			}
+		}
+
+		return -1;
 	}
 
 	#endregion Private Methods
