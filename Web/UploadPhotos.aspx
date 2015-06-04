@@ -19,21 +19,22 @@
                     <div class="text-center">
                         <asp:BulletedList ID="UploadErrors" runat="server" CssClass="col-centered" />
                     </div>
-                    <div class="row col-md-offset-3">
-                        <asp:FileUpload runat="server" ID="photoUploader" AllowMultiple="true" CssClass="form-control" />
-                    </div>
-                    <div class="row top-buffer">
-                        <asp:LinkButton CssClass="btn btn-primary" runat="server" ID="uploadPhotoButton" OnClick="UploadPhoto"><i class="glyphicon glyphicon-cloud-upload"></i>&nbsp;Upload Photo</asp:LinkButton>
+                    <div class="row text-center">
+                        <div class="form-inline">
+                            <asp:FileUpload runat="server" ID="photoUploader" AllowMultiple="true" CssClass="form-control" />
+                            <asp:LinkButton CssClass="btn btn-primary" runat="server" ID="uploadPhotoButton" OnClick="UploadPhoto"><i class="glyphicon glyphicon-cloud-upload"></i>&nbsp;Upload Photo</asp:LinkButton>
+                        </div>
                     </div>
                     <div class="row top-buffer">
                         <div id="returnMessage" runat="server"></div>
                     </div>
+                    <div class="row text-center top-buffer">
+                        <asp:LinkButton ID="GoBackButton" runat="server" CssClass="btn btn-default" OnClick="GoBackButton_Click"><i class="glyphicon glyphicon-chevron-left"></i>&nbsp;Go Back</asp:LinkButton>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="text-center top-buffer">
-            <asp:LinkButton ID="GoBackButton" runat="server" CssClass="btn btn-primary" OnClick="GoBackButton_Click"><i class="glyphicon glyphicon-chevron-left"></i>&nbsp;Go Back</asp:LinkButton>
-        </div>
+        
     </div>
     <script src="Scripts/jquery-1.10.2.js"></script>
     <script type="text/javascript">
