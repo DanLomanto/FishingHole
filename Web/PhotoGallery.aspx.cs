@@ -208,7 +208,7 @@ public partial class PhotoGallery : Page
 		foreach (KeyValuePair<int, string> imageInfo in twentyImagesToDisplay)
 		{
 			HtmlGenericControl li = new HtmlGenericControl("li");
-			li.Attributes.Add("class", "col-md-3 text-center");
+			li.Attributes.Add("class", "col-md-3 text-center photogallery-spacing");
 			li.Attributes.Add("style", "list-style-type: none;");
 
 			HtmlInputCheckBox checkbox = new HtmlInputCheckBox();

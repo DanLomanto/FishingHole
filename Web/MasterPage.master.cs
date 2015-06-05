@@ -9,7 +9,8 @@ public partial class MasterPage : System.Web.UI.MasterPage
 	{
 		if (Session["Email"] != null || UsersInfo != null)
 		{
-			UsernameDropDown.InnerText = UsersInfo.FirstName + " " + UsersInfo.LastName;
+			//UsernameDropDown.InnerText = UsersInfo.FirstName + " " + UsersInfo.LastName + "";
+			UsernameDropDown.InnerHtml = UsersInfo.FirstName + " " + UsersInfo.LastName + "<span class=\"caret\"></span>";
 		}
 	}
 

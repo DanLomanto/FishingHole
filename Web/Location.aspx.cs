@@ -140,7 +140,11 @@ public partial class Location : Page
 
 		if (locationType.SelectedIndex == 0)
 		{
-			location.CreateLocation(Master.UsersInfo.ID);
+			formValidationErrors.Add("You must specify a way to enter your location info.");
+			formErrors.CssClass = formErrors.CssClass + " has-error";
+			formErrors.ForeColor = Color.Red;
+			formErrors.DataSource = formValidationErrors;
+			formErrors.DataBind();
 		}
 		else if (locationType.SelectedIndex == 1)
 		{
