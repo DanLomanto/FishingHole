@@ -222,6 +222,11 @@
                 $lightbox.find('.modal-dialog').css({ 'width': $img.width() });
                 $lightbox.find('.close').removeClass('hidden');
             });
+
+            $('.carousel').carousel({
+                wrap: false,
+                interval: 0
+            });
         });
 
         $('#MainContent_TripDate').datepicker();
