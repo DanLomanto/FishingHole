@@ -92,11 +92,9 @@
                 <div class="container-fluid top-buffer col-md-10 col-md-offset-1">
                     <div class="panel-group" id="accordion">
                         <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <a data-toggle="collapse" data-parent="#accordion" href="#LocationAccordian" style="text-decoration: none; color: #606060;">
-                                    <h4 class="panel-title">Create or Attach a Location
-                                    </h4>
-                                </a>
+                            <div class="panel-heading" data-toggle="collapse" data-target="#LocationAccordian" data-parent="#accordion">                                
+                                <h4 class="panel-title">Create or Attach a Location
+                                </h4>
                             </div>
                             <div id="LocationAccordian" class="panel-collapse collapse" aria-expanded="false">
                                 <div class="panel-body">
@@ -121,11 +119,9 @@
                             </div>
                         </div>
                         <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <a data-toggle="collapse" data-parent="#accordion" href="#PhotosAccordian" style="text-decoration: none; color: #606060;">
-                                    <h4 class="panel-title">Upload or Attach Photos
-                                    </h4>
-                                </a>
+                            <div class="panel-heading" data-toggle="collapse" data-target="#PhotosAccordian" data-parent="#accordion">
+                                <h4 class="panel-title">Upload or Attach Photos
+                                </h4>
                             </div>
                             <div id="PhotosAccordian" class="panel-collapse collapse" aria-expanded="false">
                                 <div class="panel-body">
