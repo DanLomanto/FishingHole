@@ -25,7 +25,7 @@
                         <ContentTemplate>
                             <asp:GridView ID="TripsDataGrid" OnSorting="TripsDataGrid_Sorting" runat="server" AllowPaging="True" AllowSorting="True"
                                 CssClass="table table-striped table-bordered table-hover" BorderStyle="NotSet" AutoGenerateColumns="false"
-                                OnSelectedIndexChanged="OnTripsSelectedIndexChanged" OnRowDataBound="OnTripsRowDataBound">
+                                OnSelectedIndexChanged="OnTripsSelectedIndexChanged" OnRowDataBound="OnTripsRowDataBound" AutoGenerateSelectButton="true">
                                 <Columns>
                                     <asp:BoundField ItemStyle-CssClass="maxWidthGrid" DataField="ID" HeaderText="ID" Visible="false" />
                                     <asp:BoundField ItemStyle-CssClass="maxWidthGrid" DataField="Title" HeaderText="Title" />

@@ -47,7 +47,7 @@ namespace FishingHole
 
 		protected void OnLocationsSelectedIndexChanged(object sender, EventArgs e)
 		{
-			string id = LocationsGrid.SelectedRow.Cells[0].Text;
+			string id = LocationsGrid.SelectedRow.Cells[1].Text;
 
 			Response.Redirect("Location?id=" + id + "&returnUrl=locations");
 		}

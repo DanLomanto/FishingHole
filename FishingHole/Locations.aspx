@@ -25,7 +25,7 @@
                         <ContentTemplate>
                             <asp:GridView ID="LocationsGrid" OnSorting="LocationsGrid_Sorting" runat="server" AllowPaging="True" AllowSorting="True"
                                 CssClass="table table-striped table-bordered table-hover" BorderStyle="NotSet" AutoGenerateColumns="false"
-                                OnRowDataBound="OnLocationsRowDataBound" OnSelectedIndexChanged="OnLocationsSelectedIndexChanged">
+                                OnRowDataBound="OnLocationsRowDataBound" OnSelectedIndexChanged="OnLocationsSelectedIndexChanged" AutoGenerateSelectButton="true">
                                 <Columns>
                                     <asp:BoundField ItemStyle-CssClass="maxWidthGrid" DataField="ID" HeaderText="ID" Visible="false" />
                                     <asp:BoundField ItemStyle-CssClass="maxWidthGrid" DataField="Name" HeaderText="Name" />

@@ -43,20 +43,20 @@
                         </div>
                         <div class="panel-body">
                             <div class="container-fluid">
-                                <div id="RecentlyAddedTripsMessage" runat="server" class="row col-md-offset-1">
+                                <div id="RecentlyAddedTripsMessage" runat="server" class="row">
                                     <p>Your 5 most recently added Trips:</p>
                                 </div>
-                                <div id="NoTripsMessage" runat="server" class="row col-md-offset-1 top-buffer">
+                                <div id="NoTripsMessage" runat="server" class="row top-buffer">
                                     <div class="alert alert-info col-md-7">
                                         <span>You have not created any Trips yet...</span>
                                     </div>
                                 </div>
-                                <div class="row top-buffer table-responsive col-md-10 col-md-offset-1">
+                                <div class="row top-buffer table-responsive col-md-12">
                                     <asp:UpdatePanel ID="TripsDataGridUpdatePanel" UpdateMode="Conditional" runat="server">
                                         <ContentTemplate>
                                             <asp:GridView ID="TripsDataGrid" OnSorting="TripsDataGrid_Sorting" runat="server" AllowPaging="True" AllowSorting="True"
                                                 CssClass="table table-striped table-bordered table-hover" BorderStyle="NotSet" AutoGenerateColumns="false"
-                                                OnSelectedIndexChanged="OnTripsSelectedIndexChanged" OnRowDataBound="OnTripsRowDataBound">
+                                                OnRowDataBound="OnTripsRowDataBound" OnSelectedIndexChanged="OnTripsSelectedIndexChanged" AutoGenerateSelectButton="true">
                                                 <Columns>
                                                     <asp:BoundField DataField="ID" HeaderText="ID" Visible="false" />
                                                     <asp:BoundField DataField="Title" HeaderText="Title" />
@@ -67,7 +67,7 @@
                                         </ContentTemplate>
                                     </asp:UpdatePanel>
                                 </div>
-                                <div class="row top-buffer col-md-offset-1 col-md-10">
+                                <div class="row top-buffer col-md-10">
                                     <a href="Trips.aspx">View all trips</a>
                                 </div>
                             </div>
@@ -87,31 +87,33 @@
                             <h3>Locations</h3>
                         </div>
                         <div class="panel-body">
-                            <div id="RecentlyAddedLocationsMessage" runat="server" class="row col-md-offset-1">
-                                <p>Your 5 most recently added Locations:</p>
-                            </div>
-                            <div id="NoLocationsMessage" runat="server" class="row col-md-offset-1 top-buffer">
-                                <div class="alert alert-info col-md-8">
-                                    <span>You have not created any Locations yet...</span>
+                            <div class="container-fluid">
+                                <div id="RecentlyAddedLocationsMessage" runat="server" class="row">
+                                    <p>Your 5 most recently added Locations:</p>
                                 </div>
-                            </div>
-                            <div class="row top-buffer table-responsive col-md-10 col-md-offset-1">
-                                <asp:UpdatePanel ID="LocationsGridUpdatePanel" UpdateMode="Conditional" runat="server">
-                                    <ContentTemplate>
-                                        <asp:GridView ID="LocationsGrid" OnSorting="LocationsGrid_Sorting" runat="server" AllowPaging="True" AllowSorting="True"
-                                            CssClass="table table-striped table-bordered table-hover" BorderStyle="NotSet" AutoGenerateColumns="false"
-                                            OnRowDataBound="OnLocationsRowDataBound" OnSelectedIndexChanged="OnLocationsSelectedIndexChanged">
-                                            <Columns>
-                                                <asp:BoundField DataField="ID" HeaderText="ID" Visible="false" />
-                                                <asp:BoundField DataField="Name" HeaderText="Name" />
-                                                <asp:BoundField DataField="CreateDate" HeaderText="Create Date" />
-                                            </Columns>
-                                        </asp:GridView>
-                                    </ContentTemplate>
-                                </asp:UpdatePanel>
-                            </div>
-                            <div class="row top-buffer col-md-offset-1 col-md-10">
-                                <a href="Locations.aspx">View all locations</a>
+                                <div id="NoLocationsMessage" runat="server" class="row top-buffer">
+                                    <div class="alert alert-info col-md-8">
+                                        <span>You have not created any Locations yet...</span>
+                                    </div>
+                                </div>
+                                <div class="row top-buffer table-responsive col-md-12">
+                                    <asp:UpdatePanel ID="LocationsGridUpdatePanel" UpdateMode="Conditional" runat="server">
+                                        <ContentTemplate>
+                                            <asp:GridView ID="LocationsGrid" OnSorting="LocationsGrid_Sorting" runat="server" AllowPaging="True" AllowSorting="True"
+                                                CssClass="table table-striped table-bordered table-hover" BorderStyle="NotSet" AutoGenerateColumns="false"
+                                                OnRowDataBound="OnLocationsRowDataBound" OnSelectedIndexChanged="OnLocationsSelectedIndexChanged" AutoGenerateSelectButton="true">
+                                                <Columns>
+                                                    <asp:BoundField DataField="ID" HeaderText="ID" Visible="false" />
+                                                    <asp:BoundField DataField="Name" HeaderText="Name" />
+                                                    <asp:BoundField DataField="CreateDate" HeaderText="Create Date" />
+                                                </Columns>
+                                            </asp:GridView>
+                                        </ContentTemplate>
+                                    </asp:UpdatePanel>
+                                </div>
+                                <div class="row top-buffer col-md-10">
+                                    <a href="Locations.aspx">View all locations</a>
+                                </div>
                             </div>
                         </div>
                     </div>

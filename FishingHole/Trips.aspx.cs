@@ -53,7 +53,7 @@ namespace FishingHole
 		/// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
 		protected void OnTripsSelectedIndexChanged(object sender, EventArgs e)
 		{
-			string id = TripsDataGrid.SelectedRow.Cells[0].Text;
+			string id = TripsDataGrid.SelectedRow.Cells[1].Text;
 
 			Response.Redirect("Trip?id=" + id + "&returnUrl=Trips");
 		}
