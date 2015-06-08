@@ -67,3 +67,4 @@ Common/obj/Debug/TempPE/FishModel.cs.dll
 Common/obj/Debug/TempPE/FishModel.Designer.cs.dll
 Web/bin/Common.dll
 Web/bin/Common.pdb
+*.suo
