@@ -11,7 +11,7 @@
             <div class="panel-body">
                 <div class="container-fluid">
                     <div class="row text-center">
-                        <asp:BulletedList ID="formErrors" runat="server" CssClass="col-centered" />
+                        <asp:BulletedList ID="formErrors" runat="server" CssClass="list-inline center-block text-center" />
                     </div>
                     <div class="row top-buffer">
                         <div class="form-inline col-md-offset-3">

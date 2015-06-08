@@ -123,9 +123,29 @@ public partial class Location : Page
 			formValidationErrors.Add("You must enter a value for the Name.");
 		}
 
-		if (locationType.SelectedIndex == 0)
+		if (locationType.Value == "SelectOption")
 		{
 			formValidationErrors.Add("You must specify a way to enter your location info.");
+		}
+		else if (locationType.Value == "StreetAddress")
+		{
+			if (string.IsNullOrWhiteSpace(StreetAddress.Value.Trim()) ||
+				string.IsNullOrWhiteSpace(CityTown.Value.Trim()) ||
+				string.IsNullOrWhiteSpace(States.Value.Trim()) ||
+				string.IsNullOrWhiteSpace(ZipCode.Value.Trim()))
+			{
+				formValidationErrors.Add("You must enter all information for the location's address.");
+			}
+		}
+		else if (locationType.Value == "Coordinates")
+		{
+			if (string.IsNullOrWhiteSpace(Lattitude.Value.Trim()) ||
+				string.IsNullOrWhiteSpace(LattitudeDropDown.Value.Trim()) ||
+				string.IsNullOrWhiteSpace(Longitude.Value.Trim()) ||
+				string.IsNullOrWhiteSpace(LongitudeDropDown.Value.Trim()))
+			{
+				formValidationErrors.Add("You must enter all information for the location's coordinates.");
+			}
 		}
 
 		if (formValidationErrors.Count > 0)
@@ -134,19 +154,12 @@ public partial class Location : Page
 			formErrors.ForeColor = Color.Red;
 			formErrors.DataSource = formValidationErrors;
 			formErrors.DataBind();
+			return;
 		}
 
 		#endregion Field Validation
 
-		if (locationType.SelectedIndex == 0)
-		{
-			formValidationErrors.Add("You must specify a way to enter your location info.");
-			formErrors.CssClass = formErrors.CssClass + " has-error";
-			formErrors.ForeColor = Color.Red;
-			formErrors.DataSource = formValidationErrors;
-			formErrors.DataBind();
-		}
-		else if (locationType.SelectedIndex == 1)
+		if (locationType.SelectedIndex == 1)
 		{
 			location.StreetAddress = StreetAddress.Value;
 			location.CityTown = CityTown.Value;
