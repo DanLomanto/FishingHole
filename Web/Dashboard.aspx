@@ -15,15 +15,17 @@
                         <h3>Photo Gallery</h3>
                     </div>
                     <div class="panel-body">
-                        <div class="row col-md-offset-1">
-                            <p>Your 8 most recent photo uploads:</p>
-                        </div>
-                        <div class="row col-md-10 col-md-offset-1">
-                            <ul id="photoGallery" class="row top-buffer no-bullets" runat="server">
-                            </ul>
-                        </div>
-                        <div class="row top-buffer col-md-offset-1 col-md-10">
-                            <a href="PhotoGallery.aspx">View all photos</a>
+                        <div class="container-fluid">
+                            <div class="row col-md-offset-1">
+                                <p>Your 8 most recent photo uploads:</p>
+                            </div>
+                            <div class="row col-md-10 col-md-offset-1">
+                                <ul id="photoGallery" class="row top-buffer no-bullets" runat="server">
+                                </ul>
+                            </div>
+                            <div class="row top-buffer col-md-offset-1 col-md-10">
+                                <a href="PhotoGallery.aspx">View all photos</a>
+                            </div>
                         </div>
                     </div>
                 </div>

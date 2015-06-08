@@ -214,6 +214,7 @@ public partial class PhotoGallery : Page
 			HtmlInputCheckBox checkbox = new HtmlInputCheckBox();
 			checkbox.Value = imageInfo.Key.ToString();
 			checkbox.Attributes.Add("style", "vertical-align: top; margin-right:5px");
+			checkbox.Attributes.Add("class", "pull-left");
 
 			HtmlImage image = new HtmlImage();
 			image.Src = imageInfo.Value;
@@ -221,6 +222,7 @@ public partial class PhotoGallery : Page
 			image.Width = 100;
 			image.Attributes.Add("data-target", "#lightbox");
 			image.Attributes.Add("data-toggle", "modal");
+			image.Attributes.Add("class", "thumbnail");
 
 			li.Controls.Add(checkbox);
 			li.Controls.Add(image);

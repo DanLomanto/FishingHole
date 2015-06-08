@@ -256,8 +256,10 @@ public partial class Dashboard : Page
 		foreach (KeyValuePair<int, string> imagePath in twentyImagesToDisplay)
 		{
 			HtmlGenericControl li = new HtmlGenericControl("li");
-			li.Attributes.Add("class", "col-md-3 text-center photogallery-spacing");
-			li.InnerHtml = "<img src='" + imagePath.Value + "' height='100px' width='100px' data-target=\"#lightbox\" data-toggle=\"modal\" />";
+			li.Attributes.Add("class", "col-md-3 thumbnail");
+			//li.Attributes.Add("class", "col-md-3 text-center ");
+			li.InnerHtml = "<img src='" + imagePath.Value + "' data-target=\"#lightbox\" data-toggle=\"modal\" />";
+			//li.InnerHtml = "<img src='" + imagePath.Value + "' height='100px' width='100px' data-target=\"#lightbox\" data-toggle=\"modal\" />";
 
 			photoGallery.Controls.Add(li);
 		}
