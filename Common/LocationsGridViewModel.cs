@@ -85,11 +85,14 @@ namespace Common
 			var result = fishDb.GetAllLocationsForUser(userId);
 			DataTable table = DataActions.ConvertToDataTable(result);
 
-			if (table.Rows.Count > 0)
+			if (table.Rows.Count == 0)
 			{
-				table.DefaultView.Sort = "ID DESC";
-				table = table.DefaultView.ToTable();
+				return new DataTable();
 			}
+
+			table.DefaultView.Sort = "ID DESC";
+			table = table.DefaultView.ToTable();
+
 			return table;
 		}
 

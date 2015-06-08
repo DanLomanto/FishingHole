@@ -46,9 +46,9 @@
                                 <div id="RecentlyAddedTripsMessage" runat="server" class="row col-md-offset-1">
                                     <p>Your 5 most recently added Trips:</p>
                                 </div>
-                                <div id="NoTripsMessage" runat="server" class="row col-md-offset-1">
+                                <div id="NoTripsMessage" runat="server" class="row col-md-offset-1 top-buffer">
                                     <div class="alert alert-info col-md-7">
-                                        <span>You have not created any Trip yet...</span>
+                                        <span>You have not created any Trips yet...</span>
                                     </div>
                                 </div>
                                 <div class="row top-buffer table-responsive col-md-10 col-md-offset-1">
@@ -90,8 +90,8 @@
                             <div id="RecentlyAddedLocationsMessage" runat="server" class="row col-md-offset-1">
                                 <p>Your 5 most recently added Locations:</p>
                             </div>
-                            <div id="NoLocationsMessage" runat="server" class="row col-md-offset-1">
-                                <div class="alert alert-info col-md-7">
+                            <div id="NoLocationsMessage" runat="server" class="row col-md-offset-1 top-buffer">
+                                <div class="alert alert-info col-md-8">
                                     <span>You have not created any Locations yet...</span>
                                 </div>
                             </div>
