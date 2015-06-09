@@ -104,7 +104,10 @@ namespace Common
 		public static DataTable GetTopFiveLocationsForUser(int userId)
 		{
 			DataTable table = GetLocationsForUser(userId);
-			table.AsEnumerable().Take(5);
+			if (table != null)
+			{
+				table.AsEnumerable().Take(5);
+			}
 
 			return table;
 		}

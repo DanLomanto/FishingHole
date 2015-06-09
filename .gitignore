@@ -68,3 +68,4 @@ Common/obj/Debug/TempPE/FishModel.Designer.cs.dll
 FishingHole/bin/Common.dll
 FishingHole/bin/Common.pdb
 *.suo
+FishingHole/Properties/PublishProfiles/*.*

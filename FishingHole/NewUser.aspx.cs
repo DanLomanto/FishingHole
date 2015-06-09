@@ -39,20 +39,19 @@ namespace FishingHole
 			if (formValidationErrors.Count > 0)
 			{
 				formErrors.CssClass = formErrors.CssClass + " has-error";
-				formErrors.ForeColor = Color.Red;
-				formErrors.DataSource = formValidationErrors;
-				formErrors.DataBind();
+				BindErrorData();
 			}
 			else
 			{
-				bool wasUserCreated = UserActions.CreateNewUser(emailInput.Value.Trim(), firstNameInput.Value.Trim(), lastNameInput.Value.Trim(), passwordInput.Value.Trim());
-				if (!wasUserCreated)
+				if (UserActions.DoesUserExist(emailInput.Value.Trim()))
 				{
 					formValidationErrors.Add("A user with this email already exists.");
-					formErrors.CssClass = formErrors.CssClass + " has-error";
-					formErrors.ForeColor = Color.Red;
-					formErrors.DataSource = formValidationErrors;
-					formErrors.DataBind();
+					BindErrorData();
+				}
+				else if (!UserActions.CreateNewUser(emailInput.Value.Trim(), firstNameInput.Value.Trim(), lastNameInput.Value.Trim(), passwordInput.Value.Trim()))
+				{
+					formValidationErrors.Add("This user could not be created. Please try again.");
+					BindErrorData();
 				}
 				else
 				{
@@ -98,6 +97,14 @@ namespace FishingHole
 			}
 
 			return formValidationErrors;
+		}
+
+		private void BindErrorData()
+		{
+			formErrors.CssClass = formErrors.CssClass + " has-error";
+			formErrors.ForeColor = Color.Red;
+			formErrors.DataSource = formValidationErrors;
+			formErrors.DataBind();
 		}
 
 		#endregion Private Methods

@@ -65,6 +65,7 @@ namespace FishingHole
 			}
 			else
 			{
+				TripsDataGrid.Visible = false;
 				RecentlyAddedTripsMessage.Visible = false;
 				NoTripsMessage.Visible = true;
 			}
@@ -81,6 +82,7 @@ namespace FishingHole
 			}
 			else
 			{
+				LocationsGrid.Visible = false;
 				RecentlyAddedLocationsMessage.Visible = false;
 				NoLocationsMessage.Visible = true;
 			}

@@ -52,7 +52,10 @@ namespace Common
 		public static DataTable GetTopFiveTripsForUser(int userId)
 		{
 			DataTable table = GetTripsForUser(userId);
-			table.AsEnumerable().Take(5);
+			if (table != null)
+			{
+				table.AsEnumerable().Take(5);
+			}
 
 			return table;
 		}
