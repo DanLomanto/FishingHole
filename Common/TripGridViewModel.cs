@@ -41,7 +41,7 @@ namespace Common
 
 			if (table.Rows.Count == 0)
 			{
-				return new DataTable();
+				return null;
 			}
 
 			table.DefaultView.Sort = "ID DESC";

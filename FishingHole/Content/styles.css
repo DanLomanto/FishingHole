@@ -10,9 +10,8 @@
 	margin-left: 10px;
 }
 
-.no-bullets{
+.no-bullets {
 	list-style-type: none;
-	margin-bottom: 20px;
 }
 
 #lightbox .modal-content {

@@ -20,7 +20,7 @@
                         <p>Select which picture you'd like to upload and then click the 'Upload Photo' button.</p>
                     </div>
                     <div class="text-center">
-                        <asp:BulletedList ID="UploadErrors" runat="server" CssClass="col-centered" />
+                        <asp:BulletedList ID="UploadErrors" runat="server" CssClass="no-bullets list-group-item-danger center-block text-center" />
                     </div>
                     <div class="row text-center">
                         <div class="form-inline">

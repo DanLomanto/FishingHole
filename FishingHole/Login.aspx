@@ -11,31 +11,31 @@
                 <div class="panel-heading text-center">
                     <h3>Welcome to the Fishing Hole!</h3>
                 </div>
-                <div class="panel-body">
+                <div class="panel-body" style="min-width: 350px">
                     <div class="container-fluid">
                         <div class="row text-center">
                             <img src="images/FishLogo.jpg" height="225" width="300" />
                         </div>
-                        <div class="row">
-                            <asp:BulletedList ID="formErrors" runat="server" CssClass="list-inline center-block text-center" />
+                        <div class="row col-md-8 col-md-offset-2">
+                            <asp:BulletedList ID="formErrors" runat="server" CssClass="no-bullets list-group-item-danger center-block text-center" />
                         </div>
                         <div class="row top-buffer">
-                            <div class="form-group" runat="server">
+                            <div class="form-group">
                                 <label for="emailInput" class="col-md-3 control-label">Email:</label>
-                                <div class="col-m-9">
+                                <div class="col-md-9">
                                     <input type="email" runat="server" id="emailInput" class="form-control" placeholder="Email" />
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="form-group" runat="server">
+                        <div class="row top-buffer">
+                            <div class="form-group">
                                 <label for="passwordInput" class="col-md-3 control-label">Password:</label>
-                                <div class="col-m-9">
+                                <div class="col-md-9">
                                     <input type="password" runat="server" id="passwordInput" class="form-control" placeholder="Password" />
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row top-buffer">
                             <div class="form-group">
                                 <div class="col-md-6 col-md-offset-3">
                                     <asp:Button ID="SignInButton" runat="server" Text="Sign In" CssClass="btn btn-m btn-primary btn-block" OnClick="SignInButtonClick"></asp:Button>

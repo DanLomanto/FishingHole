@@ -136,8 +136,8 @@
     <script type="text/javascript">
 
         $(document).ready(function () {
-            var $lightbox = $('#lightbox');
 
+            var $lightbox = $('#lightbox');
             $('[data-target="#lightbox"]').on('click', function (event) {
                 var $img = $(this),
                     src = $img.attr('src'),

@@ -150,6 +150,11 @@ namespace FishingHole
 			}
 		}
 
+		/// <summary>
+		/// Handles the Click event of the SaveAndViewLocationBtn control.
+		/// </summary>
+		/// <param name="sender">The source of the event.</param>
+		/// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
 		protected void SaveAndViewLocationBtn_Click(object sender, EventArgs e)
 		{
 			int tripId = SaveTrip();

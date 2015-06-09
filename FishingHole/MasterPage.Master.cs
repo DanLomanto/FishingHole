@@ -26,9 +26,15 @@ namespace FishingHole
 
 		protected void SignOut_Click(object sender, EventArgs e)
 		{
-			UsersInfo = null;
-			Session.Clear();
-			Response.Redirect("Login.aspx");
+			try
+			{
+				UsersInfo = null;
+				Session.Clear();
+			}
+			finally
+			{
+				Response.Redirect("Login.aspx");
+			}
 		}
 	}
 }

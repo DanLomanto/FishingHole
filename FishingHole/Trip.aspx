@@ -15,7 +15,7 @@
                 <div class="container-fluid col-md-offset-1 col-md-10">
                     <div class="row top-buffer">
                         <div class="text-center">
-                            <asp:BulletedList ID="formErrors" runat="server" CssClass="col-centered" />
+                            <asp:BulletedList ID="formErrors" runat="server" CssClass="no-bullets list-group-item-danger center-block text-center" />
                         </div>
                     </div>
                     <div class="row top-buffer">
@@ -101,21 +101,23 @@
                             </div>
                             <div id="LocationAccordian" class="panel-collapse collapse" aria-expanded="false">
                                 <div class="panel-body">
-                                    <div class="row col-md-offset-1 top-buffer">
-                                        <label for="AssociatedLocation" class="col-md-4 control-label">Associated Location:</label>
-                                    </div>
-                                    <div class="row">
-                                        <div class="form-inline col-md-8 col-md-offset-2 text-center">
-                                            <asp:DropDownList ID="AssociatedLocation" runat="server" class="form-control"></asp:DropDownList>
-                                            <asp:LinkButton ID="SaveAndViewLocationBtn" runat="server" CssClass="btn btn-primary" OnClick="SaveAndViewLocationBtn_Click">Save & view location&nbsp;<i class="glyphicon glyphicon-expand"></i></asp:LinkButton>
+                                    <div class="container-fluid">
+                                        <div class="row col-md-offset-1 top-buffer">
+                                            <label for="AssociatedLocation" class="col-md-4 control-label">Associated Location:</label>
                                         </div>
-                                    </div>
-                                    <div class="row text-center top-buffer">
-                                        <span><strong>Or</strong></span>
-                                    </div>
-                                    <div class="row top-buffer">
-                                        <div class="col-md-offset-3 col-md-6">
-                                            <a id="SaveAndCreateLocation" runat="server" href="#" class="btn btn-info btn-block">Save & attach new location to trip&nbsp;<i class="glyphicon glyphicon-expand"></i></a>
+                                        <div class="row">
+                                            <div class="form-inline col-md-8 col-md-offset-2 text-center">
+                                                <asp:DropDownList ID="AssociatedLocation" runat="server" class="form-control"></asp:DropDownList>
+                                                <asp:LinkButton ID="SaveAndViewLocationBtn" runat="server" CssClass="btn btn-primary" OnClick="SaveAndViewLocationBtn_Click">Save & view location&nbsp;<i class="glyphicon glyphicon-expand"></i></asp:LinkButton>
+                                            </div>
+                                        </div>
+                                        <div class="row text-center top-buffer">
+                                            <span><strong>Or</strong></span>
+                                        </div>
+                                        <div class="row top-buffer">
+                                            <div class="col-md-offset-3 col-md-6">
+                                                <a id="SaveAndCreateLocation" runat="server" href="#" class="btn btn-info btn-block">Save & attach new location to trip&nbsp;<i class="glyphicon glyphicon-expand"></i></a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -128,42 +130,42 @@
                             </div>
                             <div id="PhotosAccordian" class="panel-collapse collapse" aria-expanded="false">
                                 <div class="panel-body">
-                                    <div class="top-buffer row col-md-offset-1">
-                                        <label>Attached Photo(s):</label>
-                                    </div>
-                                    <div class="top-buffer row col-md-8 col-md-offset-2">
-                                        <p id="NoPhotosAttachedMessage" runat="server" visible="false"><em>You have not attached any photos to this trip yet...</em></p>
-                                    </div>
-                                    <div class="row top-buffer">
-                                        <div id="myCarousel" class="carousel slide col-md-offset-2 col-md-8">
-                                            <div id="CarouselImages" runat="server" class="carousel-inner" role="listbox">
-                                            </div>
-                                            <a class="left carousel-control" href="#myCarousel" data-slide="prev"><span runat="server" id="leftCarouselControl" class="glyphicon glyphicon-chevron-left"></span></a>
-                                            <a class="right carousel-control" href="#myCarousel" data-slide="next"><span runat="server" id="rightCarouselControl" class="glyphicon glyphicon-chevron-right"></span></a>
+                                    <div class="container-fluid">
+                                        <div class="row top-buffer col-md-offset-1">
+                                            <label>Attached Photo(s):</label>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="container">
-                                    <div class="top-buffer row">
-                                        <div class="form-inline col-md-8 col-md-offset-2 text-center">
-                                            <label for="photoUploader">Upload Photo(s):</label>
-                                            <asp:FileUpload runat="server" ID="photoUploader" AllowMultiple="true" CssClass="form-control" />
-                                            <asp:LinkButton CssClass="btn btn-primary" runat="server" ID="uploadPhotoButton" OnClick="UploadPhoto"><i class="glyphicon glyphicon-cloud-upload"></i>&nbsp;Save & Upload Photo</asp:LinkButton>
+                                        <div class="row top-buffer col-md-6 col-md-offset-2">
+                                            <p id="NoPhotosAttachedMessage" runat="server" visible="false"><em>You have not attached any photos to this trip yet...</em></p>
                                         </div>
                                         <div class="row top-buffer">
-                                            <br />
-                                            <div id="returnMessage" runat="server" class="col-md-8 text-center"></div>
+                                            <div id="myCarousel" class="carousel slide col-md-offset-2 col-md-8">
+                                                <div id="CarouselImages" runat="server" class="carousel-inner" role="listbox">
+                                                </div>
+                                                <a class="left carousel-control" href="#myCarousel" data-slide="prev"><span runat="server" id="leftCarouselControl" class="glyphicon glyphicon-chevron-left"></span></a>
+                                                <a class="right carousel-control" href="#myCarousel" data-slide="next"><span runat="server" id="rightCarouselControl" class="glyphicon glyphicon-chevron-right"></span></a>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="row text-center top-buffer">
-                                        <span><strong>Or</strong></span>
-                                    </div>
-                                    <div class="row top-buffer">
-                                        <div class="col-md-offset-3 col-md-6">
-                                            <asp:LinkButton ID="SaveAndCreatePhotos" runat="server" OnClick="SaveAndCreatePhotos_Click" CssClass="btn btn-info btn-block">Save & attach existing pictures to trip&nbsp;<i class="glyphicon glyphicon-expand"></i></asp:LinkButton>
+                                        <div class="top-buffer row">
+                                            <div class="form-inline col-md-8 col-md-offset-2 text-center">
+                                                <label for="photoUploader">Upload Photo(s):</label>
+                                                <asp:FileUpload runat="server" ID="photoUploader" AllowMultiple="true" CssClass="form-control" />
+                                                <asp:LinkButton CssClass="btn btn-primary" runat="server" ID="uploadPhotoButton" OnClick="UploadPhoto"><i class="glyphicon glyphicon-cloud-upload"></i>&nbsp;Save & Upload Photo</asp:LinkButton>
+                                            </div>
+                                            <div class="row top-buffer">
+                                                <br />
+                                                <div id="returnMessage" runat="server" class="col-md-8 text-center"></div>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="row top-buffer">
+                                        <div class="row text-center top-buffer">
+                                            <span><strong>Or</strong></span>
+                                        </div>
+                                        <div class="row top-buffer">
+                                            <div class="col-md-offset-3 col-md-6">
+                                                <asp:LinkButton ID="SaveAndCreatePhotos" runat="server" OnClick="SaveAndCreatePhotos_Click" CssClass="btn btn-info btn-block">Save & attach existing pictures to trip&nbsp;<i class="glyphicon glyphicon-expand"></i></asp:LinkButton>
+                                            </div>
+                                        </div>
+                                        <div class="row top-buffer">
+                                        </div>
                                     </div>
                                 </div>
                             </div>

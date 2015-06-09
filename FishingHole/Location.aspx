@@ -13,8 +13,8 @@
             </div>
             <div class="panel-body">
                 <div class="container-fluid">
-                    <div class="row text-center">
-                        <asp:BulletedList ID="formErrors" runat="server" CssClass="list-inline center-block text-center" />
+                    <div class="row text-center col-md-offset-2">
+                        <asp:BulletedList ID="formErrors" runat="server" CssClass="no-bullets list-group-item-danger center-block text-center col-md-8" />
                     </div>
                     <div class="row top-buffer">
                         <div class="form-inline col-md-offset-3">
