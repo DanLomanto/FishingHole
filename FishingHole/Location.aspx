@@ -195,6 +195,7 @@
                                 <asp:Button ID="CancelButton" runat="server" Text="Cancel" CssClass="btn btn-m btn-default" OnClick="CancelButton_Click"></asp:Button>
                             </div>
                         </div>
+                        <div class="row top-buffer"></div>
                     </div>
                 </div>
             </div>

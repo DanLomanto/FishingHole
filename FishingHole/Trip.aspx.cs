@@ -238,7 +238,7 @@ namespace FishingHole
 				}
 				else
 				{
-					id = trip.CreateTrip(Master.UsersInfo.ID);
+					trip.ID = trip.CreateTrip(Master.UsersInfo.ID);
 				}
 			}
 
