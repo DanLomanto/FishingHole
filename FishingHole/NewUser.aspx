@@ -25,7 +25,7 @@
                         </div>
                         <div class="row top-buffer">
                             <div class="form-group">
-                                 <label for="firstNameInput" class="col-md-3 control-label">First Name:</label>
+                                <label for="firstNameInput" class="col-md-3 control-label">First Name:</label>
                                 <div class="col-md-9">
                                     <input class="form-control" runat="server" type="text" id="firstNameInput" placeholder="First Name" />
                                 </div>
@@ -82,11 +82,6 @@
         </div>
     </div>
     <script type="text/javascript">
-
-        $(document).ready(function () {
-            var navMenu = document.getElementById('navMenu');
-            navMenu.style.display = 'none';
-        });
 
         function hitEnterOnCreateAccountButton() {
             $("#firstNameInput").keyup(function (event) {

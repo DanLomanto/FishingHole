@@ -52,11 +52,6 @@
     </div>
     <script type="text/javascript">
 
-        $(document).ready(function () {
-            var navMenu = document.getElementById('navMenu');
-            navMenu.style.display = 'none';
-        });
-
         function hitEnterOnSignInButton() {
             $("#emailInput").keyup(function (event) {
                 if (event.keyCode == 13) {
