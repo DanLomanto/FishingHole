@@ -7,11 +7,11 @@
 <asp:Content ID="LoginPage" ContentPlaceHolderID="MainContent" runat="server">
     <div class="container top-buffer">
         <div class="col-md-6 col-md-offset-3">
-            <div class="panel panel-default">
+            <div class="panel panel-default" style="min-width: 350px">
                 <div class="panel-heading text-center">
                     <h3>Welcome to the Fishing Hole!</h3>
                 </div>
-                <div class="panel-body" style="min-width: 350px">
+                <div class="panel-body">
                     <div class="container-fluid">
                         <div class="row text-center">
                             <img src="images/FishLogo.jpg" height="225" width="300" />

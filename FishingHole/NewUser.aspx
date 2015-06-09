@@ -8,7 +8,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="Server">
     <div class="container top-buffer" runat="server">
         <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
+            <div class="panel panel-default" style="min-width: 350px">
                 <div class="panel-heading">
                     <h3>Create Account</h3>
                 </div>
