@@ -148,8 +148,8 @@
                     src = $img.attr('src'),
                     alt = $img.attr('alt'),
                     css = {
-                        'maxWidth': $(window).width() - 300,
-                        'maxHeight': $(window).height() - 300
+                        'maxWidth': $(window).width() - ($(window).width() * .2),
+                        'maxHeight': $(window).height() - ($(window).height() * .2)
                     };
 
                 $lightbox.find('.close').addClass('hidden');

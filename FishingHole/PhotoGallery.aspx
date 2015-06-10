@@ -19,38 +19,40 @@
                 <h3>Photo Gallery</h3>
             </div>
             <div class="panel-body">
-                <div class="row">
-                    <div class="form-inline col-md-offset-1">
-                        <label for="FilterByTripDropDown">Filter Photos by Trip:</label>
-                        <asp:DropDownList ID="FilterByTripDropDown" runat="server" class="form-control"></asp:DropDownList>
-                        <asp:LinkButton ID="FilterPhotosBtn" runat="server" CssClass="btn btn-primary" OnClick="FilterPhotosBtn_Click">Filter</asp:LinkButton>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="form-inline">
+                            <label for="FilterByTripDropDown" class="col-md-3 col-xs-10">Filter Photos by Trip:</label>
+                            <asp:DropDownList ID="FilterByTripDropDown" runat="server" class="form-control col-md-6 col-xs-6"></asp:DropDownList>
+                            <asp:LinkButton ID="FilterPhotosBtn" runat="server" CssClass="btn btn-primary col-md-1 col-xs-4 col-sm-2" OnClick="FilterPhotosBtn_Click">Filter</asp:LinkButton>
+                        </div>
                     </div>
-                </div>
-                <div class="row top-buffer">
-                    <div class="col-md-2 pull-left">
-                        <asp:LinkButton runat="server" ID="prevTwentyImages" CssClass="btn btn-default text-center" OnClick="prevTwentyImages_Click"><i class="glyphicon glyphicon-chevron-left"></i>&nbsp;Previous 20</asp:LinkButton>
+                    <div class="row top-buffer">
+                        <div class="col-md-2 col-xs-2 pull-left">
+                            <asp:LinkButton runat="server" ID="prevTwentyImages" CssClass="btn btn-default text-center" OnClick="prevTwentyImages_Click"><i class="glyphicon glyphicon-chevron-left"></i>&nbsp;Previous 20</asp:LinkButton>
+                        </div>
+                        <div class="col-md-3 col-md-offset-7 col-xs-3 col-xs-offset-7">
+                            <asp:LinkButton runat="server" ID="nextTwentyImages" CssClass="btn btn-default pull-right" OnClick="nextTwentyImages_Click">Next 20&nbsp;<span class="glyphicon glyphicon-chevron-right" /></asp:LinkButton>
+                        </div>
                     </div>
-                    <div class="col-md-3 col-md-offset-7">
-                        <asp:LinkButton runat="server" ID="nextTwentyImages" CssClass="btn btn-default pull-right" OnClick="nextTwentyImages_Click">Next 20&nbsp;<span class="glyphicon glyphicon-chevron-right" /></asp:LinkButton>
+                    <div class="top-buffer row">
+                        <p id="NoPhotosAssociatedMessage" runat="server" visible="false" class="col-md-offset-2 col-xs-offset-2"><em>You have not associated any photos to this trip yet...</em></p>
+                        <ul id="photoGallery" class="no-bullets" runat="server">
+                        </ul>
                     </div>
-                </div>
-                <div class="top-buffer row">
-                    <p id="NoPhotosAssociatedMessage" runat="server" visible="false" class="col-md-offset-2"><em>You have not associated any photos to this trip yet...</em></p>
-                    <ul id="photoGallery" runat="server">
-                    </ul>
-                </div>
-                <div class="top-buffer row">
-                    <div class="form-inline text-center">
-                        <label for="TripAssociationDropDown">Associate selected photos to Trip:</label>
-                        <asp:DropDownList ID="TripAssociationDropDown" runat="server" class="form-control"></asp:DropDownList>
-                        <asp:LinkButton ID="ApplyTripAssociation" runat="server" CssClass="btn btn-primary" OnClick="ApplyTripAssociation_Click">Apply</asp:LinkButton>
+                    <div class="top-buffer row">
+                        <div class="form-inline text-center">
+                            <label for="TripAssociationDropDown">Associate selected photos to Trip:</label>
+                            <asp:DropDownList ID="TripAssociationDropDown" runat="server" class="form-control"></asp:DropDownList>
+                            <asp:LinkButton ID="ApplyTripAssociation" runat="server" CssClass="btn btn-primary" OnClick="ApplyTripAssociation_Click">Apply</asp:LinkButton>
+                        </div>
                     </div>
-                </div>
-                <div class="top-buffer row text-center">
-                    <span>Or</span>
-                </div>
-                <div class="top-buffer row text-center">
-                    <a href="#confirmDeletionModal" id="deletePhotosBtn" class="btn btn-primary">Delete Selected Photo(s)</a>
+                    <div class="top-buffer row text-center">
+                        <span>Or</span>
+                    </div>
+                    <div class="top-buffer row text-center">
+                        <a href="#confirmDeletionModal" id="deletePhotosBtn" class="btn btn-primary">Delete Selected Photo(s)</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -106,8 +108,8 @@
                     src = $img.attr('src'),
                     alt = $img.attr('alt'),
                     css = {
-                        'maxWidth': $(window).width() - 300,
-                        'maxHeight': $(window).height() - 300
+                        'maxWidth': $(window).width() - ($(window).width() * .2),
+                        'maxHeight': $(window).height() - ($(window).height() * .2)
                     };
 
                 $lightbox.find('.close').addClass('hidden');

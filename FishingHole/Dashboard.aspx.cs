@@ -267,7 +267,7 @@ namespace FishingHole
 			foreach (KeyValuePair<int, string> imagePath in twentyImagesToDisplay)
 			{
 				HtmlGenericControl li = new HtmlGenericControl("li");
-				li.Attributes.Add("class", "col-md-3 thumbnail");
+				li.Attributes.Add("class", "col-md-3 col-xs-3 thumbnail");
 				li.InnerHtml = "<img src='" + imagePath.Value + "' data-target=\"#lightbox\" data-toggle=\"modal\" />";
 
 				photoGallery.Controls.Add(li);
