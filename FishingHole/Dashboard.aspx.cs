@@ -234,43 +234,48 @@ namespace FishingHole
 				return;
 			}
 
-			List<KeyValuePair<int, string>> twentyImagesToDisplay = new List<KeyValuePair<int, string>>();
+			List<KeyValuePair<int, string>> eightImagesToDisplay = new List<KeyValuePair<int, string>>();
 
 			if (usersPhotoGallery.Count < numberOfImagesDisplayedInGallery)
 			{
-				twentyImagesToDisplay = usersPhotoGallery.GetRange(photoGalleryIndex, usersPhotoGallery.Count);
+				eightImagesToDisplay = usersPhotoGallery.GetRange(photoGalleryIndex, usersPhotoGallery.Count);
 			}
 			else
 			{
 				if ((usersPhotoGallery.Count / (numberOfImagesDisplayedInGallery + photoGalleryIndex)) >= 1)
 				{
-					twentyImagesToDisplay = usersPhotoGallery.GetRange(photoGalleryIndex, numberOfImagesDisplayedInGallery);
+					eightImagesToDisplay = usersPhotoGallery.GetRange(photoGalleryIndex, numberOfImagesDisplayedInGallery);
 				}
 				else
 				{
-					twentyImagesToDisplay = usersPhotoGallery.GetRange(photoGalleryIndex, usersPhotoGallery.Count % numberOfImagesDisplayedInGallery);
+					eightImagesToDisplay = usersPhotoGallery.GetRange(photoGalleryIndex, usersPhotoGallery.Count % numberOfImagesDisplayedInGallery);
 				}
 			}
 
 			// Remove any existing images in the photo gallery so we can add only the ones we want to display.
 			for (int i = 0; i < numberOfImagesDisplayedInGallery; i++)
 			{
-				if (photoGallery.HasControls())
+				if (photoDiv.HasControls())
 				{
-					photoGallery.Controls.RemoveAt(0);
+					photoDiv.Controls.RemoveAt(0);
 				}
 				else
 				{ break; }
 			}
 
-			// Add the images we want to display in the gallery.
-			foreach (KeyValuePair<int, string> imagePath in twentyImagesToDisplay)
+			foreach (KeyValuePair<int, string> imageInfo in eightImagesToDisplay)
 			{
-				HtmlGenericControl li = new HtmlGenericControl("li");
-				li.Attributes.Add("class", "col-md-3 col-xs-3 thumbnail");
-				li.InnerHtml = "<img src='" + imagePath.Value + "' data-target=\"#lightbox\" data-toggle=\"modal\" />";
+				HtmlGenericControl div = new HtmlGenericControl("div");
+				div.Attributes.Add("class", "col-md-3 col-sm-4 col-xs-6");
 
-				photoGallery.Controls.Add(li);
+				HtmlImage image = new HtmlImage();
+				image.Src = imageInfo.Value;
+				image.Attributes.Add("data-target", "#lightbox");
+				image.Attributes.Add("data-toggle", "modal");
+				image.Attributes.Add("class", "thumbnail col-md-12 col-xs-12");
+
+				div.Controls.Add(image);
+				photoDiv.Controls.Add(div);
 			}
 		}
 

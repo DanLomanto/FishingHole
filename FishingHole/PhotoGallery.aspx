@@ -35,10 +35,8 @@
                             <asp:LinkButton runat="server" ID="nextTwentyImages" CssClass="btn btn-default pull-right" OnClick="nextTwentyImages_Click">Next 20&nbsp;<span class="glyphicon glyphicon-chevron-right" /></asp:LinkButton>
                         </div>
                     </div>
-                    <div class="top-buffer row">
+                    <div class="top-buffer row" id="photoDiv" runat="server">
                         <p id="NoPhotosAssociatedMessage" runat="server" visible="false" class="col-md-offset-2 col-xs-offset-2"><em>You have not associated any photos to this trip yet...</em></p>
-                        <ul id="photoGallery" class="no-bullets" runat="server">
-                        </ul>
                     </div>
                     <div class="top-buffer row">
                         <div class="form-inline text-center">

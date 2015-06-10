@@ -26,9 +26,7 @@
                                     <span>You have not added any Photos yet...</span>
                                 </div>
                             </div>
-                            <div class="row col-md-10 col-md-offset-1">
-                                <ul id="photoGallery" class="row top-buffer no-bullets" runat="server">
-                                </ul>
+                            <div class="row col-md-10 col-md-offset-1" id="photoDiv" runat="server">
                             </div>
                             <div class="row top-buffer col-md-offset-1 col-md-10">
                                 <a href="PhotoGallery.aspx">View all photos</a>

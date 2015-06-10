@@ -58,6 +58,15 @@ namespace FishingHole {
         protected global::System.Web.UI.WebControls.LinkButton nextTwentyImages;
         
         /// <summary>
+        /// photoDiv control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl photoDiv;
+        
+        /// <summary>
         /// NoPhotosAssociatedMessage control.
         /// </summary>
         /// <remarks>
@@ -65,15 +74,6 @@ namespace FishingHole {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl NoPhotosAssociatedMessage;
-        
-        /// <summary>
-        /// photoGallery control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl photoGallery;
         
         /// <summary>
         /// TripAssociationDropDown control.

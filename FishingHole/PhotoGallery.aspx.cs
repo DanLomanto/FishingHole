@@ -196,9 +196,9 @@ namespace FishingHole
 			// Remove any existing images in the photo gallery so we can add only the ones we want to display.
 			for (int i = 0; i < numberOfImagesDisplayedInGallery; i++)
 			{
-				if (photoGallery.HasControls())
+				if (photoDiv.HasControls())
 				{
-					photoGallery.Controls.RemoveAt(0);
+					photoDiv.Controls.RemoveAt(0);
 				}
 				else
 				{ break; }
@@ -207,22 +207,23 @@ namespace FishingHole
 			// Add the images we want to display in the gallery.
 			foreach (KeyValuePair<int, string> imageInfo in twentyImagesToDisplay)
 			{
-				HtmlGenericControl li = new HtmlGenericControl("li");
-				li.Attributes.Add("class", "pull-left col-md-3 col-xs-6");
+				HtmlGenericControl div = new HtmlGenericControl("div");
+				div.Attributes.Add("class", "col-md-3 col-sm-4 col-xs-6");
 
 				HtmlInputCheckBox checkbox = new HtmlInputCheckBox();
 				checkbox.Value = imageInfo.Key.ToString();
 				checkbox.Attributes.Add("class", "pull-left");
+				checkbox.Attributes.Add("style", "margin-right:5px");
 
 				HtmlImage image = new HtmlImage();
 				image.Src = imageInfo.Value;
 				image.Attributes.Add("data-target", "#lightbox");
 				image.Attributes.Add("data-toggle", "modal");
-				image.Attributes.Add("class", "thumbnail col-md-10 col-xs-10");
+				image.Attributes.Add("class", "thumbnail col-md-12 col-xs-12");
 
-				li.Controls.Add(checkbox);
-				li.Controls.Add(image);
-				photoGallery.Controls.Add(li);
+				div.Controls.Add(checkbox);
+				div.Controls.Add(image);
+				photoDiv.Controls.Add(div);
 			}
 
 			if (twentyImagesToDisplay.Count == 0)
@@ -262,7 +263,7 @@ namespace FishingHole
 		{
 			List<System.Web.UI.HtmlControls.HtmlInputCheckBox> allCheckboxes = new List<HtmlInputCheckBox>();
 
-			foreach (Control listItem in photoGallery.Controls)
+			foreach (Control listItem in photoDiv.Controls)
 			{
 				foreach (Control possibleCheckbox in listItem.Controls)
 				{
