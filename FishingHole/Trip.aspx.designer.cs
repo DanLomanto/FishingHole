@@ -103,13 +103,13 @@ namespace FishingHole {
         protected global::System.Web.UI.HtmlControls.HtmlTextArea OtherNotes;
         
         /// <summary>
-        /// AssociatedLocation control.
+        /// AttachedLocation control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList AssociatedLocation;
+        protected global::System.Web.UI.WebControls.DropDownList AttachedLocation;
         
         /// <summary>
         /// SaveAndViewLocationBtn control.

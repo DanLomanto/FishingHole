@@ -141,7 +141,7 @@ namespace Common
 		/// </summary>
 		/// <param name="tripId">The trip identifier.</param>
 		/// <returns></returns>
-		public static int GetAssociatedLocationForTrip(int tripId)
+		public static int GetAttachedLocationForTrip(int tripId)
 		{
 			FishEntities fishDb = new FishEntities();
 			var associatedLocationId = fishDb.GetAssociatedLocationForTrip(tripId).FirstOrDefault(); ;

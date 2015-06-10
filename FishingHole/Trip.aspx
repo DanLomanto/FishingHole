@@ -103,11 +103,11 @@
                                 <div class="panel-body">
                                     <div class="container-fluid">
                                         <div class="row col-md-offset-1 top-buffer">
-                                            <label for="AssociatedLocation" class="col-md-4 control-label">Associated Location:</label>
+                                            <label for="AttachedLocation" class="col-md-4 control-label">Attached Location:</label>
                                         </div>
                                         <div class="row">
                                             <div class="form-inline col-md-8 col-md-offset-2 text-center">
-                                                <asp:DropDownList ID="AssociatedLocation" runat="server" class="form-control"></asp:DropDownList>
+                                                <asp:DropDownList ID="AttachedLocation" runat="server" class="form-control"></asp:DropDownList>
                                                 <asp:LinkButton ID="SaveAndViewLocationBtn" runat="server" CssClass="btn btn-primary" OnClick="SaveAndViewLocationBtn_Click">Save & view location&nbsp;<i class="glyphicon glyphicon-expand"></i></asp:LinkButton>
                                             </div>
                                         </div>

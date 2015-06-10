@@ -18,8 +18,13 @@
                     </div>
                     <div class="panel-body">
                         <div class="container-fluid">
-                            <div class="row col-md-offset-1">
+                            <div id="RecentlyAddedPhotosMessage" runat="server" class="row col-md-offset-1">
                                 <p>Your 8 most recent photo uploads:</p>
+                            </div>
+                            <div id="NoPhotosMessage" runat="server" class="row top-buffer col-md-offset-1" visible="false">
+                                <div class="alert alert-info col-md-7">
+                                    <span>You have not added any Photos yet...</span>
+                                </div>
                             </div>
                             <div class="row col-md-10 col-md-offset-1">
                                 <ul id="photoGallery" class="row top-buffer no-bullets" runat="server">

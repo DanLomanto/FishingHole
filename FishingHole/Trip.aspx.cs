@@ -78,14 +78,14 @@ namespace FishingHole
 			{
 				PopulateLocationsDropDown();
 
-				int associatedLocationId = LocationObject.GetAssociatedLocationForTrip(id);
-				if (associatedLocationId > 0)
+				int AttachedLocationId = LocationObject.GetAttachedLocationForTrip(id);
+				if (AttachedLocationId > 0)
 				{
-					AssociatedLocation.SelectedIndex = AssociatedLocation.Items.IndexOf(AssociatedLocation.Items.FindByValue(associatedLocationId.ToString()));
+					AttachedLocation.SelectedIndex = AttachedLocation.Items.IndexOf(AttachedLocation.Items.FindByValue(AttachedLocationId.ToString()));
 				}
 				else
 				{
-					AssociatedLocation.SelectedIndex = 0;
+					AttachedLocation.SelectedIndex = 0;
 				}
 			}
 		}
@@ -161,9 +161,9 @@ namespace FishingHole
 
 			if (tripId > 0)
 			{
-				if (Convert.ToInt32(AssociatedLocation.SelectedValue) > 0)
+				if (Convert.ToInt32(AttachedLocation.SelectedValue) > 0)
 				{
-					Response.Redirect("Location.aspx?id=" + AssociatedLocation.SelectedValue);
+					Response.Redirect("Location.aspx?id=" + AttachedLocation.SelectedValue);
 				}
 				else
 				{
@@ -193,14 +193,14 @@ namespace FishingHole
 		/// </summary>
 		private void PopulateLocationsDropDown()
 		{
-			AssociatedLocation.Items.Add(new ListItem("Please select a Location...", "-1"));
+			AttachedLocation.Items.Add(new ListItem("Please select a Location...", "-1"));
 
 			foreach (DataRow row in LocationObject.GetLocationsForUser(Master.UsersInfo.ID).Rows)
 			{
-				AssociatedLocation.Items.Add(new ListItem(row["Name"].ToString(), row["ID"].ToString()));
+				AttachedLocation.Items.Add(new ListItem(row["Name"].ToString(), row["ID"].ToString()));
 			}
 
-			AssociatedLocation.DataBind();
+			AttachedLocation.DataBind();
 		}
 
 		/// <summary>
@@ -242,13 +242,13 @@ namespace FishingHole
 				}
 			}
 
-			if (AssociatedLocation.SelectedValue == "-1")
+			if (AttachedLocation.SelectedValue == "-1")
 			{
 				TripObject.DeleteLocationForTrip(trip.ID);
 			}
 			else
 			{
-				TripObject.CreateUpdateLocationForTrip(trip.ID, Convert.ToInt32(AssociatedLocation.SelectedValue));
+				TripObject.CreateUpdateLocationForTrip(trip.ID, Convert.ToInt32(AttachedLocation.SelectedValue));
 			}
 
 			return trip.ID;

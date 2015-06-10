@@ -22,6 +22,24 @@ namespace FishingHole {
         protected global::System.Web.UI.ScriptManager ScriptManager1;
         
         /// <summary>
+        /// RecentlyAddedPhotosMessage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl RecentlyAddedPhotosMessage;
+        
+        /// <summary>
+        /// NoPhotosMessage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl NoPhotosMessage;
+        
+        /// <summary>
         /// photoGallery control.
         /// </summary>
         /// <remarks>

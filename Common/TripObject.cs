@@ -45,8 +45,14 @@ namespace Common
 
 			DataTable table = DataActions.ConvertToDataTable(result);
 
+			if (table == null || table.Rows.Count == 0)
+			{
+				return null;
+			}
+
 			table.DefaultView.Sort = "ID DESC";
 			table = table.DefaultView.ToTable();
+
 			return table;
 		}
 

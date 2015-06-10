@@ -15,31 +15,33 @@
                 <h3>Locations</h3>
             </div>
             <div class="panel-body">
-                <div id="NoLocationsMessage" runat="server" class="row " style="margin-left: 10px">
-                    <div class="alert alert-info col-md-5">
+                <div class="container-fluid">
+                    <div id="NoLocationsMessage" runat="server" class="row alert alert-info col-md-offset-1 col-md-4">
                         <span>You have not created any Locations yet...</span>
                     </div>
-                </div>
-                <div class="table-responsive">
-                    <asp:UpdatePanel ID="LocationsGridUpdatePanel" UpdateMode="Conditional" runat="server">
-                        <ContentTemplate>
-                            <asp:GridView ID="LocationsGrid" OnSorting="LocationsGrid_Sorting" runat="server" AllowPaging="True" AllowSorting="True"
-                                CssClass="table table-striped table-bordered table-hover" BorderStyle="NotSet" AutoGenerateColumns="false"
-                                OnRowDataBound="OnLocationsRowDataBound" OnSelectedIndexChanged="OnLocationsSelectedIndexChanged" AutoGenerateSelectButton="true">
-                                <Columns>
-                                    <asp:BoundField ItemStyle-CssClass="maxWidthGrid" DataField="ID" HeaderText="ID" Visible="false" />
-                                    <asp:BoundField ItemStyle-CssClass="maxWidthGrid" DataField="Name" HeaderText="Name" />
-                                    <asp:BoundField ItemStyle-CssClass="maxWidthGrid" DataField="LattitudeDirection" HeaderText="Lattitude Direction" />
-                                    <asp:BoundField ItemStyle-CssClass="maxWidthGrid" DataField="Lattitude" HeaderText="Lattitude" />
-                                    <asp:BoundField ItemStyle-CssClass="maxWidthGrid" DataField="LongitudeDirection" HeaderText="Longitude Direction" />
-                                    <asp:BoundField ItemStyle-CssClass="maxWidthGrid" DataField="Longitude" HeaderText="Longitude" />
-                                    <asp:BoundField ItemStyle-CssClass="maxWidthGrid" DataField="StreetAddress" HeaderText="Street Address" />
-                                    <asp:BoundField ItemStyle-CssClass="maxWidthGrid" DataField="CityTown" HeaderText="City/Town" />
-                                    <asp:BoundField ItemStyle-CssClass="maxWidthGrid" DataField="CreateDate" HeaderText="Create Date" />
-                                </Columns>
-                            </asp:GridView>
-                        </ContentTemplate>
-                    </asp:UpdatePanel>
+                    <div class="row">
+                        <div class="table-responsive">
+                            <asp:UpdatePanel ID="LocationsGridUpdatePanel" UpdateMode="Conditional" runat="server">
+                                <ContentTemplate>
+                                    <asp:GridView ID="LocationsGrid" OnSorting="LocationsGrid_Sorting" runat="server" AllowPaging="True" AllowSorting="True"
+                                        CssClass="table table-striped table-bordered table-hover" BorderStyle="NotSet" AutoGenerateColumns="false"
+                                        OnRowDataBound="OnLocationsRowDataBound" OnSelectedIndexChanged="OnLocationsSelectedIndexChanged" AutoGenerateSelectButton="true">
+                                        <Columns>
+                                            <asp:BoundField ItemStyle-CssClass="maxWidthGrid" DataField="ID" HeaderText="ID" Visible="false" />
+                                            <asp:BoundField ItemStyle-CssClass="maxWidthGrid" DataField="Name" HeaderText="Name" />
+                                            <asp:BoundField ItemStyle-CssClass="maxWidthGrid" DataField="LattitudeDirection" HeaderText="Lattitude Direction" />
+                                            <asp:BoundField ItemStyle-CssClass="maxWidthGrid" DataField="Lattitude" HeaderText="Lattitude" />
+                                            <asp:BoundField ItemStyle-CssClass="maxWidthGrid" DataField="LongitudeDirection" HeaderText="Longitude Direction" />
+                                            <asp:BoundField ItemStyle-CssClass="maxWidthGrid" DataField="Longitude" HeaderText="Longitude" />
+                                            <asp:BoundField ItemStyle-CssClass="maxWidthGrid" DataField="StreetAddress" HeaderText="Street Address" />
+                                            <asp:BoundField ItemStyle-CssClass="maxWidthGrid" DataField="CityTown" HeaderText="City/Town" />
+                                            <asp:BoundField ItemStyle-CssClass="maxWidthGrid" DataField="CreateDate" HeaderText="Create Date" />
+                                        </Columns>
+                                    </asp:GridView>
+                                </ContentTemplate>
+                            </asp:UpdatePanel>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

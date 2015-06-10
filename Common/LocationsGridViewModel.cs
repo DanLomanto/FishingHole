@@ -85,7 +85,7 @@ namespace Common
 			var result = fishDb.GetAllLocationsForUser(userId);
 			DataTable table = DataActions.ConvertToDataTable(result);
 
-			if (table.Rows.Count == 0)
+			if (table == null || table.Rows.Count == 0)
 			{
 				return null;
 			}

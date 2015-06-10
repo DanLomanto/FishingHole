@@ -227,6 +227,13 @@ namespace FishingHole
 		{
 			List<KeyValuePair<int, string>> usersPhotoGallery = PhotoActions.GetImagesForUser(Master.UsersInfo.ID);
 
+			if (usersPhotoGallery.Count == 0)
+			{
+				NoPhotosMessage.Visible = true;
+				RecentlyAddedPhotosMessage.Visible = false;
+				return;
+			}
+
 			List<KeyValuePair<int, string>> twentyImagesToDisplay = new List<KeyValuePair<int, string>>();
 
 			if (usersPhotoGallery.Count < numberOfImagesDisplayedInGallery)
