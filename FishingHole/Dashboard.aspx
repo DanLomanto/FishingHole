@@ -28,7 +28,7 @@
                             </div>
                             <div class="row col-md-12 col-xs-12" id="photoDiv" runat="server">
                             </div>
-                            <div class="row top-buffer col-md-offset-1 col-md-10">
+                            <div class="row top-buffer col-md-offset-1 col-md-10 col-xs-10">
                                 <a href="PhotoGallery.aspx">View all photos</a>
                             </div>
                         </div>
