@@ -220,6 +220,7 @@ namespace FishingHole
 				image.Attributes.Add("data-target", "#lightbox");
 				image.Attributes.Add("data-toggle", "modal");
 				image.Attributes.Add("class", "thumbnail col-md-12 col-xs-12");
+				image.Attributes.Add("style", "height:100px; width:100px");
 
 				div.Controls.Add(checkbox);
 				div.Controls.Add(image);
