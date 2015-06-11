@@ -7,14 +7,14 @@
 <asp:Content ID="LoginPage" ContentPlaceHolderID="MainContent" runat="server">
     <div class="container top-buffer">
         <div class="col-md-6 col-md-offset-3">
-            <div class="panel panel-default" style="min-width: 330px">
+            <div class="panel panel-default">
                 <div class="panel-heading text-center">
                     <h3>Welcome to the Fishing Hole!</h3>
                 </div>
                 <div class="panel-body">
                     <div class="container-fluid">
                         <div class="row text-center">
-                            <img src="images/FishLogo.jpg" height="225" width="300" />
+                            <img src="images/FishLogo.jpg" class="col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1" />
                         </div>
                         <div class="row col-md-8 col-md-offset-2">
                             <asp:BulletedList ID="formErrors" runat="server" CssClass="no-bullets list-group-item-danger center-block text-center" />
