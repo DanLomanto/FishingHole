@@ -55,13 +55,12 @@ namespace FishingHole
 				PopulateFilterByTripDropDown();
 
 				PopulateTripsDropDown();
-			}
 
-			if (GetTripIdFromQueryString() > 0)
-			{
-				FilterByTripDropDown.SelectedIndex = FilterByTripDropDown.Items.IndexOf(FilterByTripDropDown.Items.FindByValue(GetTripIdFromQueryString().ToString()));
+				if (GetTripIdFromQueryString() > 0)
+				{
+					FilterByTripDropDown.SelectedIndex = FilterByTripDropDown.Items.IndexOf(FilterByTripDropDown.Items.FindByValue(GetTripIdFromQueryString().ToString()));
+				}
 			}
-
 			LoadPhotoGalleryImages();
 		}
 
