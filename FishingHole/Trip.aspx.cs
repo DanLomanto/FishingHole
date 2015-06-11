@@ -361,5 +361,17 @@ namespace FishingHole
 		}
 
 		#endregion Private Methods
+
+		protected void SaveAndCreateLocation_Click(object sender, EventArgs e)
+		{
+			int tripId = SaveTrip();
+
+			if (tripId > 0)
+			{
+				Response.Redirect("Location.aspx?id=0&tripId=" + tripId.ToString());
+			}
+
+			BindErrorList(new List<string> { "You must select a valid location first." });
+		}
 	}
 }

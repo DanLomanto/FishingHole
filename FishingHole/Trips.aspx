@@ -16,8 +16,8 @@
             </div>
             <div class="panel-body">
                 <div class="container-fluid">
-                    <div class="row alert alert-info col-md-offset-1 col-md-4">
-                        <div id="NoTripsMessage" runat="server">
+                    <div class="row">
+                        <div id="NoTripsMessage" runat="server" class="alert alert-info col-md-offset-1 col-md-4">
                             <span>You have not created any Trips yet...</span>
                         </div>
                     </div>

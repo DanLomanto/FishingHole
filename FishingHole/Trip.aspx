@@ -95,7 +95,7 @@
                 <div class="container-fluid top-buffer col-md-10 col-md-offset-1">
                     <div class="panel-group" id="accordion">
                         <div class="panel panel-default">
-                            <div class="panel-heading" data-toggle="collapse" data-target="#LocationAccordian" data-parent="#accordion">
+                            <div id="AttachLocationHeader" class="panel-heading" data-toggle="collapse" data-target="#LocationAccordian" data-parent="#accordion">
                                 <h4 class="panel-title">Create or Attach a Location
                                 </h4>
                             </div>
@@ -115,16 +115,14 @@
                                             <span><strong>Or</strong></span>
                                         </div>
                                         <div class="row top-buffer">
-                                            <div class="col-md-offset-3 col-md-6">
-                                                <a id="SaveAndCreateLocation" runat="server" href="#" class="btn btn-info btn-block">Save & attach new location to trip&nbsp;<i class="glyphicon glyphicon-expand"></i></a>
-                                            </div>
+                                            <asp:LinkButton ID="SaveAndCreateLocation" runat="server" CssClass="btn btn-info btn-block col-md-offset-3 col-md-6 col-xs-6" OnClick="SaveAndCreateLocation_Click">Save & attach new location&nbsp;<i class="glyphicon glyphicon-expand"></i></asp:LinkButton>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="panel panel-default">
-                            <div class="panel-heading" data-toggle="collapse" data-target="#PhotosAccordian" data-parent="#accordion">
+                            <div id="AttachPhotosHeader" class="panel-heading" data-toggle="collapse" data-target="#PhotosAccordian" data-parent="#accordion">
                                 <h4 class="panel-title">Upload or Attach Photos
                                 </h4>
                             </div>
@@ -160,9 +158,7 @@
                                             <span><strong>Or</strong></span>
                                         </div>
                                         <div class="row top-buffer">
-                                            <div class="col-md-offset-3 col-md-6">
-                                                <asp:LinkButton ID="SaveAndCreatePhotos" runat="server" OnClick="SaveAndCreatePhotos_Click" CssClass="btn btn-info btn-block">Save & attach existing pictures to trip&nbsp;<i class="glyphicon glyphicon-expand"></i></asp:LinkButton>
-                                            </div>
+                                            <asp:LinkButton ID="SaveAndCreatePhotos" runat="server" OnClick="SaveAndCreatePhotos_Click" CssClass="btn btn-info btn-block col-md-offset-3 col-md-6 col-xs-6">Save & attach existing picture(s)&nbsp;<i class="glyphicon glyphicon-expand"></i></asp:LinkButton>
                                         </div>
                                         <div class="row top-buffer">
                                         </div>
@@ -199,6 +195,14 @@
     </div>
     <script type="text/javascript">
         $(document).ready(function () {
+
+            $('#AttachLocationHeader').on('click', function () {
+                $($(this).data('target')).collapse('toggle');
+            });
+
+            $('#AttachPhotosHeader').on('click', function () {
+                $($(this).data('target')).collapse('toggle');
+            });
 
             var $lightbox = $('#lightbox');
 

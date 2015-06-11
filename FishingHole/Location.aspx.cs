@@ -33,10 +33,10 @@ namespace FishingHole
 				string queryStringId = Request.QueryString["id"];
 				if (!string.IsNullOrWhiteSpace(queryStringId))
 				{
-					int id = Convert.ToInt32(queryStringId);
-					if (id > 0)
+					int locationId = Convert.ToInt32(queryStringId);
+					if (locationId > 0)
 					{
-						LocationObject location = LocationObject.GetLocationById(id);
+						LocationObject location = LocationObject.GetLocationById(locationId);
 						LocationName.Value = location.Name;
 						Description.Value = location.Description;
 						StreetAddress.Value = location.StreetAddress;
@@ -48,7 +48,7 @@ namespace FishingHole
 						Longitude.Value = location.Longitude.ToString();
 						LongitudeDropDown.SelectedIndex = LongitudeDropDown.Items.IndexOf(LongitudeDropDown.Items.FindByValue(location.LongitudeDirection));
 
-						int associatedLocationId = TripObject.GetTripIdForLocation(id);
+						int associatedLocationId = TripObject.GetTripIdForLocation(locationId);
 						if (associatedLocationId > 0)
 						{
 							AssociatedTrip.SelectedIndex = AssociatedTrip.Items.IndexOf(AssociatedTrip.Items.FindByValue(associatedLocationId.ToString()));
@@ -91,6 +91,12 @@ namespace FishingHole
 							ZipCode.Value = string.Empty;
 						}
 					}
+				}
+
+				string tripId = Request.QueryString["tripId"];
+				if (!string.IsNullOrWhiteSpace(tripId))
+				{
+					AssociatedTrip.SelectedIndex = AssociatedTrip.Items.IndexOf(AssociatedTrip.Items.FindByValue(tripId));
 				}
 			}
 		}
