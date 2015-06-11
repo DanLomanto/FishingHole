@@ -29,8 +29,8 @@
                         </div>
                         <div class="row top-buffer">
                             <div class="form-group">
-                                <label for="passwordInput" class="col-md-2 col-xs-2 control-label">Password:</label>
-                                <div class="col-md-9 col-xs-offset-2 col-xs-8">
+                                <label for="passwordInput" class="col-md-3 col-xs-2 control-label">Password:</label>
+                                <div class="col-md-9 col-md-offset-0 col-xs-offset-2 col-xs-8">
                                     <input type="password" runat="server" id="passwordInput" class="form-control" placeholder="Password" />
                                 </div>
                             </div>

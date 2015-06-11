@@ -115,7 +115,9 @@
                                             <span><strong>Or</strong></span>
                                         </div>
                                         <div class="row top-buffer">
-                                            <asp:LinkButton ID="SaveAndCreateLocation" runat="server" CssClass="btn btn-info btn-block col-md-offset-3 col-md-6 col-xs-6" OnClick="SaveAndCreateLocation_Click">Save & attach new location&nbsp;<i class="glyphicon glyphicon-expand"></i></asp:LinkButton>
+                                            <div class="col-md-offset-3 col-md-6">
+                                                <asp:LinkButton ID="SaveAndCreateLocation" runat="server" CssClass="btn btn-info btn-block" OnClick="SaveAndCreateLocation_Click">Save & create location&nbsp;<i class="glyphicon glyphicon-expand"></i></asp:LinkButton>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -158,7 +160,9 @@
                                             <span><strong>Or</strong></span>
                                         </div>
                                         <div class="row top-buffer">
-                                            <asp:LinkButton ID="SaveAndCreatePhotos" runat="server" OnClick="SaveAndCreatePhotos_Click" CssClass="btn btn-info btn-block col-md-offset-3 col-md-6 col-xs-6">Save & attach existing picture(s)&nbsp;<i class="glyphicon glyphicon-expand"></i></asp:LinkButton>
+                                            <div class="col-md-offset-3 col-md-6">
+                                                <asp:LinkButton ID="SaveAndCreatePhotos" runat="server" OnClick="SaveAndCreatePhotos_Click" CssClass="btn btn-info btn-block col-xs-12 col-md-12">Save & attach pictures&nbsp;<i class="glyphicon glyphicon-expand"></i></asp:LinkButton>
+                                            </div>
                                         </div>
                                         <div class="row top-buffer">
                                         </div>
@@ -197,11 +201,11 @@
         $(document).ready(function () {
 
             $('#AttachLocationHeader').on('click', function () {
-                $($(this).data('target')).collapse('toggle');
+                $($(this).data('target')).collapse('toggle');                
             });
 
             $('#AttachPhotosHeader').on('click', function () {
-                $($(this).data('target')).collapse('toggle');
+                $($(this).data('target')).collapse('toggle');               
             });
 
             var $lightbox = $('#lightbox');
