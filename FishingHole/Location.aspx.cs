@@ -108,7 +108,7 @@ namespace FishingHole
 		/// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
 		protected void CancelButton_Click(object sender, EventArgs e)
 		{
-			Response.Redirect("Dashboard.aspx");
+			performProperRedirect(Request.QueryString["returnUrl"]);
 		}
 
 		/// <summary>

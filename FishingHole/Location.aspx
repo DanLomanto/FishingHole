@@ -183,8 +183,7 @@
                             </div>
                         </div>
                         <div class="row top-buffer text-center">
-                            <iframe id="GoogleMap" runat="server" visible="false"
-                                width="600"
+                            <iframe id="GoogleMap" runat="server" visible="false" class="col-md-12 col-xs-12"
                                 height="450"
                                 frameborder="0" style="border: 0"
                                 src="placeholder" />
