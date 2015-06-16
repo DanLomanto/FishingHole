@@ -159,6 +159,7 @@
     <Content Include="Content\thumbnail-gallery.css" />
     <Content Include="Content\ui.jqgrid.css" />
     <Content Include="Dashboard.aspx" />
+    <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="images\FishLogo.jpg" />
     <Content Include="Location.aspx" />
@@ -173,7 +174,6 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="PhotoGallery.aspx" />
-    <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
