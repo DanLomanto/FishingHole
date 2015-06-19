@@ -162,6 +162,7 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="images\FishLogo.jpg" />
+    <Content Include="images\TexturedLinen.png" />
     <Content Include="Location.aspx" />
     <Content Include="Locations.aspx" />
     <Content Include="Login.aspx" />

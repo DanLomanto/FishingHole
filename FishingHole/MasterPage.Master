@@ -42,7 +42,7 @@
     <!-- Personalized Styles -->
     <link href="Content/styles.css" rel="stylesheet" />
 </head>
-<body>
+<body background="images/TexturedLinen.png">
     <form id="form1" runat="server">
         <nav id="navMenu" runat="server" class="navbar navbar-default">
             <div class="container-fluid">
@@ -79,7 +79,8 @@
                             <a id="UsernameDropDown" runat="server" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"></a>
                             <ul class="dropdown-menu" role="menu">
                                 <li>
-                                    <asp:LinkButton runat="server" ID="SignOutButton" OnClick="SignOut_Click"><i class="glyphicon glyphicon-log-out"></i>&nbsp;Sign Out</asp:LinkButton></li>
+                                    <asp:LinkButton runat="server" ID="SignOutButton" OnClick="SignOut_Click"><i class="glyphicon glyphicon-log-out"></i>&nbsp;Sign Out</asp:LinkButton>
+                                </li>
                             </ul>
                         </li>
                     </ul>

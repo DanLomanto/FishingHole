@@ -6,9 +6,9 @@
 </asp:Content>
 <asp:Content ID="Dashboard" ContentPlaceHolderID="MainContent" runat="Server">
     <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-offset-1 col-md-5 col-xs-offset-1 col-xs-10">
                 <div class="panel panel-default">
                     <div class="panel-heading clearfix">
                         <div class="btn-group pull-right" style="padding-top: 15px;">
@@ -35,7 +35,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-offset-0 col-md-5 col-xs-offset-1 col-xs-10">
                 <asp:Panel ID="TripsPanel" runat="server">
                     <div class="panel panel-default">
                         <div class="panel-heading clearfix">
@@ -80,7 +80,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-offset-1 col-md-5 col-xs-offset-1 col-xs-10">
                 <asp:Panel ID="LocationsPanel" runat="server">
                     <div class="panel panel-default">
                         <div class="panel-heading clearfix">
