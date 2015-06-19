@@ -26,7 +26,6 @@
         <div class="col-xs-10 col-xs-offset-1 col-md-offset-0 col-md-9">
             <div class="container-fluid">
                 <div class="row">
-                    
                 </div>
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -42,47 +41,42 @@
                         <div class="row">
                             <div class="col-xs-10">
                                 <div class="row">
-                                
-                                        <h4 class="col-xs-8" style="color:#477bb7"><i class="glyphicon glyphicon-comment"></i>&nbsp;Where to go fishing this weekend?</h4>
+
+                                    <h4 class="col-xs-8" style="color: #477bb7"><i class="glyphicon glyphicon-comment"></i>&nbsp;Where to go fishing this weekend?</h4>
                                 </div>
-                                <div class="row">                                
+                                <div class="row">
                                     <div class="col-xs-3 col-sm-3 col-md-3"><i class="glyphicon glyphicon-calendar"></i>&nbsp;Last Comment: 10/12/2014</div>
                                     <div class="col-xs-6 col-sm-6 col-md-6"><i class="glyphicon glyphicon-user"></i>&nbsp;Created by Bill Shrader</div>
                                 </div>
                             </div>
-                        
-                                <div class="col-xs-2 col-sm-2 col-md-1 text-center well well-md">Comments <strong>2</strong></div>
-                                <br />
-                                <br />
-                                <br />
+                            <div class="col-xs-2 col-sm-2 col-md-1 text-center well well-md">Comments <strong>2</strong></div>
                             <br />
-                           
+                            <br />
+                            <br />
+                            <br />
                             <hr />
                         </div>
                         <div class="row">
                             <div class="col-xs-10">
                                 <div class="row">
-                                
-                                        <h4 class="col-xs-8" style="color:#477bb7"><i class="glyphicon glyphicon-comment"></i>&nbsp;What flies to use?</h4>
+
+                                    <h4 class="col-xs-8" style="color: #477bb7"><i class="glyphicon glyphicon-comment"></i>&nbsp;What flies to use?</h4>
                                 </div>
-                                <div class="row">                                
+                                <div class="row">
                                     <div class="col-xs-3 col-sm-3 col-md-3"><i class="glyphicon glyphicon-calendar"></i>&nbsp;Last Comment: 11/12/2014</div>
                                     <div class="col-xs-6 col-sm-6 col-md-6"><i class="glyphicon glyphicon-user"></i>&nbsp;Created by Frank Smith</div>
                                 </div>
                             </div>
-                        
-                                <div class="col-xs-2 col-sm-2 col-md-1 text-center well well-md">Comments <strong>8</strong></div>
-                                <br />
-                                <br />
-                                <br />
+                            <div class="col-xs-2 col-sm-2 col-md-1 text-center well well-md">Comments <strong>8</strong></div>
                             <br />
-                           
+                            <br />
+                            <br />
+                            <br />
                             <hr />
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
     </div>
 </asp:Content>
