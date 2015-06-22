@@ -19,6 +19,8 @@
                         <h3 class="panel-title">Categories</h3>
                     </div>
                     <div class="panel-body">
+                        <div><i class="glyphicon glyphicon-book"></i>&nbsp;General Discussion</div>
+                        <hr />
                         <div><i class="glyphicon glyphicon-book"></i>&nbsp;Fly Tying</div>
                         <hr />
                         <div><i class="glyphicon glyphicon-book"></i>&nbsp;Tips & Tricks</div>
@@ -36,7 +38,7 @@
                     <div class="panel-heading">
                         <div class="btn-group pull-right col-xs-5 form-inline" style="padding-top: 15px;">
                             <div class="form-group pull-right">
-                                <a href="#AddThreadModal" class="btn btn-large btn-primary" data-toggle="modal"><i class="glyphicon glyphicon-plus"></i>&nbsp New Thread</a>
+                                <a id="LaunchNewThreadModal" href="#AddThreadModal" class="btn btn-large btn-primary" data-toggle="modal"><i class="glyphicon glyphicon-plus"></i>&nbsp New Thread</a>
                             </div>
                         </div>
                         <h3>Recently Updated Threads</h3>
@@ -97,7 +99,7 @@
             </div>
         </div>
     </div>
-    <div id="AddThreadModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div id="AddThreadModal" class="modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -126,6 +128,7 @@
                                 <label for="ThreadTitle" class="pull-left col-xs-2 control-label">Category:</label>
                                 <div class="col-md-9 col-xs-12">
                                     <select id="Categories" class="form-control">
+                                        <option>General Discussion</option>
                                         <option>Fly Tying</option>
                                         <option>Tips & Tricks</option>
                                         <option>Bait & Tackle</option>
@@ -146,6 +149,17 @@
         $('#AddThreadModal').modal({
             backdrop: 'static',
             keyboard: false
-        })
+        });
+
+        $("#LaunchNewThreadModal").click(function () {
+            document.getElementById("AddThreadModal").className = "modal fade";
+        });
+
+        $(document).ready(function () {
+
+            $('#AddThreadModal').modal('hide');
+
+            document.getElementById("ForumNavItem").className = "active";
+        });
     </script>
 </asp:Content>
