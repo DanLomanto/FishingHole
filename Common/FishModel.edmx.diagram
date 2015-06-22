@@ -18,6 +18,7 @@
         <AssociationConnector Association="FishModel.FK_TripToLocation_Trips" ManuallyRouted="false" />
         <AssociationConnector Association="FishModel.FK_Trips_Users" ManuallyRouted="false" />
         <AssociationConnector Association="FishModel.FK_TripsToPhotos_Trips" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="FishModel.TopicName" Width="1.5" PointX="8" PointY="2" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

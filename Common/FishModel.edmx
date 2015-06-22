@@ -39,6 +39,14 @@
           <Property Name="TripID" Type="int" Nullable="false" />
           <Property Name="LocationID" Type="int" Nullable="false" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Fish.dbo.TopicNames' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="TopicNames">
+          <Key>
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
         <EntityType Name="Trips">
           <Key>
             <PropertyRef Name="ID" />
@@ -241,6 +249,7 @@
         <Function Name="GetPhotosForTrip" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="TripId" Type="int" Mode="In" />
         </Function>
+        <Function Name="GetTopicNames" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetTrip" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="UserID" Type="int" Mode="In" />
           <Parameter Name="Title" Type="varchar" Mode="In" />
@@ -288,6 +297,11 @@
           <EntitySet Name="Trips" EntityType="Self.Trips" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TripsToPhotos" EntityType="Self.TripsToPhotos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TopicNames" EntityType="Self.TopicNames" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [TopicNames].[Name] AS [Name]
+    FROM [dbo].[TopicNames] AS [TopicNames]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_ImagePaths_Users" Association="Self.FK_ImagePaths_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="ImagePaths" EntitySet="ImagePaths" />
@@ -644,8 +658,10 @@
             <Parameter Name="OtherNotes" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="DeletePhoto">
-            <Parameter Name="PhotoId" Mode="In" Type="Int32" />
+          <Parameter Name="PhotoId" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="TopicNames" EntityType="FishModel.TopicName" />
+          <FunctionImport Name="GetTopicNames" ReturnType="Collection(String)" />
         </EntityContainer>
         <ComplexType Name="DoesLoginExist_Result">
           <Property Type="String" Name="Email" Nullable="false" MaxLength="255" />
@@ -743,6 +759,12 @@
           <Property Type="String" Name="LastName" Nullable="false" MaxLength="255" />
           <Property Type="String" Name="Password" Nullable="false" MaxLength="255" />
         </ComplexType>
+        <EntityType Name="TopicName">
+          <Key>
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -974,6 +996,14 @@
           <FunctionImportMapping FunctionImportName="UpdateLocation" FunctionName="FishModel.Store.UpdateLocation" />
           <FunctionImportMapping FunctionImportName="UpdateTrip" FunctionName="FishModel.Store.UpdateTrip" />
           <FunctionImportMapping FunctionImportName="DeletePhoto" FunctionName="FishModel.Store.DeletePhoto" />
+          <EntitySetMapping Name="TopicNames">
+            <EntityTypeMapping TypeName="FishModel.TopicName">
+              <MappingFragment StoreEntitySet="TopicNames">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetTopicNames" FunctionName="FishModel.Store.GetTopicNames" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

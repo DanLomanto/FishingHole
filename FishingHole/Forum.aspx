@@ -18,14 +18,7 @@
                     <div class="panel-heading">
                         <h3 class="panel-title">Categories</h3>
                     </div>
-                    <div class="panel-body">
-                        <div><i class="glyphicon glyphicon-book"></i>&nbsp;General Discussion</div>
-                        <hr />
-                        <div><i class="glyphicon glyphicon-book"></i>&nbsp;Fly Tying</div>
-                        <hr />
-                        <div><i class="glyphicon glyphicon-book"></i>&nbsp;Tips & Tricks</div>
-                        <hr />
-                        <div><i class="glyphicon glyphicon-book"></i>&nbsp;Bait & Tackle</div>
+                    <div id="ThreadTopics" runat="server" class="panel-body">
                     </div>
                 </div>
             </div>
@@ -93,6 +86,10 @@
                             <br />
                             <br />
                             <hr />
+                        </div>
+                        <div class="row col-xs-offset-1 col-xs-10">
+                            <a href="#" id="ViewOlderThreads" runat="server" class="btn btn-default"><i class="glyphicon glyphicon-arrow-left"></i>&nbsp;Older Threads</a>
+                            <a href="#" id="ViewNewerThreads" runat="server" class="btn btn-default pull-right">Newer Threads&nbsp;<i class="glyphicon glyphicon-arrow-right"></i></a>
                         </div>
                     </div>
                 </div>

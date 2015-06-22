@@ -13,6 +13,33 @@ namespace FishingHole {
     public partial class Forum {
         
         /// <summary>
+        /// ThreadTopics control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ThreadTopics;
+        
+        /// <summary>
+        /// ViewOlderThreads control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor ViewOlderThreads;
+        
+        /// <summary>
+        /// ViewNewerThreads control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor ViewNewerThreads;
+        
+        /// <summary>
         /// ThreadTitle control.
         /// </summary>
         /// <remarks>

@@ -33,6 +33,7 @@ namespace Common
         public virtual DbSet<Trip> Trips { get; set; }
         public virtual DbSet<TripsToPhoto> TripsToPhotos { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<TopicName> TopicNames { get; set; }
     
         public virtual int CreateLocation(Nullable<int> userID, string name, string description, string streetAddress, string cityTown, string state, Nullable<int> zipcode, string lattitudeDirection, Nullable<decimal> lattitude, string longitudeDirection, Nullable<decimal> longitude, ObjectParameter output_Result)
         {
@@ -440,6 +441,11 @@ namespace Common
                 new ObjectParameter("PhotoId", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeletePhoto", photoIdParameter);
+        }
+    
+        public virtual ObjectResult<string> GetTopicNames()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("GetTopicNames");
         }
     }
 }
