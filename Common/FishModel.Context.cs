@@ -27,13 +27,15 @@ namespace Common
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Category> Categories { get; set; }
+        public virtual DbSet<Comment> Comments { get; set; }
         public virtual DbSet<ImagePath> ImagePaths { get; set; }
         public virtual DbSet<Location> Locations { get; set; }
         public virtual DbSet<LocationToTrip> LocationToTrips { get; set; }
+        public virtual DbSet<Thread> Threads { get; set; }
         public virtual DbSet<Trip> Trips { get; set; }
         public virtual DbSet<TripsToPhoto> TripsToPhotos { get; set; }
         public virtual DbSet<User> Users { get; set; }
-        public virtual DbSet<TopicName> TopicNames { get; set; }
     
         public virtual int CreateLocation(Nullable<int> userID, string name, string description, string streetAddress, string cityTown, string state, Nullable<int> zipcode, string lattitudeDirection, Nullable<decimal> lattitude, string longitudeDirection, Nullable<decimal> longitude, ObjectParameter output_Result)
         {
@@ -185,6 +187,15 @@ namespace Common
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteLocationForTrip", tripIDParameter);
         }
     
+        public virtual int DeletePhoto(Nullable<int> photoId)
+        {
+            var photoIdParameter = photoId.HasValue ?
+                new ObjectParameter("PhotoId", photoId) :
+                new ObjectParameter("PhotoId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeletePhoto", photoIdParameter);
+        }
+    
         public virtual int DeleteTripForLocation(Nullable<int> locationID)
         {
             var locationIDParameter = locationID.HasValue ?
@@ -229,6 +240,11 @@ namespace Common
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllLocationsForUser_Result>("GetAllLocationsForUser", userIDParameter);
         }
     
+        public virtual ObjectResult<GetAllThreads_Result> GetAllThreads()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllThreads_Result>("GetAllThreads");
+        }
+    
         public virtual ObjectResult<GetAllTripsForUser_Result> GetAllTripsForUser(Nullable<int> userID)
         {
             var userIDParameter = userID.HasValue ?
@@ -254,6 +270,15 @@ namespace Common
                 new ObjectParameter("LocationId", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("GetAssociatedTripForLocation", locationIdParameter);
+        }
+    
+        public virtual ObjectResult<GetCommentsForThread_Result> GetCommentsForThread(Nullable<int> iD)
+        {
+            var iDParameter = iD.HasValue ?
+                new ObjectParameter("ID", iD) :
+                new ObjectParameter("ID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetCommentsForThread_Result>("GetCommentsForThread", iDParameter);
         }
     
         public virtual ObjectResult<GetImagesForUser_Result> GetImagesForUser(Nullable<int> userID)
@@ -296,6 +321,20 @@ namespace Common
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetPhotosForTrip_Result>("GetPhotosForTrip", tripIdParameter);
         }
     
+        public virtual ObjectResult<string> GetThreadCategoryById(Nullable<int> iD)
+        {
+            var iDParameter = iD.HasValue ?
+                new ObjectParameter("ID", iD) :
+                new ObjectParameter("ID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("GetThreadCategoryById", iDParameter);
+        }
+    
+        public virtual ObjectResult<string> GetTopicNames()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("GetTopicNames");
+        }
+    
         public virtual ObjectResult<GetTrip_Result> GetTrip(Nullable<int> userID, string title)
         {
             var userIDParameter = userID.HasValue ?
@@ -327,6 +366,15 @@ namespace Common
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetUser_Result>("GetUser", emailParameter);
         }
     
+        public virtual ObjectResult<GetUserById_Result> GetUserById(Nullable<int> iD)
+        {
+            var iDParameter = iD.HasValue ?
+                new ObjectParameter("ID", iD) :
+                new ObjectParameter("ID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetUserById_Result>("GetUserById", iDParameter);
+        }
+    
         public virtual int InsertImagePath(Nullable<int> userID, string imagePath, ObjectParameter output_Result)
         {
             var userIDParameter = userID.HasValue ?
@@ -338,6 +386,27 @@ namespace Common
                 new ObjectParameter("ImagePath", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertImagePath", userIDParameter, imagePathParameter, output_Result);
+        }
+    
+        public virtual int InsertThread(string title, string message, Nullable<int> userId, Nullable<int> threadCategory)
+        {
+            var titleParameter = title != null ?
+                new ObjectParameter("Title", title) :
+                new ObjectParameter("Title", typeof(string));
+    
+            var messageParameter = message != null ?
+                new ObjectParameter("Message", message) :
+                new ObjectParameter("Message", typeof(string));
+    
+            var userIdParameter = userId.HasValue ?
+                new ObjectParameter("UserId", userId) :
+                new ObjectParameter("UserId", typeof(int));
+    
+            var threadCategoryParameter = threadCategory.HasValue ?
+                new ObjectParameter("ThreadCategory", threadCategory) :
+                new ObjectParameter("ThreadCategory", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertThread", titleParameter, messageParameter, userIdParameter, threadCategoryParameter);
         }
     
         public virtual int UpdateLocation(Nullable<int> iD, string name, string description, string streetAddress, string cityTown, string state, Nullable<int> zipcode, string lattitudeDirection, Nullable<decimal> lattitude, string longitudeDirection, Nullable<decimal> longitude)
@@ -434,18 +503,13 @@ namespace Common
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateTrip", iDParameter, titleParameter, descriptionParameter, targetedSpeciesParameter, waterConditionsParameter, weatherConditionsParameter, dateOfTripParameter, fliesLuresUsedParameter, catchOfTheDayParameter, otherNotesParameter);
         }
     
-        public virtual int DeletePhoto(Nullable<int> photoId)
+        public virtual ObjectResult<Nullable<int>> GetIdOfCategory(string category)
         {
-            var photoIdParameter = photoId.HasValue ?
-                new ObjectParameter("PhotoId", photoId) :
-                new ObjectParameter("PhotoId", typeof(int));
+            var categoryParameter = category != null ?
+                new ObjectParameter("Category", category) :
+                new ObjectParameter("Category", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeletePhoto", photoIdParameter);
-        }
-    
-        public virtual ObjectResult<string> GetTopicNames()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("GetTopicNames");
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("GetIdOfCategory", categoryParameter);
         }
     }
 }

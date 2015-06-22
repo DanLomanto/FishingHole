@@ -10,10 +10,13 @@
 namespace Common
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class TopicName
+    public partial class GetAllThreads_Result
     {
-        public string Name { get; set; }
+        public int ID { get; set; }
+        public string Title { get; set; }
+        public string Message { get; set; }
+        public int UserId { get; set; }
+        public int ThreadCategory { get; set; }
     }
 }

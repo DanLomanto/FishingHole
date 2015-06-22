@@ -16,8 +16,10 @@ namespace Common
     {
         public User()
         {
+            this.Comments = new HashSet<Comment>();
             this.ImagePaths = new HashSet<ImagePath>();
             this.Locations = new HashSet<Location>();
+            this.Threads = new HashSet<Thread>();
             this.Trips = new HashSet<Trip>();
         }
     
@@ -27,8 +29,10 @@ namespace Common
         public string LastName { get; set; }
         public string Password { get; set; }
     
+        public virtual ICollection<Comment> Comments { get; set; }
         public virtual ICollection<ImagePath> ImagePaths { get; set; }
         public virtual ICollection<Location> Locations { get; set; }
+        public virtual ICollection<Thread> Threads { get; set; }
         public virtual ICollection<Trip> Trips { get; set; }
     }
 }

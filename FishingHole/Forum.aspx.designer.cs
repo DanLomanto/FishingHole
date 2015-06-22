@@ -13,6 +13,15 @@ namespace FishingHole {
     public partial class Forum {
         
         /// <summary>
+        /// ScriptManager1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.ScriptManager ScriptManager1;
+        
+        /// <summary>
         /// ThreadTopics control.
         /// </summary>
         /// <remarks>
@@ -20,6 +29,15 @@ namespace FishingHole {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl ThreadTopics;
+        
+        /// <summary>
+        /// RecentlyUpdatedThreads control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl RecentlyUpdatedThreads;
         
         /// <summary>
         /// ViewOlderThreads control.
@@ -40,6 +58,24 @@ namespace FishingHole {
         protected global::System.Web.UI.HtmlControls.HtmlAnchor ViewNewerThreads;
         
         /// <summary>
+        /// hiddenShowModal control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hiddenShowModal;
+        
+        /// <summary>
+        /// formErrors control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.BulletedList formErrors;
+        
+        /// <summary>
         /// ThreadTitle control.
         /// </summary>
         /// <remarks>
@@ -56,6 +92,24 @@ namespace FishingHole {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlTextArea ThreadMessage;
+        
+        /// <summary>
+        /// AddThreadCategories control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList AddThreadCategories;
+        
+        /// <summary>
+        /// CreateNewThread control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton CreateNewThread;
         
         /// <summary>
         /// Master property.

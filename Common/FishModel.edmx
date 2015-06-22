@@ -5,6 +5,22 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="FishModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Categories">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Comments">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Comment" Type="varchar" MaxLength="1000" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="ImagePaths">
           <Key>
             <PropertyRef Name="ID" />
@@ -39,13 +55,15 @@
           <Property Name="TripID" Type="int" Nullable="false" />
           <Property Name="LocationID" Type="int" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'Fish.dbo.TopicNames' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="TopicNames">
+        <EntityType Name="Threads">
           <Key>
-            <PropertyRef Name="Name" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Message" Type="varchar" MaxLength="1000" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="ThreadCategory" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Trips">
           <Key>
@@ -82,6 +100,18 @@ warning 6002: The table/view 'Fish.dbo.TopicNames' does not have a primary key d
           <Property Name="LastName" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="Password" Type="varchar" MaxLength="255" Nullable="false" />
         </EntityType>
+        <Association Name="FK_Comments_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Comments" Type="Self.Comments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Comments">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ImagePaths_Users">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="ImagePaths" Type="Self.ImagePaths" Multiplicity="*" />
@@ -103,6 +133,30 @@ warning 6002: The table/view 'Fish.dbo.TopicNames' does not have a primary key d
             </Principal>
             <Dependent Role="Locations">
               <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Threads_Categories">
+          <End Role="Categories" Type="Self.Categories" Multiplicity="1" />
+          <End Role="Threads" Type="Self.Threads" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categories">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Threads">
+              <PropertyRef Name="ThreadCategory" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Threads_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Threads" Type="Self.Threads" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Threads">
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -227,6 +281,7 @@ warning 6002: The table/view 'Fish.dbo.TopicNames' does not have a primary key d
         <Function Name="GetAllLocationsForUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="UserID" Type="int" Mode="In" />
         </Function>
+        <Function Name="GetAllThreads" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetAllTripsForUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="UserID" Type="int" Mode="In" />
         </Function>
@@ -235,6 +290,12 @@ warning 6002: The table/view 'Fish.dbo.TopicNames' does not have a primary key d
         </Function>
         <Function Name="GetAssociatedTripForLocation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="LocationId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetCommentsForThread" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetIdOfCategory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Category" Type="varchar" Mode="In" />
         </Function>
         <Function Name="GetImagesForUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="UserID" Type="int" Mode="In" />
@@ -249,6 +310,9 @@ warning 6002: The table/view 'Fish.dbo.TopicNames' does not have a primary key d
         <Function Name="GetPhotosForTrip" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="TripId" Type="int" Mode="In" />
         </Function>
+        <Function Name="GetThreadCategoryById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID" Type="int" Mode="In" />
+        </Function>
         <Function Name="GetTopicNames" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetTrip" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="UserID" Type="int" Mode="In" />
@@ -260,10 +324,19 @@ warning 6002: The table/view 'Fish.dbo.TopicNames' does not have a primary key d
         <Function Name="GetUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Email" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="GetUserById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID" Type="int" Mode="In" />
+        </Function>
         <Function Name="InsertImagePath" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="UserID" Type="int" Mode="In" />
           <Parameter Name="ImagePath" Type="varchar" Mode="In" />
           <Parameter Name="Output_Result" Type="bigint" Mode="InOut" />
+        </Function>
+        <Function Name="InsertThread" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Title" Type="varchar" Mode="In" />
+          <Parameter Name="Message" Type="varchar" Mode="In" />
+          <Parameter Name="UserId" Type="int" Mode="In" />
+          <Parameter Name="ThreadCategory" Type="int" Mode="In" />
         </Function>
         <Function Name="UpdateLocation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ID" Type="int" Mode="In" />
@@ -291,17 +364,19 @@ warning 6002: The table/view 'Fish.dbo.TopicNames' does not have a primary key d
           <Parameter Name="OtherNotes" Type="text" Mode="In" />
         </Function>
         <EntityContainer Name="FishModelStoreContainer">
+          <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Comments" EntityType="Self.Comments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ImagePaths" EntityType="Self.ImagePaths" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Locations" EntityType="Self.Locations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LocationToTrip" EntityType="Self.LocationToTrip" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Threads" EntityType="Self.Threads" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Trips" EntityType="Self.Trips" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TripsToPhotos" EntityType="Self.TripsToPhotos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="TopicNames" EntityType="Self.TopicNames" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [TopicNames].[Name] AS [Name]
-    FROM [dbo].[TopicNames] AS [TopicNames]</DefiningQuery>
-          </EntitySet>
+          <AssociationSet Name="FK_Comments_Users" Association="Self.FK_Comments_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Comments" EntitySet="Comments" />
+          </AssociationSet>
           <AssociationSet Name="FK_ImagePaths_Users" Association="Self.FK_ImagePaths_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="ImagePaths" EntitySet="ImagePaths" />
@@ -309,6 +384,14 @@ warning 6002: The table/view 'Fish.dbo.TopicNames' does not have a primary key d
           <AssociationSet Name="FK_Locations_Users" Association="Self.FK_Locations_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="Locations" EntitySet="Locations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Threads_Categories" Association="Self.FK_Threads_Categories">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="Threads" EntitySet="Threads" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Threads_Users" Association="Self.FK_Threads_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Threads" EntitySet="Threads" />
           </AssociationSet>
           <AssociationSet Name="FK_Trips_Users" Association="Self.FK_Trips_Users">
             <End Role="Users" EntitySet="Users" />
@@ -335,6 +418,24 @@ warning 6002: The table/view 'Fish.dbo.TopicNames' does not have a primary key d
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="FishModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Threads" Relationship="Self.FK_Threads_Categories" FromRole="Categories" ToRole="Threads" />
+        </EntityType>
+        <EntityType Name="Comment">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Comment1" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Comments_Users" FromRole="Comments" ToRole="Users" />
+        </EntityType>
         <EntityType Name="ImagePath">
           <Key>
             <PropertyRef Name="ID" />
@@ -375,6 +476,18 @@ warning 6002: The table/view 'Fish.dbo.TopicNames' does not have a primary key d
           <NavigationProperty Name="Location" Relationship="Self.FK_TripToLocation_TripToLocation" FromRole="LocationToTrip" ToRole="Locations" />
           <NavigationProperty Name="Trip" Relationship="Self.FK_TripToLocation_Trips" FromRole="LocationToTrip" ToRole="Trips" />
         </EntityType>
+        <EntityType Name="Thread">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Message" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="ThreadCategory" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Category" Relationship="Self.FK_Threads_Categories" FromRole="Threads" ToRole="Categories" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Threads_Users" FromRole="Threads" ToRole="Users" />
+        </EntityType>
         <EntityType Name="Trip">
           <Key>
             <PropertyRef Name="ID" />
@@ -414,10 +527,36 @@ warning 6002: The table/view 'Fish.dbo.TopicNames' does not have a primary key d
           <Property Name="FirstName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="LastName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Password" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Comments" Relationship="Self.FK_Comments_Users" FromRole="Users" ToRole="Comments" />
           <NavigationProperty Name="ImagePaths" Relationship="Self.FK_ImagePaths_Users" FromRole="Users" ToRole="ImagePaths" />
           <NavigationProperty Name="Locations" Relationship="Self.FK_Locations_Users" FromRole="Users" ToRole="Locations" />
+          <NavigationProperty Name="Threads" Relationship="Self.FK_Threads_Users" FromRole="Users" ToRole="Threads" />
           <NavigationProperty Name="Trips" Relationship="Self.FK_Trips_Users" FromRole="Users" ToRole="Trips" />
         </EntityType>
+        <Association Name="FK_Threads_Categories">
+          <End Role="Categories" Type="Self.Category" Multiplicity="1" />
+          <End Role="Threads" Type="Self.Thread" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categories">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Threads">
+              <PropertyRef Name="ThreadCategory" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Comments_Users">
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="Comments" Type="Self.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Comments">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ImagePaths_Users">
           <End Role="Users" Type="Self.User" Multiplicity="1" />
           <End Role="ImagePaths" Type="Self.ImagePath" Multiplicity="*" />
@@ -478,6 +617,18 @@ warning 6002: The table/view 'Fish.dbo.TopicNames' does not have a primary key d
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Threads_Users">
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="Threads" Type="Self.Thread" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Threads">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Trips_Users">
           <End Role="Users" Type="Self.User" Multiplicity="1" />
           <End Role="Trips" Type="Self.Trip" Multiplicity="*" />
@@ -503,12 +654,23 @@ warning 6002: The table/view 'Fish.dbo.TopicNames' does not have a primary key d
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="FishEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Categories" EntityType="Self.Category" />
+          <EntitySet Name="Comments" EntityType="Self.Comment" />
           <EntitySet Name="ImagePaths" EntityType="Self.ImagePath" />
           <EntitySet Name="Locations" EntityType="Self.Location" />
           <EntitySet Name="LocationToTrips" EntityType="Self.LocationToTrip" />
+          <EntitySet Name="Threads" EntityType="Self.Thread" />
           <EntitySet Name="Trips" EntityType="Self.Trip" />
           <EntitySet Name="TripsToPhotos" EntityType="Self.TripsToPhoto" />
           <EntitySet Name="Users" EntityType="Self.User" />
+          <AssociationSet Name="FK_Threads_Categories" Association="Self.FK_Threads_Categories">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="Threads" EntitySet="Threads" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comments_Users" Association="Self.FK_Comments_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Comments" EntitySet="Comments" />
+          </AssociationSet>
           <AssociationSet Name="FK_ImagePaths_Users" Association="Self.FK_ImagePaths_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="ImagePaths" EntitySet="ImagePaths" />
@@ -528,6 +690,10 @@ warning 6002: The table/view 'Fish.dbo.TopicNames' does not have a primary key d
           <AssociationSet Name="FK_TripToLocation_Trips" Association="Self.FK_TripToLocation_Trips">
             <End Role="Trips" EntitySet="Trips" />
             <End Role="LocationToTrip" EntitySet="LocationToTrips" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Threads_Users" Association="Self.FK_Threads_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Threads" EntitySet="Threads" />
           </AssociationSet>
           <AssociationSet Name="FK_Trips_Users" Association="Self.FK_Trips_Users">
             <End Role="Users" EntitySet="Users" />
@@ -581,6 +747,9 @@ warning 6002: The table/view 'Fish.dbo.TopicNames' does not have a primary key d
           <FunctionImport Name="DeleteLocationForTrip">
           <Parameter Name="TripID" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="DeletePhoto">
+          <Parameter Name="PhotoId" Mode="In" Type="Int32" />
+          </FunctionImport>
           <FunctionImport Name="DeleteTripForLocation">
           <Parameter Name="LocationID" Mode="In" Type="Int32" />
           </FunctionImport>
@@ -595,6 +764,7 @@ warning 6002: The table/view 'Fish.dbo.TopicNames' does not have a primary key d
           <FunctionImport Name="GetAllLocationsForUser" ReturnType="Collection(FishModel.GetAllLocationsForUser_Result)">
           <Parameter Name="UserID" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="GetAllThreads" ReturnType="Collection(FishModel.GetAllThreads_Result)" />
           <FunctionImport Name="GetAllTripsForUser" ReturnType="Collection(FishModel.GetAllTripsForUser_Result)">
           <Parameter Name="UserID" Mode="In" Type="Int32" />
           </FunctionImport>
@@ -603,6 +773,9 @@ warning 6002: The table/view 'Fish.dbo.TopicNames' does not have a primary key d
           </FunctionImport>
           <FunctionImport Name="GetAssociatedTripForLocation" ReturnType="Collection(Int32)">
           <Parameter Name="LocationId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetCommentsForThread" ReturnType="Collection(FishModel.GetCommentsForThread_Result)">
+          <Parameter Name="ID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetImagesForUser" ReturnType="Collection(FishModel.GetImagesForUser_Result)">
           <Parameter Name="UserID" Mode="In" Type="Int32" />
@@ -617,6 +790,10 @@ warning 6002: The table/view 'Fish.dbo.TopicNames' does not have a primary key d
           <FunctionImport Name="GetPhotosForTrip" ReturnType="Collection(FishModel.GetPhotosForTrip_Result)">
           <Parameter Name="TripId" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="GetThreadCategoryById" ReturnType="Collection(String)">
+          <Parameter Name="ID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetTopicNames" ReturnType="Collection(String)" />
           <FunctionImport Name="GetTrip" ReturnType="Collection(FishModel.GetTrip_Result)">
             <Parameter Name="UserID" Mode="In" Type="Int32" />
             <Parameter Name="Title" Mode="In" Type="String" />
@@ -627,10 +804,19 @@ warning 6002: The table/view 'Fish.dbo.TopicNames' does not have a primary key d
           <FunctionImport Name="GetUser" ReturnType="Collection(FishModel.GetUser_Result)">
           <Parameter Name="Email" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="GetUserById" ReturnType="Collection(FishModel.GetUserById_Result)">
+          <Parameter Name="ID" Mode="In" Type="Int32" />
+          </FunctionImport>
           <FunctionImport Name="InsertImagePath">
             <Parameter Name="UserID" Mode="In" Type="Int32" />
             <Parameter Name="ImagePath" Mode="In" Type="String" />
             <Parameter Name="Output_Result" Mode="InOut" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="InsertThread">
+            <Parameter Name="Title" Mode="In" Type="String" />
+            <Parameter Name="Message" Mode="In" Type="String" />
+            <Parameter Name="UserId" Mode="In" Type="Int32" />
+            <Parameter Name="ThreadCategory" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="UpdateLocation">
             <Parameter Name="ID" Mode="In" Type="Int32" />
@@ -657,11 +843,9 @@ warning 6002: The table/view 'Fish.dbo.TopicNames' does not have a primary key d
             <Parameter Name="CatchOfTheDay" Mode="In" Type="String" />
             <Parameter Name="OtherNotes" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="DeletePhoto">
-          <Parameter Name="PhotoId" Mode="In" Type="Int32" />
+          <FunctionImport Name="GetIdOfCategory" ReturnType="Collection(Int32)">
+            <Parameter Name="Category" Mode="In" Type="String" />
           </FunctionImport>
-          <EntitySet Name="TopicNames" EntityType="FishModel.TopicName" />
-          <FunctionImport Name="GetTopicNames" ReturnType="Collection(String)" />
         </EntityContainer>
         <ComplexType Name="DoesLoginExist_Result">
           <Property Type="String" Name="Email" Nullable="false" MaxLength="255" />
@@ -683,6 +867,13 @@ warning 6002: The table/view 'Fish.dbo.TopicNames' does not have a primary key d
           <Property Type="Decimal" Name="Longitude" Nullable="true" Precision="18" Scale="0" />
           <Property Type="DateTime" Name="CreateDate" Nullable="false" Precision="23" />
         </ComplexType>
+        <ComplexType Name="GetAllThreads_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Title" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="Message" Nullable="false" MaxLength="1000" />
+          <Property Type="Int32" Name="UserId" Nullable="false" />
+          <Property Type="Int32" Name="ThreadCategory" Nullable="false" />
+        </ComplexType>
         <ComplexType Name="GetAllTripsForUser_Result">
           <Property Type="Int32" Name="ID" Nullable="false" />
           <Property Type="String" Name="Title" Nullable="false" MaxLength="255" />
@@ -694,6 +885,11 @@ warning 6002: The table/view 'Fish.dbo.TopicNames' does not have a primary key d
           <Property Type="String" Name="FliesLuresUsed" Nullable="true" MaxLength="255" />
           <Property Type="String" Name="CatchOfTheDay" Nullable="true" MaxLength="255" />
           <Property Type="String" Name="OtherNotes" Nullable="true" MaxLength="Max" />
+          <Property Type="DateTime" Name="CreateDate" Nullable="false" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="GetCommentsForThread_Result">
+          <Property Type="String" Name="Comment" Nullable="false" MaxLength="1000" />
+          <Property Type="Int32" Name="UserId" Nullable="false" />
           <Property Type="DateTime" Name="CreateDate" Nullable="false" Precision="23" />
         </ComplexType>
         <ComplexType Name="GetImagesForUser_Result">
@@ -759,18 +955,37 @@ warning 6002: The table/view 'Fish.dbo.TopicNames' does not have a primary key d
           <Property Type="String" Name="LastName" Nullable="false" MaxLength="255" />
           <Property Type="String" Name="Password" Nullable="false" MaxLength="255" />
         </ComplexType>
-        <EntityType Name="TopicName">
-          <Key>
-            <PropertyRef Name="Name" />
-          </Key>
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-        </EntityType>
+        <ComplexType Name="GetUserById_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Email" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="FirstName" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="LastName" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="Password" Nullable="false" MaxLength="255" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="FishModelStoreContainer" CdmEntityContainer="FishEntities">
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="FishModel.Category">
+              <MappingFragment StoreEntitySet="Categories">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Comments">
+            <EntityTypeMapping TypeName="FishModel.Comment">
+              <MappingFragment StoreEntitySet="Comments">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Comment1" ColumnName="Comment" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="ImagePaths">
             <EntityTypeMapping TypeName="FishModel.ImagePath">
               <MappingFragment StoreEntitySet="ImagePaths">
@@ -805,6 +1020,17 @@ warning 6002: The table/view 'Fish.dbo.TopicNames' does not have a primary key d
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="TripID" ColumnName="TripID" />
                 <ScalarProperty Name="LocationID" ColumnName="LocationID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Threads">
+            <EntityTypeMapping TypeName="FishModel.Thread">
+              <MappingFragment StoreEntitySet="Threads">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ThreadCategory" ColumnName="ThreadCategory" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -852,6 +1078,7 @@ warning 6002: The table/view 'Fish.dbo.TopicNames' does not have a primary key d
           <FunctionImportMapping FunctionImportName="CreateUpdateLocationToTrip" FunctionName="FishModel.Store.CreateUpdateLocationToTrip" />
           <FunctionImportMapping FunctionImportName="CreateUser" FunctionName="FishModel.Store.CreateUser" />
           <FunctionImportMapping FunctionImportName="DeleteLocationForTrip" FunctionName="FishModel.Store.DeleteLocationForTrip" />
+          <FunctionImportMapping FunctionImportName="DeletePhoto" FunctionName="FishModel.Store.DeletePhoto" />
           <FunctionImportMapping FunctionImportName="DeleteTripForLocation" FunctionName="FishModel.Store.DeleteTripForLocation" />
           <FunctionImportMapping FunctionImportName="DoesLoginExist" FunctionName="FishModel.Store.DoesLoginExist">
             <ResultMapping>
@@ -882,6 +1109,17 @@ warning 6002: The table/view 'Fish.dbo.TopicNames' does not have a primary key d
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetAllThreads" FunctionName="FishModel.Store.GetAllThreads">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="FishModel.GetAllThreads_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ThreadCategory" ColumnName="ThreadCategory" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="GetAllTripsForUser" FunctionName="FishModel.Store.GetAllTripsForUser">
             <ResultMapping>
               <ComplexTypeMapping TypeName="FishModel.GetAllTripsForUser_Result">
@@ -901,6 +1139,15 @@ warning 6002: The table/view 'Fish.dbo.TopicNames' does not have a primary key d
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="GetAssociatedLocationForTrip" FunctionName="FishModel.Store.GetAssociatedLocationForTrip" />
           <FunctionImportMapping FunctionImportName="GetAssociatedTripForLocation" FunctionName="FishModel.Store.GetAssociatedTripForLocation" />
+          <FunctionImportMapping FunctionImportName="GetCommentsForThread" FunctionName="FishModel.Store.GetCommentsForThread">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="FishModel.GetCommentsForThread_Result">
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="GetImagesForUser" FunctionName="FishModel.Store.GetImagesForUser">
             <ResultMapping>
               <ComplexTypeMapping TypeName="FishModel.GetImagesForUser_Result">
@@ -949,6 +1196,8 @@ warning 6002: The table/view 'Fish.dbo.TopicNames' does not have a primary key d
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetThreadCategoryById" FunctionName="FishModel.Store.GetThreadCategoryById" />
+          <FunctionImportMapping FunctionImportName="GetTopicNames" FunctionName="FishModel.Store.GetTopicNames" />
           <FunctionImportMapping FunctionImportName="GetTrip" FunctionName="FishModel.Store.GetTrip">
             <ResultMapping>
               <ComplexTypeMapping TypeName="FishModel.GetTrip_Result">
@@ -992,18 +1241,22 @@ warning 6002: The table/view 'Fish.dbo.TopicNames' does not have a primary key d
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetUserById" FunctionName="FishModel.Store.GetUserById">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="FishModel.GetUserById_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="InsertImagePath" FunctionName="FishModel.Store.InsertImagePath" />
+          <FunctionImportMapping FunctionImportName="InsertThread" FunctionName="FishModel.Store.InsertThread" />
           <FunctionImportMapping FunctionImportName="UpdateLocation" FunctionName="FishModel.Store.UpdateLocation" />
           <FunctionImportMapping FunctionImportName="UpdateTrip" FunctionName="FishModel.Store.UpdateTrip" />
-          <FunctionImportMapping FunctionImportName="DeletePhoto" FunctionName="FishModel.Store.DeletePhoto" />
-          <EntitySetMapping Name="TopicNames">
-            <EntityTypeMapping TypeName="FishModel.TopicName">
-              <MappingFragment StoreEntitySet="TopicNames">
-                <ScalarProperty Name="Name" ColumnName="Name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="GetTopicNames" FunctionName="FishModel.Store.GetTopicNames" />
+          <FunctionImportMapping FunctionImportName="GetIdOfCategory" FunctionName="FishModel.Store.GetIdOfCategory" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

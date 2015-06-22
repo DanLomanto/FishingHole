@@ -72,6 +72,28 @@ namespace Common
 		}
 
 		/// <summary>
+		/// Gets the user information by ID.
+		/// </summary>
+		/// <param name="id">The identifier.</param>
+		/// <returns></returns>
+		public static UserInformation GetUserInfo(int id)
+		{
+			FishEntities fishDB = new FishEntities();
+			var result = fishDB.GetUserById(id).FirstOrDefault();
+
+			if (result == null)
+			{ return null; }
+
+			UserInformation userInfo = new UserInformation();
+			userInfo.ID = result.ID;
+			userInfo.Email = result.Email;
+			userInfo.FirstName = result.FirstName;
+			userInfo.LastName = result.LastName;
+
+			return userInfo;
+		}
+
+		/// <summary>
 		/// Checks to see if the specified login exists with the password provided.
 		/// </summary>
 		/// <param name="email">The email.</param>

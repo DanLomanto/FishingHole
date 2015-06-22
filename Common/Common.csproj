@@ -94,6 +94,12 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Category.cs">
+      <DependentUpon>FishModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Comment.cs">
+      <DependentUpon>FishModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataActions.cs" />
     <Compile Include="DoesLoginExist_Result.cs">
       <DependentUpon>FishModel.tt</DependentUpon>
@@ -118,7 +124,13 @@
     <Compile Include="GetAllLocationsForUser_Result.cs">
       <DependentUpon>FishModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="GetAllThreads_Result.cs">
+      <DependentUpon>FishModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="GetAllTripsForUser_Result.cs">
+      <DependentUpon>FishModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetCommentsForThread_Result.cs">
       <DependentUpon>FishModel.tt</DependentUpon>
     </Compile>
     <Compile Include="GetImagesForUser_Result.cs">
@@ -139,6 +151,9 @@
     <Compile Include="GetTrip_Result.cs">
       <DependentUpon>FishModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="GetUserById_Result.cs">
+      <DependentUpon>FishModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="GetUser_Result.cs">
       <DependentUpon>FishModel.tt</DependentUpon>
     </Compile>
@@ -155,7 +170,7 @@
     </Compile>
     <Compile Include="PhotoActions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TopicName.cs">
+    <Compile Include="Thread.cs">
       <DependentUpon>FishModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Trip.cs">
