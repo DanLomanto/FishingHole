@@ -511,5 +511,14 @@ namespace Common
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("GetIdOfCategory", categoryParameter);
         }
+    
+        public virtual ObjectResult<SearchThreads_Result> SearchThreads(string searchText)
+        {
+            var searchTextParameter = searchText != null ?
+                new ObjectParameter("SearchText", searchText) :
+                new ObjectParameter("SearchText", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SearchThreads_Result>("SearchThreads", searchTextParameter);
+        }
     }
 }

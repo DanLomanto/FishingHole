@@ -28,7 +28,7 @@ namespace FishingHole
 		{
 			LoadDiscussionTopics();
 
-			LoadRecentlyUpdatedThreads();
+			LoadRecentlyUpdatedThreads(ForumActions.GetAllThreads());
 
 			ClearOutErrorList();
 		}
@@ -77,7 +77,30 @@ namespace FishingHole
 			};
 			newThread.CreateThread(Master.UsersInfo.ID);
 
-			LoadRecentlyUpdatedThreads();
+			LoadRecentlyUpdatedThreads(ForumActions.GetAllThreads());
+		}
+
+		/// <summary>
+		/// Handles the Click event of the SearchThreadsButton control.
+		/// </summary>
+		/// <param name="sender">The source of the event.</param>
+		/// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+		protected void SearchThreadsButton_Click(object sender, EventArgs e)
+		{
+			List<ForumThread> threads = ForumActions.SearchForThreads(SearchThreadsText.Value.Trim());
+
+			LoadRecentlyUpdatedThreads(threads);
+		}
+
+		/// <summary>
+		/// Handles the Click event of the ResetFilterButton control.
+		/// </summary>
+		/// <param name="sender">The source of the event.</param>
+		/// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+		protected void ResetFilterButton_Click(object sender, EventArgs e)
+		{
+			SearchThreadsText.Value = string.Empty;
+			LoadRecentlyUpdatedThreads(ForumActions.GetAllThreads());
 		}
 
 		#region Private Methods
@@ -107,18 +130,17 @@ namespace FishingHole
 		/// <summary>
 		/// Loads the recently update threads.
 		/// </summary>
-		private void LoadRecentlyUpdatedThreads()
+		private void LoadRecentlyUpdatedThreads(List<ForumThread> threads)
 		{
-			List<ForumThread> threads = ForumActions.GetAllThreads();
-
-			if (RecentlyUpdatedThreads.HasControls())
+			int numberOfThreads = RecentlyUpdatedThreads.Controls.Count;
+			for (int i = 0; i < numberOfThreads; i++)
 			{
-				int numberOfThreads = RecentlyUpdatedThreads.Controls.Count;
-				for (int counter = 0; counter < numberOfThreads; counter++)
+				if (RecentlyUpdatedThreads.HasControls())
 				{
-					RecentlyUpdatedThreads.Controls.RemoveAt(counter);
-					numberOfThreads = RecentlyUpdatedThreads.Controls.Count;
+					RecentlyUpdatedThreads.Controls.RemoveAt(0);
 				}
+				else
+				{ break; }
 			}
 
 			int threadIndex = 0;

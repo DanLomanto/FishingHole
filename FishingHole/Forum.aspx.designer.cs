@@ -22,6 +22,33 @@ namespace FishingHole {
         protected global::System.Web.UI.ScriptManager ScriptManager1;
         
         /// <summary>
+        /// SearchThreadsText control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText SearchThreadsText;
+        
+        /// <summary>
+        /// SearchThreadsButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton SearchThreadsButton;
+        
+        /// <summary>
+        /// ResetFilterButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton ResetFilterButton;
+        
+        /// <summary>
         /// ThreadTopics control.
         /// </summary>
         /// <remarks>

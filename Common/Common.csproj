@@ -170,6 +170,9 @@
     </Compile>
     <Compile Include="PhotoActions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SearchThreads_Result.cs">
+      <DependentUpon>FishModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Thread.cs">
       <DependentUpon>FishModel.tt</DependentUpon>
     </Compile>

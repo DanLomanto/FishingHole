@@ -58,6 +58,37 @@ namespace Common
 		}
 
 		/// <summary>
+		/// Searches for threads.
+		/// </summary>
+		/// <param name="searchText">The search text.</param>
+		/// <returns></returns>
+		public static List<ForumThread> SearchForThreads(string searchText)
+		{
+			FishEntities fishDB = new FishEntities();
+			var result = fishDB.SearchThreads(searchText);
+
+			List<ForumThread> allThreads = new List<ForumThread>();
+			foreach (SearchThreads_Result item in result)
+			{
+				ForumThread thread = new ForumThread
+				{
+					ID = item.ID,
+					Title = item.Title,
+					Message = item.Message
+				};
+
+				UserInformation userInfo = UserActions.GetUserInfo(item.UserId);
+				thread.UserFirstLastNames = new KeyValuePair<string, string>(userInfo.FirstName, userInfo.LastName);
+				thread.Category = GetCategory(item.ThreadCategory);
+				thread.CommentCount = GetCommentCountForThread(item.ID);
+
+				allThreads.Add(thread);
+			}
+
+			return allThreads;
+		}
+
+		/// <summary>
 		/// Gets the comments for thread.
 		/// </summary>
 		/// <param name="threadId">The identifier.</param>

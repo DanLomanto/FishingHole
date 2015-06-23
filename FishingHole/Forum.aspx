@@ -9,8 +9,9 @@
             <div class="row">
                 <div class="form-inline">
                     <div class="form-group">
-                        <input type="text" class="form-control input-md" placeholder="Search threads..." />
-                        <a href="#" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i></a>
+                        <input id="SearchThreadsText" runat="server" type="text" class="form-control input-md" placeholder="Search threads..." maxlength="50" />
+                        <asp:LinkButton ID="SearchThreadsButton" runat="server" CssClass="btn btn-primary" OnClick="SearchThreadsButton_Click"><i class="glyphicon glyphicon-search"></i></asp:LinkButton>
+                        <asp:LinkButton ID="ResetFilterButton" runat="server" CssClass="btn btn-default" OnClick="ResetFilterButton_Click">Reset</asp:LinkButton>
                     </div>
                 </div>
             </div>

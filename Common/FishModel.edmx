@@ -338,6 +338,9 @@
           <Parameter Name="UserId" Type="int" Mode="In" />
           <Parameter Name="ThreadCategory" Type="int" Mode="In" />
         </Function>
+        <Function Name="SearchThreads" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="SearchText" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="UpdateLocation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ID" Type="int" Mode="In" />
           <Parameter Name="Name" Type="varchar" Mode="In" />
@@ -844,7 +847,10 @@
             <Parameter Name="OtherNotes" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetIdOfCategory" ReturnType="Collection(Int32)">
-            <Parameter Name="Category" Mode="In" Type="String" />
+          <Parameter Name="Category" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SearchThreads" ReturnType="Collection(FishModel.SearchThreads_Result)">
+            <Parameter Name="SearchText" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="DoesLoginExist_Result">
@@ -961,6 +967,13 @@
           <Property Type="String" Name="FirstName" Nullable="false" MaxLength="255" />
           <Property Type="String" Name="LastName" Nullable="false" MaxLength="255" />
           <Property Type="String" Name="Password" Nullable="false" MaxLength="255" />
+        </ComplexType>
+        <ComplexType Name="SearchThreads_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Title" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="Message" Nullable="false" MaxLength="1000" />
+          <Property Type="Int32" Name="UserId" Nullable="false" />
+          <Property Type="Int32" Name="ThreadCategory" Nullable="false" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1257,6 +1270,17 @@
           <FunctionImportMapping FunctionImportName="UpdateLocation" FunctionName="FishModel.Store.UpdateLocation" />
           <FunctionImportMapping FunctionImportName="UpdateTrip" FunctionName="FishModel.Store.UpdateTrip" />
           <FunctionImportMapping FunctionImportName="GetIdOfCategory" FunctionName="FishModel.Store.GetIdOfCategory" />
+          <FunctionImportMapping FunctionImportName="SearchThreads" FunctionName="FishModel.Store.SearchThreads">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="FishModel.SearchThreads_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ThreadCategory" ColumnName="ThreadCategory" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
