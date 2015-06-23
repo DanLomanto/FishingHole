@@ -148,13 +148,13 @@ namespace FishingHole
 		/// </summary>
 		private void ClearOutErrorList()
 		{
-			int numberOfErrors = formErrors.Controls.Count;
+			int numberOfErrors = formErrors.Items.Count;
 
-			if (formErrors.HasControls())
+			if (numberOfErrors > 0)
 			{
-				for (int counter = 0; counter <= numberOfErrors; counter++)
+				for (int counter = 0; counter < numberOfErrors; counter++)
 				{
-					formErrors.Controls.RemoveAt(0);
+					formErrors.Items.RemoveAt(counter);
 					numberOfErrors = formErrors.Controls.Count;
 				}
 			}
