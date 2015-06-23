@@ -49,8 +49,7 @@
             </div>
         </div>
     </div>
-    <asp:HiddenField ID="hiddenShowModal" runat="server" Visible="false" />
-
+    <input type="text" id="hiddenShowModal" runat="server" style="display: none;" />
     <div id="AddThreadModal" class="modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -109,12 +108,17 @@
 
             $('#AddThreadModal').modal('hide');
 
-            var something = $('#MainContent_hiddenShowModal').val();
-            if (something == "true") {
+            var displayModal = $('#MainContent_hiddenShowModal').val();
+            if (displayModal == "true") {
                 $('#AddThreadModal').modal('show');
             }
 
             document.getElementById("ForumNavItem").className = "active";
+        });
+
+        $('#AddThreadModal').on('hidden.bs.modal', function (e) {
+            $('#MainContent_ThreadTitle').val("");
+            $('#MainContent_ThreadMessage').val("");
         });
     </script>
 </asp:Content>

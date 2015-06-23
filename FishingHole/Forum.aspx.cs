@@ -29,6 +29,8 @@ namespace FishingHole
 			LoadDiscussionTopics();
 
 			LoadRecentlyUpdateThreads();
+
+			ClearOutErrorList();
 		}
 
 		/// <summary>
@@ -40,9 +42,9 @@ namespace FishingHole
 		{
 			#region Field Validation
 
-			hiddenShowModal.Value = "false";
+			ClearOutErrorList();
 
-			formValidationErrors = new List<string>();
+			hiddenShowModal.Value = "false";
 
 			if (string.IsNullOrWhiteSpace(ThreadTitle.Value))
 			{
@@ -139,6 +141,26 @@ namespace FishingHole
 
 				RecentlyUpdatedThreads.Controls.Add(div);
 			}
+		}
+
+		/// <summary>
+		/// Clears the out error list.
+		/// </summary>
+		private void ClearOutErrorList()
+		{
+			int numberOfErrors = formErrors.Controls.Count;
+
+			if (formErrors.HasControls())
+			{
+				for (int counter = 0; counter <= numberOfErrors; counter++)
+				{
+					formErrors.Controls.RemoveAt(0);
+					numberOfErrors = formErrors.Controls.Count;
+				}
+			}
+
+			formValidationErrors = new List<string>();
+			formErrors.DataBind();
 		}
 
 		#endregion Private Methods
