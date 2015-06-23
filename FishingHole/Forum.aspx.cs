@@ -28,7 +28,7 @@ namespace FishingHole
 		{
 			LoadDiscussionTopics();
 
-			LoadRecentlyUpdateThreads();
+			LoadRecentlyUpdatedThreads();
 
 			ClearOutErrorList();
 		}
@@ -76,6 +76,8 @@ namespace FishingHole
 				Category = AddThreadCategories.SelectedValue.Trim()
 			};
 			newThread.CreateThread(Master.UsersInfo.ID);
+
+			LoadRecentlyUpdatedThreads();
 		}
 
 		#region Private Methods
@@ -105,10 +107,21 @@ namespace FishingHole
 		/// <summary>
 		/// Loads the recently update threads.
 		/// </summary>
-		private void LoadRecentlyUpdateThreads()
+		private void LoadRecentlyUpdatedThreads()
 		{
 			List<ForumThread> threads = ForumActions.GetAllThreads();
 
+			if (RecentlyUpdatedThreads.HasControls())
+			{
+				int numberOfThreads = RecentlyUpdatedThreads.Controls.Count;
+				for (int counter = 0; counter < numberOfThreads; counter++)
+				{
+					RecentlyUpdatedThreads.Controls.RemoveAt(counter);
+					numberOfThreads = RecentlyUpdatedThreads.Controls.Count;
+				}
+			}
+
+			int threadIndex = 0;
 			foreach (ForumThread thread in threads)
 			{
 				HtmlGenericControl div = new HtmlGenericControl("div");
@@ -139,7 +152,8 @@ namespace FishingHole
 									"</a>" +
 								"</div><br /><br /><br /><br /><hr />";
 
-				RecentlyUpdatedThreads.Controls.Add(div);
+				RecentlyUpdatedThreads.Controls.AddAt(threadIndex, div);
+				threadIndex = threadIndex + 1;
 			}
 		}
 
