@@ -27,8 +27,6 @@
         </div>
         <div class="col-xs-10 col-xs-offset-1 col-md-offset-0 col-md-9">
             <div class="container-fluid">
-                <div class="row">
-                </div>
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <div class="btn-group pull-right col-xs-5 form-inline" style="padding-top: 15px;">
@@ -39,6 +37,7 @@
                         <h3>Recently Updated Threads</h3>
                     </div>
                     <div class="panel-body">
+                        <div id="FilterTag" runat="server" class="row" visible="false"></div>
                         <div id="RecentlyUpdatedThreads" runat="server">
                         </div>
                         <div class="row col-xs-offset-1 col-xs-10">

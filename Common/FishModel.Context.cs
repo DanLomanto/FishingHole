@@ -520,5 +520,14 @@ namespace Common
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SearchThreads_Result>("SearchThreads", searchTextParameter);
         }
+    
+        public virtual ObjectResult<SearchForThreadsByCategory_Result> SearchForThreadsByCategory(string category)
+        {
+            var categoryParameter = category != null ?
+                new ObjectParameter("Category", category) :
+                new ObjectParameter("Category", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SearchForThreadsByCategory_Result>("SearchForThreadsByCategory", categoryParameter);
+        }
     }
 }

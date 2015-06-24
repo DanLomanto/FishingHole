@@ -338,6 +338,9 @@
           <Parameter Name="UserId" Type="int" Mode="In" />
           <Parameter Name="ThreadCategory" Type="int" Mode="In" />
         </Function>
+        <Function Name="SearchForThreadsByCategory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Category" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="SearchThreads" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="SearchText" Type="varchar" Mode="In" />
         </Function>
@@ -850,7 +853,10 @@
           <Parameter Name="Category" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SearchThreads" ReturnType="Collection(FishModel.SearchThreads_Result)">
-            <Parameter Name="SearchText" Mode="In" Type="String" />
+          <Parameter Name="SearchText" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SearchForThreadsByCategory" ReturnType="Collection(FishModel.SearchForThreadsByCategory_Result)">
+            <Parameter Name="Category" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="DoesLoginExist_Result">
@@ -969,6 +975,13 @@
           <Property Type="String" Name="Password" Nullable="false" MaxLength="255" />
         </ComplexType>
         <ComplexType Name="SearchThreads_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Title" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="Message" Nullable="false" MaxLength="1000" />
+          <Property Type="Int32" Name="UserId" Nullable="false" />
+          <Property Type="Int32" Name="ThreadCategory" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="SearchForThreadsByCategory_Result">
           <Property Type="Int32" Name="ID" Nullable="false" />
           <Property Type="String" Name="Title" Nullable="false" MaxLength="255" />
           <Property Type="String" Name="Message" Nullable="false" MaxLength="1000" />
@@ -1273,6 +1286,17 @@
           <FunctionImportMapping FunctionImportName="SearchThreads" FunctionName="FishModel.Store.SearchThreads">
             <ResultMapping>
               <ComplexTypeMapping TypeName="FishModel.SearchThreads_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ThreadCategory" ColumnName="ThreadCategory" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SearchForThreadsByCategory" FunctionName="FishModel.Store.SearchForThreadsByCategory">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="FishModel.SearchForThreadsByCategory_Result">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="Message" ColumnName="Message" />

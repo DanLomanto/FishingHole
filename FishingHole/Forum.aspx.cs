@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
+using System.Web.UI.WebControls;
 using Common;
 
 namespace FishingHole
@@ -103,6 +104,21 @@ namespace FishingHole
 			LoadRecentlyUpdatedThreads(ForumActions.GetAllThreads());
 		}
 
+		/// <summary>
+		/// Handles the Click event of the ThreadTopic control.
+		/// </summary>
+		/// <param name="sender">The source of the event.</param>
+		/// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+		protected void ThreadTopic_Click(object sender, EventArgs e)
+		{
+			LinkButton topicButton = sender as LinkButton;
+			string topicSelected = topicButton.Text.Trim();
+
+			LoadRecentlyUpdatedThreads(ForumActions.SearchForThreadsByCategory(topicSelected));
+
+			FilterTag.Visible = true;
+		}
+
 		#region Private Methods
 
 		/// <summary>
@@ -112,10 +128,19 @@ namespace FishingHole
 		{
 			List<string> topics = ForumActions.GetListOfThreadTopics();
 
+			int counter = 0;
 			foreach (string topic in topics)
 			{
 				HtmlGenericControl div = new HtmlGenericControl("div");
-				div.InnerHtml = "<i class=\"glyphicon glyphicon-book\"></i>&nbsp;" + topic;
+				div.InnerHtml = "<i class=\"glyphicon glyphicon-book\"></i>&nbsp;";
+
+				LinkButton topicLinkButton = new LinkButton();
+				topicLinkButton.Text = topic;
+				topicLinkButton.ID = "Topic" + counter.ToString();
+				topicLinkButton.Attributes.Add("Style", "color: black;");
+				topicLinkButton.Click += new EventHandler(ThreadTopic_Click);
+
+				div.Controls.Add(topicLinkButton);
 
 				ThreadTopics.Controls.Add(div);
 
@@ -124,6 +149,8 @@ namespace FishingHole
 
 				// Populate the drop down in the Add New Thread modal.
 				AddThreadCategories.Items.Add(topic);
+
+				counter++;
 			}
 		}
 
