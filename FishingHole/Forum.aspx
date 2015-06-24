@@ -37,7 +37,9 @@
                         <h3>Recently Updated Threads</h3>
                     </div>
                     <div class="panel-body">
-                        <div id="FilterTag" runat="server" class="row" visible="false"></div>
+                        <div id="FilterTag" runat="server" class="row" visible="false">
+                            <div class="alert alert-info col-xs-offset-1 col-xs-2">Filter:&nbsp;<span id="FilterCategoryText" runat="server" class="badge"></span></div>
+                        </div>
                         <div id="RecentlyUpdatedThreads" runat="server">
                         </div>
                         <div class="row col-xs-offset-1 col-xs-10">

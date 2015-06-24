@@ -102,6 +102,7 @@ namespace FishingHole
 		{
 			SearchThreadsText.Value = string.Empty;
 			LoadRecentlyUpdatedThreads(ForumActions.GetAllThreads());
+			FilterTag.Visible = false;
 		}
 
 		/// <summary>
@@ -117,6 +118,7 @@ namespace FishingHole
 			LoadRecentlyUpdatedThreads(ForumActions.SearchForThreadsByCategory(topicSelected));
 
 			FilterTag.Visible = true;
+			FilterCategoryText.InnerText = topicSelected;
 		}
 
 		#region Private Methods
