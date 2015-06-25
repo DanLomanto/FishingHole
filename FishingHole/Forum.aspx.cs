@@ -88,11 +88,12 @@ namespace FishingHole
 		/// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
 		protected void SearchThreadsButton_Click(object sender, EventArgs e)
 		{
-			List<ForumThread> threads = ForumActions.SearchForThreads(SearchThreadsText.Value.Trim());
+			string searchText = SearchThreadsText.Value.Trim();
+			List<ForumThread> threads = ForumActions.SearchForThreads(searchText);
 
 			LoadRecentlyUpdatedThreads(threads);
 
-			FilterTag.Visible = false;
+			DisplayFilterTag(searchText);
 		}
 
 		/// <summary>
@@ -119,8 +120,9 @@ namespace FishingHole
 
 			LoadRecentlyUpdatedThreads(ForumActions.SearchForThreadsByCategory(topicSelected));
 
-			FilterTag.Visible = true;
-			FilterCategoryText.InnerText = topicSelected;
+			DisplayFilterTag(topicSelected);
+
+			SearchThreadsText.Value = string.Empty;
 		}
 
 		#region Private Methods
@@ -232,6 +234,16 @@ namespace FishingHole
 
 			formValidationErrors = new List<string>();
 			formErrors.DataBind();
+		}
+
+		/// <summary>
+		/// Displays the filter tag.
+		/// </summary>
+		/// <param name="filterText">The filter text.</param>
+		private void DisplayFilterTag(string filterText)
+		{
+			FilterTag.Visible = true;
+			FilterCategoryText.InnerText = filterText;
 		}
 
 		#endregion Private Methods

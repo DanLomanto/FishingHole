@@ -45,7 +45,13 @@
                             <div id="FilterTag" runat="server" class="row" visible="false">
                                 <div class="container-fluid">
                                     <div class="row">
-                                        <div class="alert alert-info col-xs-2 left-buffer text-center">Filter:&nbsp;<span id="FilterCategoryText" runat="server" class="badge"></span></div>
+                                        <div class="col-xs-12 col-md-offset-3 col-md-6 text-center">
+                                            <div class="alert alert-info left-buffer">
+                                                Filter:&nbsp;
+                                                <span id="FilterCategoryText" runat="server" class="badge"></span>&nbsp;
+                                                <asp:LinkButton ID="CloseFilter" runat="server" OnClick="ResetFilterButton_Click"><i class="fa fa-times-circle"></i></asp:LinkButton>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="row">
                                         <hr />
