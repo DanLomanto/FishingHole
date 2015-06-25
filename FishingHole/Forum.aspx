@@ -9,7 +9,7 @@
             <div class="row">
                 <div class="form-inline">
                     <div class="form-group">
-                        <input id="SearchThreadsText" runat="server" type="text" class="form-control input-md" placeholder="Search threads..." maxlength="50" />
+                        <input id="SearchThreadsText" runat="server" type="text" class="form-control input-md" placeholder="Search all threads..." maxlength="50" />
                         <asp:LinkButton ID="SearchThreadsButton" runat="server" CssClass="btn btn-primary" OnClick="SearchThreadsButton_Click"><i class="glyphicon glyphicon-search"></i></asp:LinkButton>
                         <asp:LinkButton ID="ResetFilterButton" runat="server" CssClass="btn btn-default" OnClick="ResetFilterButton_Click">Reset</asp:LinkButton>
                     </div>
@@ -38,7 +38,14 @@
                     </div>
                     <div class="panel-body">
                         <div id="FilterTag" runat="server" class="row" visible="false">
-                            <div class="alert alert-info col-xs-offset-1 col-xs-2">Filter:&nbsp;<span id="FilterCategoryText" runat="server" class="badge"></span></div>
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="alert alert-info col-xs-2 left-buffer text-center">Filter:&nbsp;<span id="FilterCategoryText" runat="server" class="badge"></span></div>
+                                </div>
+                                <div class="row">
+                                    <hr />
+                                </div>
+                            </div>
                         </div>
                         <div id="RecentlyUpdatedThreads" runat="server">
                         </div>

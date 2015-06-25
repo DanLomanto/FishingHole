@@ -91,6 +91,8 @@ namespace FishingHole
 			List<ForumThread> threads = ForumActions.SearchForThreads(SearchThreadsText.Value.Trim());
 
 			LoadRecentlyUpdatedThreads(threads);
+
+			FilterTag.Visible = false;
 		}
 
 		/// <summary>

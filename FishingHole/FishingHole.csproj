@@ -231,6 +231,7 @@
     <Content Include="Scripts\WebForms\WebUIValidation.js" />
     <None Include="Properties\PublishProfiles\Publish.pubxml" />
     <None Include="Scripts\_references.js" />
+    <Content Include="Thread.aspx" />
     <Content Include="Trip.aspx" />
     <Content Include="Trips.aspx" />
     <Content Include="UploadPhotos.aspx" />
@@ -312,6 +313,13 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="Thread.aspx.cs">
+      <DependentUpon>Thread.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Thread.aspx.designer.cs">
+      <DependentUpon>Thread.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Trip.aspx.cs">
       <DependentUpon>Trip.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
