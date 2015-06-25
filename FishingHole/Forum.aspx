@@ -32,12 +32,14 @@
                 <div class="row">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <div class="btn-group pull-right col-xs-5 form-inline" style="padding-top: 15px;">
-                                <div class="form-group pull-right">
+                            <div class="row">
+                                <div class="col-xs-12 col-md-10">
+                                    <h3>Recently Updated Threads</h3>
+                                </div>
+                                <div class="col-xs-12 col-md-2 pull-right" style="padding-top: 15px;">
                                     <a id="LaunchNewThreadModal" href="#AddThreadModal" class="btn btn-large btn-primary" data-toggle="modal"><i class="glyphicon glyphicon-plus"></i>&nbsp New Thread</a>
                                 </div>
                             </div>
-                            <h3>Recently Updated Threads</h3>
                         </div>
                         <div class="panel-body">
                             <div id="FilterTag" runat="server" class="row" visible="false">

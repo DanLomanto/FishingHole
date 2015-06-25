@@ -186,7 +186,7 @@ namespace FishingHole
 					lastCommentDate = thread.LastModifiedDate.ToString("MM/dd/yyyy");
 				}
 
-				div.InnerHtml = "<div class=\"col-xs-8 col-md-10\">" +
+				div.InnerHtml = "<div class=\"col-xs-12 col-md-9\">" +
 									"<div class=\"row\">" +
 										"<a href=\"Thread.aspx?id=" + thread.ID + "\">" +
 											"<h4 class=\"col-xs-12\" style=\"color: #477bb7\"><i class=\"fa fa-comment\"></i>&nbsp;" + thread.Title + "</h4>" +
@@ -197,13 +197,17 @@ namespace FishingHole
 										"<div class=\"col-xs-12 col-sm-6 col-md-6\"><i class=\"glyphicon glyphicon-user\"></i>&nbsp;Created by " + thread.UserFirstLastNames.Key + " " + thread.UserFirstLastNames.Value + "</div>" +
 									"</div>" +
 								"</div>" +
-								"<div class=\"col-xs-2 col-sm-2 col-md-2 text-center\">" +
+								"<div class=\"col-xs-offset-1 col-xs-10 col-md-2 text-center\">" +
 									"<a href=\"Thread.aspx?id=" + thread.ID + "\" style=\"color: #000000\">" +
 										"<div class=\"col-xs-7 well well-md\" style=\"min-width: 100px\">" +
 											"<span>Comments <strong>" + thread.CommentCount.ToString() + "</strong></span>" +
 										"</div>" +
 									"</a>" +
-								"</div><br /><br /><br /><br /><hr />";
+								"</div>" +
+								"<div class=\"row col-xs-12\">" +
+									"<hr />" +
+								"</div>";
+				//"</div><br /><br /><br /><br /><hr />";
 
 				RecentlyUpdatedThreads.Controls.AddAt(threadIndex, div);
 				threadIndex = threadIndex + 1;

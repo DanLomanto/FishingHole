@@ -21,16 +21,16 @@
                         </div>
                         <div class="row top-buffer">
                             <div class="form-group">
-                                <label for="emailInput" class="col-md-3 col-xs-3 control-label">Email:</label>
-                                <div class="col-md-9 col-xs-9">
+                                <label for="emailInput" class="col-md-3 col-xs-12 control-label">Email:</label>
+                                <div class="col-md-9 col-md-offset-0 col-xs-12">
                                     <input type="email" runat="server" id="emailInput" class="form-control" placeholder="Email" />
                                 </div>
                             </div>
                         </div>
                         <div class="row top-buffer">
                             <div class="form-group">
-                                <label for="passwordInput" class="col-md-3 col-xs-2 control-label">Password:</label>
-                                <div class="col-md-9 col-md-offset-0 col-xs-offset-2 col-xs-8">
+                                <label for="passwordInput" class="col-md-3 col-xs-12 control-label">Password:</label>
+                                <div class="col-md-9 col-md-offset-0 col-xs-12">
                                     <input type="password" runat="server" id="passwordInput" class="form-control" placeholder="Password" />
                                 </div>
                             </div>
