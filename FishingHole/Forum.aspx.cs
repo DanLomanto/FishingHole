@@ -189,7 +189,7 @@ namespace FishingHole
 				div.InnerHtml = "<div class=\"col-xs-10\">" +
 									"<div class=\"row\">" +
 										"<a href=\"Thread.aspx?id=" + thread.ID + "\">" +
-											"<h4 class=\"col-xs-8\" style=\"color: #477bb7\"><i class=\"glyphicon glyphicon-comment\"></i>&nbsp;" + thread.Title + "</h4>" +
+											"<h4 class=\"col-xs-8\" style=\"color: #477bb7\"><i class=\"fa fa-comment\"></i>&nbsp;" + thread.Title + "</h4>" +
 										"</a>" +
 									"</div>" +
 									"<div class=\"row\">" +
