@@ -6,52 +6,56 @@
     <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
     <div class="container-fluid">
         <div class="col-xs-10 col-xs-offset-1 col-md-offset-0 col-md-3">
-            <div class="row">
-                <div class="form-inline">
-                    <div class="form-group">
-                        <input id="SearchThreadsText" runat="server" type="text" class="form-control input-md" placeholder="Search all threads..." maxlength="50" />
-                        <asp:LinkButton ID="SearchThreadsButton" runat="server" CssClass="btn btn-primary" OnClick="SearchThreadsButton_Click"><i class="glyphicon glyphicon-search"></i></asp:LinkButton>
-                        <asp:LinkButton ID="ResetFilterButton" runat="server" CssClass="btn btn-default" OnClick="ResetFilterButton_Click">Reset</asp:LinkButton>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="form-inline">
+                        <div class="form-group">
+                            <input id="SearchThreadsText" runat="server" type="text" class="form-control input-md" placeholder="Search all threads..." maxlength="50" />
+                            <asp:LinkButton ID="SearchThreadsButton" runat="server" CssClass="btn btn-primary" OnClick="SearchThreadsButton_Click"><i class="glyphicon glyphicon-search"></i></asp:LinkButton>
+                            <asp:LinkButton ID="ResetFilterButton" runat="server" CssClass="btn btn-default" OnClick="ResetFilterButton_Click">Reset</asp:LinkButton>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="row top-buffer">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Categories</h3>
-                    </div>
-                    <div id="ThreadTopics" runat="server" class="panel-body">
+                <div class="row top-buffer">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Categories</h3>
+                        </div>
+                        <div id="ThreadTopics" runat="server" class="panel-body">
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-xs-10 col-xs-offset-1 col-md-offset-0 col-md-9">
             <div class="container-fluid">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <div class="btn-group pull-right col-xs-5 form-inline" style="padding-top: 15px;">
-                            <div class="form-group pull-right">
-                                <a id="LaunchNewThreadModal" href="#AddThreadModal" class="btn btn-large btn-primary" data-toggle="modal"><i class="glyphicon glyphicon-plus"></i>&nbsp New Thread</a>
-                            </div>
-                        </div>
-                        <h3>Recently Updated Threads</h3>
-                    </div>
-                    <div class="panel-body">
-                        <div id="FilterTag" runat="server" class="row" visible="false">
-                            <div class="container-fluid">
-                                <div class="row">
-                                    <div class="alert alert-info col-xs-2 left-buffer text-center">Filter:&nbsp;<span id="FilterCategoryText" runat="server" class="badge"></span></div>
-                                </div>
-                                <div class="row">
-                                    <hr />
+                <div class="row">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <div class="btn-group pull-right col-xs-5 form-inline" style="padding-top: 15px;">
+                                <div class="form-group pull-right">
+                                    <a id="LaunchNewThreadModal" href="#AddThreadModal" class="btn btn-large btn-primary" data-toggle="modal"><i class="glyphicon glyphicon-plus"></i>&nbsp New Thread</a>
                                 </div>
                             </div>
+                            <h3>Recently Updated Threads</h3>
                         </div>
-                        <div id="RecentlyUpdatedThreads" runat="server">
-                        </div>
-                        <div class="row col-xs-offset-1 col-xs-10">
-                            <a href="#" id="ViewOlderThreads" runat="server" class="btn btn-default"><i class="glyphicon glyphicon-arrow-left"></i>&nbsp;Older Threads</a>
-                            <a href="#" id="ViewNewerThreads" runat="server" class="btn btn-default pull-right">Newer Threads&nbsp;<i class="glyphicon glyphicon-arrow-right"></i></a>
+                        <div class="panel-body">
+                            <div id="FilterTag" runat="server" class="row" visible="false">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="alert alert-info col-xs-2 left-buffer text-center">Filter:&nbsp;<span id="FilterCategoryText" runat="server" class="badge"></span></div>
+                                    </div>
+                                    <div class="row">
+                                        <hr />
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="RecentlyUpdatedThreads" runat="server">
+                            </div>
+                            <div class="row col-xs-offset-1 col-xs-10">
+                                <a href="#" id="ViewOlderThreads" runat="server" class="btn btn-default"><i class="glyphicon glyphicon-arrow-left"></i>&nbsp;Older Threads</a>
+                                <a href="#" id="ViewNewerThreads" runat="server" class="btn btn-default pull-right">Newer Threads&nbsp;<i class="glyphicon glyphicon-arrow-right"></i></a>
+                            </div>
                         </div>
                     </div>
                 </div>

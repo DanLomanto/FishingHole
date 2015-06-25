@@ -186,15 +186,15 @@ namespace FishingHole
 					lastCommentDate = thread.LastModifiedDate.ToString("MM/dd/yyyy");
 				}
 
-				div.InnerHtml = "<div class=\"col-xs-10\">" +
+				div.InnerHtml = "<div class=\"col-xs-8 col-md-10\">" +
 									"<div class=\"row\">" +
 										"<a href=\"Thread.aspx?id=" + thread.ID + "\">" +
-											"<h4 class=\"col-xs-8\" style=\"color: #477bb7\"><i class=\"fa fa-comment\"></i>&nbsp;" + thread.Title + "</h4>" +
+											"<h4 class=\"col-xs-12\" style=\"color: #477bb7\"><i class=\"fa fa-comment\"></i>&nbsp;" + thread.Title + "</h4>" +
 										"</a>" +
 									"</div>" +
 									"<div class=\"row\">" +
-										"<div class=\"col-xs-3 col-sm-3 col-md-3\"><i class=\"glyphicon glyphicon-calendar\"></i>&nbsp;Last Comment: " + lastCommentDate + "</div>" +
-										"<div class=\"col-xs-6 col-sm-6 col-md-6\"><i class=\"glyphicon glyphicon-user\"></i>&nbsp;Created by " + thread.UserFirstLastNames.Key + " " + thread.UserFirstLastNames.Value + "</div>" +
+										"<div class=\"col-xs-12 col-md-3\"><i class=\"glyphicon glyphicon-calendar\"></i>&nbsp;Last Comment: " + lastCommentDate + "</div>" +
+										"<div class=\"col-xs-12 col-sm-6 col-md-6\"><i class=\"glyphicon glyphicon-user\"></i>&nbsp;Created by " + thread.UserFirstLastNames.Key + " " + thread.UserFirstLastNames.Value + "</div>" +
 									"</div>" +
 								"</div>" +
 								"<div class=\"col-xs-2 col-sm-2 col-md-2 text-center\">" +
