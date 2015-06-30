@@ -78,7 +78,7 @@
                             </div>
                             <div class="row col-xs-offset-1 col-xs-10">
                                 <asp:LinkButton runat="server" ID="ViewOlderThreads" CssClass="btn btn-default" OnClick="ViewOlderThreads_Click"><i class="glyphicon glyphicon-arrow-left"></i>&nbsp;Older Threads</asp:LinkButton>
-                                <asp:LinkButton runat="server" ID="ViewNewerThreads" CssClass="btn btn-default" OnClick="ViewNewerThreads_Click">Newer Threads&nbsp;<i class="glyphicon glyphicon-arrow-right"></i></asp:LinkButton>
+                                <asp:LinkButton runat="server" ID="ViewNewerThreads" CssClass="btn btn-default pull-right" OnClick="ViewNewerThreads_Click">Newer Threads&nbsp;<i class="glyphicon glyphicon-arrow-right"></i></asp:LinkButton>
                             </div>
                         </div>
                     </div>

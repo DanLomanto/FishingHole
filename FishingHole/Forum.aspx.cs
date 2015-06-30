@@ -63,7 +63,7 @@ namespace FishingHole
 		{
 			LoadDiscussionTopics();
 
-			LoadRecentlyUpdatedThreads(ForumActions.GetAllThreads());
+			LoadThreadsForAllFilterScenarios();
 
 			ClearOutErrorList();
 		}
@@ -112,7 +112,7 @@ namespace FishingHole
 			};
 			newThread.CreateThread(Master.UsersInfo.ID);
 
-			LoadRecentlyUpdatedThreads(ForumActions.GetAllThreads());
+			LoadThreadsForAllFilterScenarios();
 		}
 
 		/// <summary>
@@ -125,9 +125,11 @@ namespace FishingHole
 			string searchText = SearchThreadsText.Value.Trim();
 			List<ForumThread> threads = ForumActions.SearchForThreads(searchText);
 
-			LoadRecentlyUpdatedThreads(threads);
+			//LoadRecentlyUpdatedThreads(ForumActions.SearchForThreads(searchText));
 
 			DisplayFilterCategoryTag(searchText);
+
+			LoadThreadsForAllFilterScenarios();
 		}
 
 		/// <summary>
@@ -138,7 +140,7 @@ namespace FishingHole
 		protected void ResetFilterButton_Click(object sender, EventArgs e)
 		{
 			SearchThreadsText.Value = string.Empty;
-			LoadRecentlyUpdatedThreads(ForumActions.GetAllThreads());
+			LoadThreadsForAllFilterScenarios();
 			FilterSearchTextTag.Visible = false;
 			FilterCategoryTag.Visible = false;
 		}
@@ -153,9 +155,11 @@ namespace FishingHole
 			LinkButton topicButton = sender as LinkButton;
 			string topicSelected = topicButton.Text.Trim();
 
-			LoadRecentlyUpdatedThreads(ForumActions.SearchForThreadsByCategory(topicSelected));
+			//LoadRecentlyUpdatedThreads(ForumActions.SearchForThreadsByCategory(topicSelected));
 
 			DisplayFilterSearchTextTag(topicSelected);
+
+			LoadThreadsForAllFilterScenarios();
 
 			SearchThreadsText.Value = string.Empty;
 		}
@@ -217,6 +221,30 @@ namespace FishingHole
 
 				counter++;
 			}
+		}
+
+		/// <summary>
+		/// Loads the threads for all filter scenarios.
+		/// </summary>
+		private void LoadThreadsForAllFilterScenarios()
+		{
+			List<ForumThread> threads = new List<ForumThread>();
+			string filterCategoryText = GetFilterCategoryText();
+			string searchText = GetFilterSearchTagText();
+			if (!string.IsNullOrEmpty(filterCategoryText))
+			{
+				threads = ForumActions.SearchForThreadsByCategory(filterCategoryText);
+			}
+			else if (!string.IsNullOrEmpty(searchText))
+			{
+				threads = ForumActions.SearchForThreads(searchText);
+			}
+			else
+			{
+				threads = ForumActions.GetAllThreads();
+			}
+
+			LoadRecentlyUpdatedThreads(threads);
 		}
 
 		/// <summary>
@@ -370,30 +398,6 @@ namespace FishingHole
 			}
 
 			return string.Empty;
-		}
-
-		/// <summary>
-		/// Loads the threads for all filter scenarios.
-		/// </summary>
-		private void LoadThreadsForAllFilterScenarios()
-		{
-			List<ForumThread> threads = new List<ForumThread>();
-			string filterCategoryText = GetFilterCategoryText();
-			string searchText = GetFilterSearchTagText();
-			if (!string.IsNullOrEmpty(filterCategoryText))
-			{
-				threads = ForumActions.SearchForThreadsByCategory(filterCategoryText);
-			}
-			else if (!string.IsNullOrEmpty(searchText))
-			{
-				threads = ForumActions.SearchForThreads(searchText);
-			}
-			else
-			{
-				threads = ForumActions.GetAllThreads();
-			}
-
-			LoadRecentlyUpdatedThreads(threads);
 		}
 
 		#endregion Private Methods
