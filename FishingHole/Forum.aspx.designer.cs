@@ -58,13 +58,13 @@ namespace FishingHole {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl ThreadTopics;
         
         /// <summary>
-        /// FilterTag control.
+        /// FilterSearchTextTag control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl FilterTag;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl FilterSearchTextTag;
         
         /// <summary>
         /// FilterCategoryText control.
@@ -85,6 +85,33 @@ namespace FishingHole {
         protected global::System.Web.UI.WebControls.LinkButton CloseFilter;
         
         /// <summary>
+        /// FilterCategoryTag control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl FilterCategoryTag;
+        
+        /// <summary>
+        /// Span1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Span1;
+        
+        /// <summary>
+        /// LinkButton1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton LinkButton1;
+        
+        /// <summary>
         /// RecentlyUpdatedThreads control.
         /// </summary>
         /// <remarks>
@@ -100,7 +127,7 @@ namespace FishingHole {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor ViewOlderThreads;
+        protected global::System.Web.UI.WebControls.LinkButton ViewOlderThreads;
         
         /// <summary>
         /// ViewNewerThreads control.
@@ -109,7 +136,7 @@ namespace FishingHole {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor ViewNewerThreads;
+        protected global::System.Web.UI.WebControls.LinkButton ViewNewerThreads;
         
         /// <summary>
         /// hiddenShowModal control.

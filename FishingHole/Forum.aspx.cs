@@ -18,6 +18,40 @@ namespace FishingHole
 		/// </summary>
 		private List<string> formValidationErrors;
 
+		/// <summary>
+		/// Gets or sets the index of the photo gallery.
+		/// </summary>
+		/// <value>
+		/// The index of the photo gallery.
+		/// </value>
+		private int pageIndex
+		{
+			get
+			{
+				try
+				{
+					int pageId = Convert.ToInt32(Request.QueryString["page"]);
+					if (pageId > 0)
+					{
+						return pageId;
+					}
+				}
+				catch
+				{
+				}
+				return 0;
+			}
+			set
+			{
+				ViewState["photoGalleryIndex"] = value;
+			}
+		}
+
+		/// <summary>
+		/// The number of images displayed in the gallery at once.
+		/// </summary>
+		private const int numberOfImagesDisplayedInGallery = 20;
+
 		#endregion Properties
 
 		/// <summary>
@@ -93,7 +127,7 @@ namespace FishingHole
 
 			LoadRecentlyUpdatedThreads(threads);
 
-			DisplayFilterTag(searchText);
+			DisplayFilterCategoryTag(searchText);
 		}
 
 		/// <summary>
@@ -105,7 +139,8 @@ namespace FishingHole
 		{
 			SearchThreadsText.Value = string.Empty;
 			LoadRecentlyUpdatedThreads(ForumActions.GetAllThreads());
-			FilterTag.Visible = false;
+			FilterSearchTextTag.Visible = false;
+			FilterCategoryTag.Visible = false;
 		}
 
 		/// <summary>
@@ -120,9 +155,33 @@ namespace FishingHole
 
 			LoadRecentlyUpdatedThreads(ForumActions.SearchForThreadsByCategory(topicSelected));
 
-			DisplayFilterTag(topicSelected);
+			DisplayFilterSearchTextTag(topicSelected);
 
 			SearchThreadsText.Value = string.Empty;
+		}
+
+		/// <summary>
+		/// Handles the Click event of the ViewNewerThreads control.
+		/// </summary>
+		/// <param name="sender">The source of the event.</param>
+		/// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+		protected void ViewNewerThreads_Click(object sender, EventArgs e)
+		{
+			pageIndex = pageIndex + numberOfImagesDisplayedInGallery;
+			ViewOlderThreads.Visible = true;
+			LoadThreadsForAllFilterScenarios();
+		}
+
+		/// <summary>
+		/// Handles the Click event of the ViewOlderThreads control.
+		/// </summary>
+		/// <param name="sender">The source of the event.</param>
+		/// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+		protected void ViewOlderThreads_Click(object sender, EventArgs e)
+		{
+			pageIndex = pageIndex - numberOfImagesDisplayedInGallery;
+			ViewNewerThreads.Visible = true;
+			LoadThreadsForAllFilterScenarios();
 		}
 
 		#region Private Methods
@@ -165,6 +224,36 @@ namespace FishingHole
 		/// </summary>
 		private void LoadRecentlyUpdatedThreads(List<ForumThread> threads)
 		{
+			List<ForumThread> twentyThreadsToDisplay = new List<ForumThread>();
+
+			if (threads.Count < numberOfImagesDisplayedInGallery)
+			{
+				twentyThreadsToDisplay = threads.GetRange(pageIndex, threads.Count);
+
+				ViewOlderThreads.Visible = false;
+				ViewNewerThreads.Visible = false;
+			}
+			else
+			{
+				if (pageIndex == 0)
+				{
+					ViewOlderThreads.Visible = false;
+				}
+
+				if ((threads.Count / (numberOfImagesDisplayedInGallery + pageIndex)) >= 1)
+				{
+					twentyThreadsToDisplay = threads.GetRange(pageIndex, numberOfImagesDisplayedInGallery);
+				}
+				else
+				{
+					twentyThreadsToDisplay = threads.GetRange(pageIndex, threads.Count % numberOfImagesDisplayedInGallery);
+					ViewNewerThreads.Visible = false;
+				}
+			}
+
+			// -----------------------------
+
+			// Remove any existing threads from the forum so we can add only the ones we want to display.
 			int numberOfThreads = RecentlyUpdatedThreads.Controls.Count;
 			for (int i = 0; i < numberOfThreads; i++)
 			{
@@ -177,7 +266,7 @@ namespace FishingHole
 			}
 
 			int threadIndex = 0;
-			foreach (ForumThread thread in threads)
+			foreach (ForumThread thread in twentyThreadsToDisplay)
 			{
 				HtmlGenericControl div = new HtmlGenericControl("div");
 				div.Attributes.Add("class", "row");
@@ -209,7 +298,6 @@ namespace FishingHole
 								"<div class=\"row col-xs-12\">" +
 									"<hr />" +
 								"</div>";
-				//"</div><br /><br /><br /><br /><hr />";
 
 				RecentlyUpdatedThreads.Controls.AddAt(threadIndex, div);
 				threadIndex = threadIndex + 1;
@@ -240,10 +328,72 @@ namespace FishingHole
 		/// Displays the filter tag.
 		/// </summary>
 		/// <param name="filterText">The filter text.</param>
-		private void DisplayFilterTag(string filterText)
+		private void DisplayFilterSearchTextTag(string filterText)
 		{
-			FilterTag.Visible = true;
-			FilterCategoryText.InnerText = filterText;
+			FilterSearchTextTag.Visible = true;
+			FilterSearchTextTag.InnerText = filterText;
+		}
+
+		/// <summary>
+		/// Displays the filter category tag.
+		/// </summary>
+		/// <param name="filterText">The filter text.</param>
+		private void DisplayFilterCategoryTag(string filterText)
+		{
+			FilterCategoryTag.Visible = true;
+			FilterCategoryTag.InnerText = filterText;
+		}
+
+		/// <summary>
+		/// Gets the filter search tag text.
+		/// </summary>
+		/// <returns></returns>
+		private string GetFilterSearchTagText()
+		{
+			if (FilterSearchTextTag.Visible)
+			{
+				return FilterSearchTextTag.InnerText;
+			}
+
+			return string.Empty;
+		}
+
+		/// <summary>
+		/// Gets the filter category text.
+		/// </summary>
+		/// <returns></returns>
+		private string GetFilterCategoryText()
+		{
+			if (FilterCategoryTag.Visible)
+			{
+				return FilterCategoryTag.InnerText;
+			}
+
+			return string.Empty;
+		}
+
+		/// <summary>
+		/// Loads the threads for all filter scenarios.
+		/// </summary>
+		private void LoadThreadsForAllFilterScenarios()
+		{
+			List<ForumThread> threads = new List<ForumThread>();
+			string filterCategoryText = GetFilterCategoryText();
+			string searchText = GetFilterSearchTagText();
+			if (!string.IsNullOrEmpty(filterCategoryText))
+			{
+				threads = ForumActions.SearchForThreadsByCategory(filterCategoryText);
+			}
+			else if (!string.IsNullOrEmpty(searchText))
+			{
+				threads = ForumActions.SearchForThreads(searchText);
+			}
+			else
+			{
+				threads = ForumActions.GetAllThreads();
+			}
+
+			LoadRecentlyUpdatedThreads(threads);
 		}
 
 		#endregion Private Methods

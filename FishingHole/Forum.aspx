@@ -42,14 +42,30 @@
                             </div>
                         </div>
                         <div class="panel-body">
-                            <div id="FilterTag" runat="server" class="row" visible="false">
+                            <div id="FilterSearchTextTag" runat="server" class="row" visible="false">
                                 <div class="container-fluid">
                                     <div class="row">
                                         <div class="col-xs-12 col-md-offset-3 col-md-6 text-center">
                                             <div class="alert alert-info left-buffer">
-                                                Filter:&nbsp;
+                                                Filter Text:&nbsp;
                                                 <span id="FilterCategoryText" runat="server" class="badge"></span>&nbsp;
                                                 <asp:LinkButton ID="CloseFilter" runat="server" OnClick="ResetFilterButton_Click"><i class="fa fa-times-circle"></i></asp:LinkButton>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <hr />
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="FilterCategoryTag" runat="server" class="row" visible="false">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-xs-12 col-md-offset-3 col-md-6 text-center">
+                                            <div class="alert alert-info left-buffer">
+                                                Filter Category:&nbsp;
+                                                <span id="Span1" runat="server" class="badge"></span>&nbsp;
+                                                <asp:LinkButton ID="LinkButton1" runat="server" OnClick="ResetFilterButton_Click"><i class="fa fa-times-circle"></i></asp:LinkButton>
                                             </div>
                                         </div>
                                     </div>
@@ -61,8 +77,8 @@
                             <div id="RecentlyUpdatedThreads" runat="server">
                             </div>
                             <div class="row col-xs-offset-1 col-xs-10">
-                                <a href="#" id="ViewOlderThreads" runat="server" class="btn btn-default"><i class="glyphicon glyphicon-arrow-left"></i>&nbsp;Older Threads</a>
-                                <a href="#" id="ViewNewerThreads" runat="server" class="btn btn-default pull-right">Newer Threads&nbsp;<i class="glyphicon glyphicon-arrow-right"></i></a>
+                                <asp:LinkButton runat="server" ID="ViewOlderThreads" CssClass="btn btn-default" OnClick="ViewOlderThreads_Click"><i class="glyphicon glyphicon-arrow-left"></i>&nbsp;Older Threads</asp:LinkButton>
+                                <asp:LinkButton runat="server" ID="ViewNewerThreads" CssClass="btn btn-default" OnClick="ViewNewerThreads_Click">Newer Threads&nbsp;<i class="glyphicon glyphicon-arrow-right"></i></asp:LinkButton>
                             </div>
                         </div>
                     </div>
