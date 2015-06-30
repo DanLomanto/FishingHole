@@ -170,6 +170,16 @@ namespace Common
 		/// <returns></returns>
 		public string GetGoogleMapsUrl()
 		{
+			string locationToAppendOnLink = FormatGoogleMapsLocationInfo();
+			return "https://www.google.com/maps/embed/v1/place?key=" + ConfigurationManager.AppSettings["GoogleAPIKey"].ToString() + "&q=" + locationToAppendOnLink;
+		}
+
+		/// <summary>
+		/// Formats the google maps location information.
+		/// </summary>
+		/// <returns></returns>
+		public string FormatGoogleMapsLocationInfo()
+		{
 			string locationToAppendOnLink = string.Empty;
 			if (!string.IsNullOrWhiteSpace(this.StreetAddress))
 			{
@@ -182,7 +192,7 @@ namespace Common
 				locationToAppendOnLink = formatCoordinates(this.LattitudeDirection, this.Lattitude, this.LongitudeDirection, this.Longitude);
 			}
 
-			return "https://www.google.com/maps/embed/v1/place?key=" + ConfigurationManager.AppSettings["GoogleAPIKey"].ToString() + "&q=" + locationToAppendOnLink;
+			return locationToAppendOnLink;
 		}
 
 		#region Private Methods

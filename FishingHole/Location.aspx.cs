@@ -232,7 +232,8 @@ namespace FishingHole
 		private void SetGoogleMapsUrl(LocationObject location)
 		{
 			GoogleMap.Src = location.GetGoogleMapsUrl();
-			GoogleMap.Visible = true;
+			OpenLocationInGoogleMaps.HRef = "https://www.google.com/maps/place/" + location.FormatGoogleMapsLocationInfo();
+			LocationMapInfo.Visible = true;
 		}
 
 		/// <summary>

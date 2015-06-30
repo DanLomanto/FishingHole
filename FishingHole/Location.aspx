@@ -182,11 +182,16 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row top-buffer text-center">
-                            <iframe id="GoogleMap" runat="server" visible="false" class="col-md-12 col-xs-12"
-                                height="450"
-                                frameborder="0" style="border: 0"
-                                src="placeholder" />
+                        <div id="LocationMapInfo" runat="server" visible="false">
+                            <div class="row top-buffer text-center">
+                                <a href="#" id="OpenLocationInGoogleMaps" runat="server" target="_blank" class="btn btn-primary"><i class="fa fa-map-marker">&nbsp;Open location in Google Maps</i></a>
+                            </div>
+                            <div class="row top-buffer text-center">
+                                <iframe id="GoogleMap" runat="server" class="col-md-12 col-xs-12"
+                                    height="450"
+                                    frameborder="0" style="border: 0"
+                                    src="placeholder" />
+                            </div>
                         </div>
                         <div class="row top-buffer">
                             <div class="form-inline text-center">
