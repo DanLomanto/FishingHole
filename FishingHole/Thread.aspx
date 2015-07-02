@@ -32,10 +32,10 @@
                                         <asp:BulletedList ID="formErrors" runat="server" CssClass="no-bullets list-group-item-danger center-block text-center col-md-8" />
                                     </div>
                                     <div class="row">
-                                        <div class="col-xs-4 col-xs-offset-2">
-                                            <textarea runat="server" id="ThreadReply" class="form-control" placeholder="Reply Message..." maxlength="1000" style="width: 300px; height: 150px;" />
+                                        <div class="col-xs-12 col-md-4 col-md-offset-1">
+                                            <textarea runat="server" id="ThreadReply" class="form-control" placeholder="Reply Message..." maxlength="1000" style="min-width: 150px; max-width: 500px; height: 150px;" />
                                         </div>
-                                        <div class="col-xs-4">
+                                        <div class="col-xs-12 col-md-4 col-md-offset-2">
                                             <div class="radio">
                                                 <label>
                                                     <input id="DontShareLocationsRadioBtn" runat="server" type="radio" name="shareLocationBtns" checked="true" />Don't share location
