@@ -46,12 +46,7 @@
                                                     <input id="ShareLocationsRadioBtn" runat="server" type="radio" name="shareLocationBtns" class="pull-left" />Share location
                                                 </label>
                                                 <div class="top-buffer">
-                                                    <select id="Locations" runat="server" class="form-control" disabled="disabled">
-                                                        <option selected="selected">Select Location...</option>
-                                                        <option>Location 1</option>
-                                                        <option>Location 2</option>
-                                                        <option>Location 3</option>
-                                                    </select>
+                                                    <select id="Locations" runat="server" class="form-control" disabled="disabled"></select>
                                                 </div>
                                             </div>
                                         </div>

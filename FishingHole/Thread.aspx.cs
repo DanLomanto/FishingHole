@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Drawing;
 using System.Web.UI.HtmlControls;
+using System.Web.UI.WebControls;
 using Common;
 
 namespace FishingHole
@@ -39,6 +41,11 @@ namespace FishingHole
 			LoadOriginalThreadMessage();
 
 			LoadThreadComments();
+
+			if (!Page.IsPostBack)
+			{
+				PopulateLocationsDropDown();
+			}
 
 			if (Page.IsPostBack)
 			{
@@ -179,6 +186,21 @@ namespace FishingHole
 			{
 				Locations.Disabled = true;
 			}
+		}
+
+		/// <summary>
+		/// Populates the locations drop down.
+		/// </summary>
+		private void PopulateLocationsDropDown()
+		{
+			Locations.Items.Add(new ListItem("Select Location...", "-1"));
+
+			foreach (DataRow row in LocationObject.GetLocationsForUser(Master.UsersInfo.ID).Rows)
+			{
+				Locations.Items.Add(new ListItem(row["Name"].ToString(), row["ID"].ToString()));
+			}
+
+			Locations.DataBind();
 		}
 
 		#endregion Private Methods
