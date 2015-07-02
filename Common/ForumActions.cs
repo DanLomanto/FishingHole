@@ -43,13 +43,20 @@ namespace Common
 				{
 					ID = item.ID,
 					Title = item.Title,
-					Message = item.Message
+					Message = item.Message,
+					CreateDate = item.CreateDate
 				};
 
 				UserInformation userInfo = UserActions.GetUserInfo(item.UserId);
 				thread.UserFirstLastNames = new KeyValuePair<string, string>(userInfo.FirstName, userInfo.LastName);
 				thread.Category = GetCategory(item.ThreadCategory);
 				thread.CommentCount = GetCommentCountForThread(item.ID);
+
+				List<ThreadComment> allCommentsForThread = ForumActions.GetCommentsForThread(thread.ID);
+				if (allCommentsForThread.Count > 0)
+				{
+					thread.LastCommentDate = allCommentsForThread.Last().CreateDate;
+				}
 
 				allThreads.Add(thread);
 			}
@@ -74,7 +81,8 @@ namespace Common
 				{
 					ID = item.ID,
 					Title = item.Title,
-					Message = item.Message
+					Message = item.Message,
+					CreateDate = item.CreateDate
 				};
 
 				UserInformation userInfo = UserActions.GetUserInfo(item.UserId);
@@ -105,7 +113,8 @@ namespace Common
 				{
 					ID = item.ID,
 					Title = item.Title,
-					Message = item.Message
+					Message = item.Message,
+					CreateDate = item.CreateDate
 				};
 
 				UserInformation userInfo = UserActions.GetUserInfo(item.UserId);
@@ -135,6 +144,7 @@ namespace Common
 				ThreadComment tc = new ThreadComment();
 				tc.CreateDate = comment.CreateDate;
 				tc.Message = comment.Comment;
+				tc.ThreadId = threadId;
 				UserInformation userInfo = UserActions.GetUserInfo(comment.UserId);
 				tc.UserFirstLastNames = new KeyValuePair<string, string>(userInfo.FirstName, userInfo.LastName);
 
@@ -226,12 +236,44 @@ namespace Common
 		public KeyValuePair<string, string> UserFirstLastNames { get; set; }
 
 		/// <summary>
-		/// Gets or sets the last modified date.
+		/// Gets or sets the first name.
 		/// </summary>
 		/// <value>
-		/// The last modified date.
+		/// The first name.
 		/// </value>
-		public DateTime LastModifiedDate { get; set; }
+		public string FirstName
+		{
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// Gets or sets the last name.
+		/// </summary>
+		/// <value>
+		/// The last name.
+		/// </value>
+		public string LastName
+		{
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// Gets or sets the last comment date.
+		/// </summary>
+		/// <value>
+		/// The last comment date.
+		/// </value>
+		public DateTime LastCommentDate { get; set; }
+
+		/// <summary>
+		/// Gets or sets the create date.
+		/// </summary>
+		/// <value>
+		/// The create date.
+		/// </value>
+		public DateTime CreateDate { get; set; }
 
 		/// <summary>
 		/// Gets or sets the comment count.
@@ -251,10 +293,38 @@ namespace Common
 
 		#endregion Properties
 
+		/// <summary>
+		/// Creates the thread.
+		/// </summary>
+		/// <param name="userId">The user identifier.</param>
 		public void CreateThread(int userId)
 		{
 			FishEntities fishDB = new FishEntities();
 			fishDB.InsertThread(this.Title, this.Message, userId, ForumActions.GetIdOfCategory(this.Category));
+		}
+
+		/// <summary>
+		/// Gets the thread by identifier.
+		/// </summary>
+		public static ForumThread GetThreadById(int threadId)
+		{
+			FishEntities fishDB = new FishEntities();
+			GetThreadById_Result result = fishDB.GetThreadById(threadId).FirstOrDefault();
+
+			ForumThread thread = new ForumThread();
+			thread.Message = result.Message;
+			thread.Title = result.Title;
+			thread.ID = threadId;
+			thread.CreateDate = result.CreateDate;
+
+			UserInformation userInfo = UserActions.GetUserInfo(result.UserId);
+			thread.FirstName = userInfo.FirstName;
+			thread.LastName = userInfo.LastName;
+
+			List<ThreadComment> allCommentsForThread = ForumActions.GetCommentsForThread(thread.ID);
+			thread.LastCommentDate = allCommentsForThread.Last().CreateDate;
+
+			return thread;
 		}
 	}
 
@@ -286,5 +356,47 @@ namespace Common
 		/// The create date.
 		/// </value>
 		public DateTime CreateDate { get; set; }
+
+		/// <summary>
+		/// Gets or sets the thread identifier.
+		/// </summary>
+		/// <value>
+		/// The thread identifier.
+		/// </value>
+		public int ThreadId { get; set; }
+
+		/// <summary>
+		/// Gets or sets the first name.
+		/// </summary>
+		/// <value>
+		/// The first name.
+		/// </value>
+		public string FirstName
+		{
+			get { return UserFirstLastNames.Key; }
+			set { }
+		}
+
+		/// <summary>
+		/// Gets or sets the last name.
+		/// </summary>
+		/// <value>
+		/// The last name.
+		/// </value>
+		public string LastName
+		{
+			get { return UserFirstLastNames.Value; }
+			set { }
+		}
+
+		/// <summary>
+		/// Creates the thread.
+		/// </summary>
+		/// <param name="userId">The user identifier.</param>
+		public void CreateThread(int userId)
+		{
+			FishEntities fishDB = new FishEntities();
+			fishDB.InsertThreadComment(this.Message, userId, this.ThreadId);
+		}
 	}
 }

@@ -14,13 +14,20 @@ namespace Common
     
     public partial class Thread
     {
+        public Thread()
+        {
+            this.Comments = new HashSet<Comment>();
+        }
+    
         public int ID { get; set; }
         public string Title { get; set; }
         public string Message { get; set; }
         public int UserId { get; set; }
         public int ThreadCategory { get; set; }
+        public System.DateTime CreateDate { get; set; }
     
         public virtual Category Category { get; set; }
+        public virtual ICollection<Comment> Comments { get; set; }
         public virtual User User { get; set; }
     }
 }

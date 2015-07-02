@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="FishModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="FishModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Categories">
           <Key>
             <PropertyRef Name="ID" />
@@ -16,10 +16,11 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Comment" Type="varchar" MaxLength="1000" Nullable="false" />
           <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="ThreadId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="ImagePaths">
           <Key>
@@ -64,6 +65,7 @@
           <Property Name="Message" Type="varchar" MaxLength="1000" Nullable="false" />
           <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="ThreadCategory" Type="int" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="Trips">
           <Key>
@@ -100,6 +102,18 @@
           <Property Name="LastName" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="Password" Type="varchar" MaxLength="255" Nullable="false" />
         </EntityType>
+        <Association Name="FK_Comments_Threads">
+          <End Role="Threads" Type="Self.Threads" Multiplicity="1" />
+          <End Role="Comments" Type="Self.Comments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Threads">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Comments">
+              <PropertyRef Name="ThreadId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Comments_Users">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="Comments" Type="Self.Comments" Multiplicity="*" />
@@ -310,6 +324,9 @@
         <Function Name="GetPhotosForTrip" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="TripId" Type="int" Mode="In" />
         </Function>
+        <Function Name="GetThreadById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID" Type="int" Mode="In" />
+        </Function>
         <Function Name="GetThreadCategoryById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ID" Type="int" Mode="In" />
         </Function>
@@ -337,6 +354,11 @@
           <Parameter Name="Message" Type="varchar" Mode="In" />
           <Parameter Name="UserId" Type="int" Mode="In" />
           <Parameter Name="ThreadCategory" Type="int" Mode="In" />
+        </Function>
+        <Function Name="InsertThreadComment" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Comment" Type="varchar" Mode="In" />
+          <Parameter Name="UserId" Type="int" Mode="In" />
+          <Parameter Name="ThreadId" Type="int" Mode="In" />
         </Function>
         <Function Name="SearchForThreadsByCategory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Category" Type="varchar" Mode="In" />
@@ -379,6 +401,10 @@
           <EntitySet Name="Trips" EntityType="Self.Trips" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TripsToPhotos" EntityType="Self.TripsToPhotos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Comments_Threads" Association="Self.FK_Comments_Threads">
+            <End Role="Threads" EntitySet="Threads" />
+            <End Role="Comments" EntitySet="Comments" />
+          </AssociationSet>
           <AssociationSet Name="FK_Comments_Users" Association="Self.FK_Comments_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="Comments" EntitySet="Comments" />
@@ -420,7 +446,8 @@
             <End Role="LocationToTrip" EntitySet="LocationToTrip" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="FishModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -436,10 +463,12 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Comment1" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="UserId" Type="Int32" Nullable="false" />
           <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ThreadId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Thread" Relationship="Self.FK_Comments_Threads" FromRole="Comments" ToRole="Threads" />
           <NavigationProperty Name="User" Relationship="Self.FK_Comments_Users" FromRole="Comments" ToRole="Users" />
         </EntityType>
         <EntityType Name="ImagePath">
@@ -491,7 +520,9 @@
           <Property Name="Message" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="UserId" Type="Int32" Nullable="false" />
           <Property Name="ThreadCategory" Type="Int32" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Category" Relationship="Self.FK_Threads_Categories" FromRole="Threads" ToRole="Categories" />
+          <NavigationProperty Name="Comments" Relationship="Self.FK_Comments_Threads" FromRole="Threads" ToRole="Comments" />
           <NavigationProperty Name="User" Relationship="Self.FK_Threads_Users" FromRole="Threads" ToRole="Users" />
         </EntityType>
         <EntityType Name="Trip">
@@ -548,6 +579,18 @@
             </Principal>
             <Dependent Role="Threads">
               <PropertyRef Name="ThreadCategory" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Comments_Threads">
+          <End Role="Threads" Type="Self.Thread" Multiplicity="1" />
+          <End Role="Comments" Type="Self.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Threads">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Comments">
+              <PropertyRef Name="ThreadId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -673,6 +716,10 @@
             <End Role="Categories" EntitySet="Categories" />
             <End Role="Threads" EntitySet="Threads" />
           </AssociationSet>
+          <AssociationSet Name="FK_Comments_Threads" Association="Self.FK_Comments_Threads">
+            <End Role="Threads" EntitySet="Threads" />
+            <End Role="Comments" EntitySet="Comments" />
+          </AssociationSet>
           <AssociationSet Name="FK_Comments_Users" Association="Self.FK_Comments_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="Comments" EntitySet="Comments" />
@@ -751,13 +798,13 @@
             <Parameter Name="Password" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="DeleteLocationForTrip">
-          <Parameter Name="TripID" Mode="In" Type="Int32" />
+            <Parameter Name="TripID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="DeletePhoto">
-          <Parameter Name="PhotoId" Mode="In" Type="Int32" />
+            <Parameter Name="PhotoId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="DeleteTripForLocation">
-          <Parameter Name="LocationID" Mode="In" Type="Int32" />
+            <Parameter Name="LocationID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="DoesLoginExist" ReturnType="Collection(FishModel.DoesLoginExist_Result)">
             <Parameter Name="Email" Mode="In" Type="String" />
@@ -768,36 +815,42 @@
             <Parameter Name="Title" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetAllLocationsForUser" ReturnType="Collection(FishModel.GetAllLocationsForUser_Result)">
-          <Parameter Name="UserID" Mode="In" Type="Int32" />
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetAllThreads" ReturnType="Collection(FishModel.GetAllThreads_Result)" />
           <FunctionImport Name="GetAllTripsForUser" ReturnType="Collection(FishModel.GetAllTripsForUser_Result)">
-          <Parameter Name="UserID" Mode="In" Type="Int32" />
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetAssociatedLocationForTrip" ReturnType="Collection(Int32)">
-          <Parameter Name="TripID" Mode="In" Type="Int32" />
+            <Parameter Name="TripID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetAssociatedTripForLocation" ReturnType="Collection(Int32)">
-          <Parameter Name="LocationId" Mode="In" Type="Int32" />
+            <Parameter Name="LocationId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetCommentsForThread" ReturnType="Collection(FishModel.GetCommentsForThread_Result)">
-          <Parameter Name="ID" Mode="In" Type="Int32" />
+            <Parameter Name="ID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetIdOfCategory" ReturnType="Collection(Int32)">
+            <Parameter Name="Category" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetImagesForUser" ReturnType="Collection(FishModel.GetImagesForUser_Result)">
-          <Parameter Name="UserID" Mode="In" Type="Int32" />
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetLocation" ReturnType="Collection(FishModel.GetLocation_Result)">
             <Parameter Name="UserID" Mode="In" Type="Int32" />
             <Parameter Name="Name" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetLocationById" ReturnType="Collection(FishModel.GetLocationById_Result)">
-          <Parameter Name="ID" Mode="In" Type="Int32" />
+            <Parameter Name="ID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetPhotosForTrip" ReturnType="Collection(FishModel.GetPhotosForTrip_Result)">
-          <Parameter Name="TripId" Mode="In" Type="Int32" />
+            <Parameter Name="TripId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetThreadById" ReturnType="Collection(FishModel.GetThreadById_Result)">
+            <Parameter Name="ID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetThreadCategoryById" ReturnType="Collection(String)">
-          <Parameter Name="ID" Mode="In" Type="Int32" />
+            <Parameter Name="ID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetTopicNames" ReturnType="Collection(String)" />
           <FunctionImport Name="GetTrip" ReturnType="Collection(FishModel.GetTrip_Result)">
@@ -805,13 +858,13 @@
             <Parameter Name="Title" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetTripById" ReturnType="Collection(FishModel.GetTripById_Result)">
-          <Parameter Name="ID" Mode="In" Type="Int32" />
+            <Parameter Name="ID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetUser" ReturnType="Collection(FishModel.GetUser_Result)">
-          <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="Email" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetUserById" ReturnType="Collection(FishModel.GetUserById_Result)">
-          <Parameter Name="ID" Mode="In" Type="Int32" />
+            <Parameter Name="ID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="InsertImagePath">
             <Parameter Name="UserID" Mode="In" Type="Int32" />
@@ -823,6 +876,17 @@
             <Parameter Name="Message" Mode="In" Type="String" />
             <Parameter Name="UserId" Mode="In" Type="Int32" />
             <Parameter Name="ThreadCategory" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="InsertThreadComment">
+            <Parameter Name="Comment" Mode="In" Type="String" />
+            <Parameter Name="UserId" Mode="In" Type="Int32" />
+            <Parameter Name="ThreadId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SearchForThreadsByCategory" ReturnType="Collection(FishModel.SearchForThreadsByCategory_Result)">
+            <Parameter Name="Category" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SearchThreads" ReturnType="Collection(FishModel.SearchThreads_Result)">
+            <Parameter Name="SearchText" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="UpdateLocation">
             <Parameter Name="ID" Mode="In" Type="Int32" />
@@ -848,15 +912,6 @@
             <Parameter Name="FliesLuresUsed" Mode="In" Type="String" />
             <Parameter Name="CatchOfTheDay" Mode="In" Type="String" />
             <Parameter Name="OtherNotes" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="GetIdOfCategory" ReturnType="Collection(Int32)">
-          <Parameter Name="Category" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="SearchThreads" ReturnType="Collection(FishModel.SearchThreads_Result)">
-          <Parameter Name="SearchText" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="SearchForThreadsByCategory" ReturnType="Collection(FishModel.SearchForThreadsByCategory_Result)">
-            <Parameter Name="Category" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="DoesLoginExist_Result">
@@ -885,6 +940,7 @@
           <Property Type="String" Name="Message" Nullable="false" MaxLength="1000" />
           <Property Type="Int32" Name="UserId" Nullable="false" />
           <Property Type="Int32" Name="ThreadCategory" Nullable="false" />
+          <Property Type="DateTime" Name="CreateDate" Nullable="false" Precision="23" />
         </ComplexType>
         <ComplexType Name="GetAllTripsForUser_Result">
           <Property Type="Int32" Name="ID" Nullable="false" />
@@ -936,6 +992,14 @@
           <Property Type="Int32" Name="PhotoID" Nullable="false" />
           <Property Type="String" Name="ImagePath" Nullable="false" MaxLength="255" />
         </ComplexType>
+        <ComplexType Name="GetThreadById_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Title" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="Message" Nullable="false" MaxLength="1000" />
+          <Property Type="Int32" Name="UserId" Nullable="false" />
+          <Property Type="Int32" Name="ThreadCategory" Nullable="false" />
+          <Property Type="DateTime" Name="CreateDate" Nullable="false" Precision="23" />
+        </ComplexType>
         <ComplexType Name="GetTrip_Result">
           <Property Type="String" Name="Title" Nullable="false" MaxLength="255" />
           <Property Type="String" Name="Description" Nullable="true" MaxLength="Max" />
@@ -974,19 +1038,21 @@
           <Property Type="String" Name="LastName" Nullable="false" MaxLength="255" />
           <Property Type="String" Name="Password" Nullable="false" MaxLength="255" />
         </ComplexType>
-        <ComplexType Name="SearchThreads_Result">
-          <Property Type="Int32" Name="ID" Nullable="false" />
-          <Property Type="String" Name="Title" Nullable="false" MaxLength="255" />
-          <Property Type="String" Name="Message" Nullable="false" MaxLength="1000" />
-          <Property Type="Int32" Name="UserId" Nullable="false" />
-          <Property Type="Int32" Name="ThreadCategory" Nullable="false" />
-        </ComplexType>
         <ComplexType Name="SearchForThreadsByCategory_Result">
           <Property Type="Int32" Name="ID" Nullable="false" />
           <Property Type="String" Name="Title" Nullable="false" MaxLength="255" />
           <Property Type="String" Name="Message" Nullable="false" MaxLength="1000" />
           <Property Type="Int32" Name="UserId" Nullable="false" />
           <Property Type="Int32" Name="ThreadCategory" Nullable="false" />
+          <Property Type="DateTime" Name="CreateDate" Nullable="false" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="SearchThreads_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Title" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="Message" Nullable="false" MaxLength="1000" />
+          <Property Type="Int32" Name="UserId" Nullable="false" />
+          <Property Type="Int32" Name="ThreadCategory" Nullable="false" />
+          <Property Type="DateTime" Name="CreateDate" Nullable="false" Precision="23" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1009,6 +1075,7 @@
                 <ScalarProperty Name="Comment1" ColumnName="Comment" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="ThreadId" ColumnName="ThreadId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1057,6 +1124,7 @@
                 <ScalarProperty Name="Message" ColumnName="Message" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="ThreadCategory" ColumnName="ThreadCategory" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1143,6 +1211,7 @@
                 <ScalarProperty Name="Message" ColumnName="Message" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="ThreadCategory" ColumnName="ThreadCategory" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -1174,6 +1243,7 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetIdOfCategory" FunctionName="FishModel.Store.GetIdOfCategory" />
           <FunctionImportMapping FunctionImportName="GetImagesForUser" FunctionName="FishModel.Store.GetImagesForUser">
             <ResultMapping>
               <ComplexTypeMapping TypeName="FishModel.GetImagesForUser_Result">
@@ -1219,6 +1289,18 @@
               <ComplexTypeMapping TypeName="FishModel.GetPhotosForTrip_Result">
                 <ScalarProperty Name="PhotoID" ColumnName="PhotoID" />
                 <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetThreadById" FunctionName="FishModel.Store.GetThreadById">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="FishModel.GetThreadById_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ThreadCategory" ColumnName="ThreadCategory" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -1280,20 +1362,7 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="InsertImagePath" FunctionName="FishModel.Store.InsertImagePath" />
           <FunctionImportMapping FunctionImportName="InsertThread" FunctionName="FishModel.Store.InsertThread" />
-          <FunctionImportMapping FunctionImportName="UpdateLocation" FunctionName="FishModel.Store.UpdateLocation" />
-          <FunctionImportMapping FunctionImportName="UpdateTrip" FunctionName="FishModel.Store.UpdateTrip" />
-          <FunctionImportMapping FunctionImportName="GetIdOfCategory" FunctionName="FishModel.Store.GetIdOfCategory" />
-          <FunctionImportMapping FunctionImportName="SearchThreads" FunctionName="FishModel.Store.SearchThreads">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="FishModel.SearchThreads_Result">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="Message" ColumnName="Message" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="ThreadCategory" ColumnName="ThreadCategory" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="InsertThreadComment" FunctionName="FishModel.Store.InsertThreadComment" />
           <FunctionImportMapping FunctionImportName="SearchForThreadsByCategory" FunctionName="FishModel.Store.SearchForThreadsByCategory">
             <ResultMapping>
               <ComplexTypeMapping TypeName="FishModel.SearchForThreadsByCategory_Result">
@@ -1302,9 +1371,24 @@
                 <ScalarProperty Name="Message" ColumnName="Message" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="ThreadCategory" ColumnName="ThreadCategory" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SearchThreads" FunctionName="FishModel.Store.SearchThreads">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="FishModel.SearchThreads_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ThreadCategory" ColumnName="ThreadCategory" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="UpdateLocation" FunctionName="FishModel.Store.UpdateLocation" />
+          <FunctionImportMapping FunctionImportName="UpdateTrip" FunctionName="FishModel.Store.UpdateTrip" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -67,13 +67,13 @@ namespace FishingHole {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl FilterSearchTextTag;
         
         /// <summary>
-        /// FilterCategoryText control.
+        /// FilterSearchTagText control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl FilterCategoryText;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl FilterSearchTagText;
         
         /// <summary>
         /// CloseFilter control.
@@ -94,13 +94,13 @@ namespace FishingHole {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl FilterCategoryTag;
         
         /// <summary>
-        /// Span1 control.
+        /// FilterCategoryTagText control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Span1;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl FilterCategoryTagText;
         
         /// <summary>
         /// LinkButton1 control.

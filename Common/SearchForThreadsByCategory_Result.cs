@@ -18,5 +18,6 @@ namespace Common
         public string Message { get; set; }
         public int UserId { get; set; }
         public int ThreadCategory { get; set; }
+        public System.DateTime CreateDate { get; set; }
     }
 }

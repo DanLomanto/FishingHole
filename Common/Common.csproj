@@ -145,6 +145,9 @@
     <Compile Include="GetPhotosForTrip_Result.cs">
       <DependentUpon>FishModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="GetThreadById_Result.cs">
+      <DependentUpon>FishModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="GetTripById_Result.cs">
       <DependentUpon>FishModel.tt</DependentUpon>
     </Compile>

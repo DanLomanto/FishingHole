@@ -48,7 +48,7 @@
                                         <div class="col-xs-12 col-md-offset-3 col-md-6 text-center">
                                             <div class="alert alert-info left-buffer">
                                                 Filter Text:&nbsp;
-                                                <span id="FilterCategoryText" runat="server" class="badge"></span>&nbsp;
+                                                <span id="FilterSearchTagText" runat="server" class="badge"></span>&nbsp;
                                                 <asp:LinkButton ID="CloseFilter" runat="server" OnClick="ResetFilterButton_Click"><i class="fa fa-times-circle"></i></asp:LinkButton>
                                             </div>
                                         </div>
@@ -64,7 +64,7 @@
                                         <div class="col-xs-12 col-md-offset-3 col-md-6 text-center">
                                             <div class="alert alert-info left-buffer">
                                                 Filter Category:&nbsp;
-                                                <span id="Span1" runat="server" class="badge"></span>&nbsp;
+                                                <span id="FilterCategoryTagText" runat="server" class="badge"></span>&nbsp;
                                                 <asp:LinkButton ID="LinkButton1" runat="server" OnClick="ResetFilterButton_Click"><i class="fa fa-times-circle"></i></asp:LinkButton>
                                             </div>
                                         </div>

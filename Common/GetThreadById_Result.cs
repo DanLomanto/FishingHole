@@ -11,7 +11,7 @@ namespace Common
 {
     using System;
     
-    public partial class SearchThreads_Result
+    public partial class GetThreadById_Result
     {
         public int ID { get; set; }
         public string Title { get; set; }

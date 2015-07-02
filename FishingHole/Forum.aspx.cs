@@ -30,20 +30,16 @@ namespace FishingHole
 			{
 				try
 				{
-					int pageId = Convert.ToInt32(Request.QueryString["page"]);
-					if (pageId > 0)
-					{
-						return pageId;
-					}
+					return Convert.ToInt32(ViewState["pageIndex"]);
 				}
 				catch
 				{
+					return 0;
 				}
-				return 0;
 			}
 			set
 			{
-				ViewState["photoGalleryIndex"] = value;
+				ViewState["pageIndex"] = value;
 			}
 		}
 
@@ -140,9 +136,10 @@ namespace FishingHole
 		protected void ResetFilterButton_Click(object sender, EventArgs e)
 		{
 			SearchThreadsText.Value = string.Empty;
-			LoadThreadsForAllFilterScenarios();
 			FilterSearchTextTag.Visible = false;
 			FilterCategoryTag.Visible = false;
+
+			LoadThreadsForAllFilterScenarios();
 		}
 
 		/// <summary>
@@ -171,7 +168,7 @@ namespace FishingHole
 		/// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
 		protected void ViewNewerThreads_Click(object sender, EventArgs e)
 		{
-			pageIndex = pageIndex + numberOfImagesDisplayedInGallery;
+			pageIndex = pageIndex - numberOfImagesDisplayedInGallery;
 			ViewOlderThreads.Visible = true;
 			LoadThreadsForAllFilterScenarios();
 		}
@@ -183,7 +180,7 @@ namespace FishingHole
 		/// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
 		protected void ViewOlderThreads_Click(object sender, EventArgs e)
 		{
-			pageIndex = pageIndex - numberOfImagesDisplayedInGallery;
+			pageIndex = pageIndex + numberOfImagesDisplayedInGallery;
 			ViewNewerThreads.Visible = true;
 			LoadThreadsForAllFilterScenarios();
 		}
@@ -265,17 +262,19 @@ namespace FishingHole
 			{
 				if (pageIndex == 0)
 				{
-					ViewOlderThreads.Visible = false;
+					ViewNewerThreads.Visible = false;
 				}
 
 				if ((threads.Count / (numberOfImagesDisplayedInGallery + pageIndex)) >= 1)
 				{
 					twentyThreadsToDisplay = threads.GetRange(pageIndex, numberOfImagesDisplayedInGallery);
+					ViewOlderThreads.Visible = true;
 				}
 				else
 				{
 					twentyThreadsToDisplay = threads.GetRange(pageIndex, threads.Count % numberOfImagesDisplayedInGallery);
-					ViewNewerThreads.Visible = false;
+					ViewNewerThreads.Visible = true;
+					ViewOlderThreads.Visible = false;
 				}
 			}
 
@@ -302,7 +301,7 @@ namespace FishingHole
 				string lastCommentDate = "N/A";
 				if (thread.CommentCount > 0)
 				{
-					lastCommentDate = thread.LastModifiedDate.ToString("MM/dd/yyyy");
+					lastCommentDate = thread.LastCommentDate.ToString("MM/dd/yyyy");
 				}
 
 				div.InnerHtml = "<div class=\"col-xs-12 col-md-9\">" +
@@ -312,8 +311,9 @@ namespace FishingHole
 										"</a>" +
 									"</div>" +
 									"<div class=\"row\">" +
+										"<div class=\"col-xs-12 col-md-3\"><i class=\"glyphicon glyphicon-calendar\"></i>&nbsp;Create Date: " + thread.CreateDate.ToString("MM/dd/yyyy") + "</div>" +
+										"<div class=\"col-xs-12 col-sm-6 col-md-3\"><i class=\"glyphicon glyphicon-user\"></i>&nbsp;Created by " + thread.UserFirstLastNames.Key + " " + thread.UserFirstLastNames.Value + "</div>" +
 										"<div class=\"col-xs-12 col-md-3\"><i class=\"glyphicon glyphicon-calendar\"></i>&nbsp;Last Comment: " + lastCommentDate + "</div>" +
-										"<div class=\"col-xs-12 col-sm-6 col-md-6\"><i class=\"glyphicon glyphicon-user\"></i>&nbsp;Created by " + thread.UserFirstLastNames.Key + " " + thread.UserFirstLastNames.Value + "</div>" +
 									"</div>" +
 								"</div>" +
 								"<div class=\"col-xs-offset-1 col-xs-10 col-md-2 text-center\">" +
@@ -359,7 +359,7 @@ namespace FishingHole
 		private void DisplayFilterSearchTextTag(string filterText)
 		{
 			FilterSearchTextTag.Visible = true;
-			FilterSearchTextTag.InnerText = filterText;
+			FilterSearchTagText.InnerText = filterText;
 		}
 
 		/// <summary>
@@ -369,7 +369,7 @@ namespace FishingHole
 		private void DisplayFilterCategoryTag(string filterText)
 		{
 			FilterCategoryTag.Visible = true;
-			FilterCategoryTag.InnerText = filterText;
+			FilterCategoryTagText.InnerText = filterText;
 		}
 
 		/// <summary>

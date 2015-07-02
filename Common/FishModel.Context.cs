@@ -281,6 +281,15 @@ namespace Common
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetCommentsForThread_Result>("GetCommentsForThread", iDParameter);
         }
     
+        public virtual ObjectResult<Nullable<int>> GetIdOfCategory(string category)
+        {
+            var categoryParameter = category != null ?
+                new ObjectParameter("Category", category) :
+                new ObjectParameter("Category", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("GetIdOfCategory", categoryParameter);
+        }
+    
         public virtual ObjectResult<GetImagesForUser_Result> GetImagesForUser(Nullable<int> userID)
         {
             var userIDParameter = userID.HasValue ?
@@ -319,6 +328,15 @@ namespace Common
                 new ObjectParameter("TripId", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetPhotosForTrip_Result>("GetPhotosForTrip", tripIdParameter);
+        }
+    
+        public virtual ObjectResult<GetThreadById_Result> GetThreadById(Nullable<int> iD)
+        {
+            var iDParameter = iD.HasValue ?
+                new ObjectParameter("ID", iD) :
+                new ObjectParameter("ID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetThreadById_Result>("GetThreadById", iDParameter);
         }
     
         public virtual ObjectResult<string> GetThreadCategoryById(Nullable<int> iD)
@@ -407,6 +425,41 @@ namespace Common
                 new ObjectParameter("ThreadCategory", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertThread", titleParameter, messageParameter, userIdParameter, threadCategoryParameter);
+        }
+    
+        public virtual int InsertThreadComment(string comment, Nullable<int> userId, Nullable<int> threadId)
+        {
+            var commentParameter = comment != null ?
+                new ObjectParameter("Comment", comment) :
+                new ObjectParameter("Comment", typeof(string));
+    
+            var userIdParameter = userId.HasValue ?
+                new ObjectParameter("UserId", userId) :
+                new ObjectParameter("UserId", typeof(int));
+    
+            var threadIdParameter = threadId.HasValue ?
+                new ObjectParameter("ThreadId", threadId) :
+                new ObjectParameter("ThreadId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertThreadComment", commentParameter, userIdParameter, threadIdParameter);
+        }
+    
+        public virtual ObjectResult<SearchForThreadsByCategory_Result> SearchForThreadsByCategory(string category)
+        {
+            var categoryParameter = category != null ?
+                new ObjectParameter("Category", category) :
+                new ObjectParameter("Category", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SearchForThreadsByCategory_Result>("SearchForThreadsByCategory", categoryParameter);
+        }
+    
+        public virtual ObjectResult<SearchThreads_Result> SearchThreads(string searchText)
+        {
+            var searchTextParameter = searchText != null ?
+                new ObjectParameter("SearchText", searchText) :
+                new ObjectParameter("SearchText", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SearchThreads_Result>("SearchThreads", searchTextParameter);
         }
     
         public virtual int UpdateLocation(Nullable<int> iD, string name, string description, string streetAddress, string cityTown, string state, Nullable<int> zipcode, string lattitudeDirection, Nullable<decimal> lattitude, string longitudeDirection, Nullable<decimal> longitude)
@@ -501,33 +554,6 @@ namespace Common
                 new ObjectParameter("OtherNotes", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateTrip", iDParameter, titleParameter, descriptionParameter, targetedSpeciesParameter, waterConditionsParameter, weatherConditionsParameter, dateOfTripParameter, fliesLuresUsedParameter, catchOfTheDayParameter, otherNotesParameter);
-        }
-    
-        public virtual ObjectResult<Nullable<int>> GetIdOfCategory(string category)
-        {
-            var categoryParameter = category != null ?
-                new ObjectParameter("Category", category) :
-                new ObjectParameter("Category", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("GetIdOfCategory", categoryParameter);
-        }
-    
-        public virtual ObjectResult<SearchThreads_Result> SearchThreads(string searchText)
-        {
-            var searchTextParameter = searchText != null ?
-                new ObjectParameter("SearchText", searchText) :
-                new ObjectParameter("SearchText", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SearchThreads_Result>("SearchThreads", searchTextParameter);
-        }
-    
-        public virtual ObjectResult<SearchForThreadsByCategory_Result> SearchForThreadsByCategory(string category)
-        {
-            var categoryParameter = category != null ?
-                new ObjectParameter("Category", category) :
-                new ObjectParameter("Category", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SearchForThreadsByCategory_Result>("SearchForThreadsByCategory", categoryParameter);
         }
     }
 }

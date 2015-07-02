@@ -13,6 +13,15 @@ namespace FishingHole {
     public partial class Thread {
         
         /// <summary>
+        /// OriginalThreadMessage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl OriginalThreadMessage;
+        
+        /// <summary>
         /// ThreadBody control.
         /// </summary>
         /// <remarks>
@@ -22,22 +31,22 @@ namespace FishingHole {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl ThreadBody;
         
         /// <summary>
-        /// OriginalMessageHeader control.
+        /// ThreadReply control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl OriginalMessageHeader;
+        protected global::System.Web.UI.HtmlControls.HtmlTextArea ThreadReply;
         
         /// <summary>
-        /// OriginalMessage control.
+        /// PostReply control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl OriginalMessage;
+        protected global::System.Web.UI.WebControls.LinkButton PostReply;
         
         /// <summary>
         /// Master property.
