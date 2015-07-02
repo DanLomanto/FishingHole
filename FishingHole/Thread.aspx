@@ -17,19 +17,49 @@
                         <div class="panel-body">
                             <div id="OriginalThreadMessage" runat="server">
                             </div>
+                            <hr />
                         </div>
+
                         <div id="ThreadBody" runat="server" class="container-fluid">
                         </div>
                     </div>
                     <div class="panel-body">
-                        <div class="container-fluid text-center">
-                            <div class="row">
-                                <div class="col-xs-4 col-xs-offset-4">
-                                    <textarea runat="server" id="ThreadReply" class="form-control" placeholder="Reply Message..." maxlength="1000" style="width: 300px; height: 150px;" />
+                        <div class="panel panel-default well">
+                            <div class="panel-body">
+
+                                <div class="container-fluid">
+                                    <div class="row text-center col-md-offset-2">
+                                        <asp:BulletedList ID="formErrors" runat="server" CssClass="no-bullets list-group-item-danger center-block text-center col-md-8" />
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-4 col-xs-offset-2">
+                                            <textarea runat="server" id="ThreadReply" class="form-control" placeholder="Reply Message..." maxlength="1000" style="width: 300px; height: 150px;" />
+                                        </div>
+                                        <div class="col-xs-4">
+                                            <div class="radio">
+                                                <label>
+                                                    <input id="DontShareLocationsRadioBtn" runat="server" type="radio" name="shareLocationBtns" checked="true" />Don't share location
+                                                </label>
+                                            </div>
+                                            <div class="radio">
+                                                <label>
+                                                    <input id="ShareLocationsRadioBtn" runat="server" type="radio" name="shareLocationBtns" class="pull-left" />Share location
+                                                </label>
+                                                <div class="top-buffer">
+                                                    <select id="Locations" runat="server" class="form-control" disabled="disabled">
+                                                        <option selected="selected">Select Location...</option>
+                                                        <option>Location 1</option>
+                                                        <option>Location 2</option>
+                                                        <option>Location 3</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row top-buffer text-center">
+                                        <asp:LinkButton ID="PostReply" runat="server" OnClick="PostReply_Click" CssClass="btn btn-primary">Post Reply</asp:LinkButton>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="row top-buffer">
-                                <asp:LinkButton ID="PostReply" runat="server" OnClick="PostReply_Click" CssClass="btn btn-primary">Post Reply</asp:LinkButton>
                             </div>
                         </div>
                     </div>
@@ -40,4 +70,13 @@
             </div>
         </div>
     </div>
+    <script type="text/javascript">
+        $('#MainContent_ShareLocationsRadioBtn').click(function () {
+            document.getElementById('<%= Locations.ClientID %>').disabled = false;
+        });
+
+        $('#MainContent_DontShareLocationsRadioBtn').click(function () {
+            document.getElementById('<%= Locations.ClientID %>').disabled = true;
+        });
+    </script>
 </asp:Content>

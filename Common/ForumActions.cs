@@ -90,6 +90,12 @@ namespace Common
 				thread.Category = GetCategory(item.ThreadCategory);
 				thread.CommentCount = GetCommentCountForThread(item.ID);
 
+				List<ThreadComment> allCommentsForThread = ForumActions.GetCommentsForThread(thread.ID);
+				if (allCommentsForThread.Count > 0)
+				{
+					thread.LastCommentDate = allCommentsForThread.Last().CreateDate;
+				}
+
 				allThreads.Add(thread);
 			}
 
@@ -121,6 +127,12 @@ namespace Common
 				thread.UserFirstLastNames = new KeyValuePair<string, string>(userInfo.FirstName, userInfo.LastName);
 				thread.Category = GetCategory(item.ThreadCategory);
 				thread.CommentCount = GetCommentCountForThread(item.ID);
+
+				List<ThreadComment> allCommentsForThread = ForumActions.GetCommentsForThread(thread.ID);
+				if (allCommentsForThread.Count > 0)
+				{
+					thread.LastCommentDate = allCommentsForThread.Last().CreateDate;
+				}
 
 				allThreads.Add(thread);
 			}
@@ -322,7 +334,10 @@ namespace Common
 			thread.LastName = userInfo.LastName;
 
 			List<ThreadComment> allCommentsForThread = ForumActions.GetCommentsForThread(thread.ID);
-			thread.LastCommentDate = allCommentsForThread.Last().CreateDate;
+			if (allCommentsForThread.Count > 0)
+			{
+				thread.LastCommentDate = allCommentsForThread.Last().CreateDate;
+			}
 
 			return thread;
 		}

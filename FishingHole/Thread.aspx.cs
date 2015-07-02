@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Web.UI.HtmlControls;
 using Common;
 
@@ -21,6 +22,11 @@ namespace FishingHole
 			set { }
 		}
 
+		/// <summary>
+		/// The form validation errors
+		/// </summary>
+		private List<string> formValidationErrors;
+
 		#endregion Properties
 
 		/// <summary>
@@ -33,6 +39,11 @@ namespace FishingHole
 			LoadOriginalThreadMessage();
 
 			LoadThreadComments();
+
+			if (Page.IsPostBack)
+			{
+				EnableOrDisableLocationsDropDown();
+			}
 		}
 
 		/// <summary>
@@ -42,6 +53,31 @@ namespace FishingHole
 		/// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
 		protected void PostReply_Click(object sender, EventArgs e)
 		{
+			#region Field Validation
+
+			formValidationErrors = new List<string>();
+
+			if (string.IsNullOrWhiteSpace(ThreadReply.Value.Trim()))
+			{
+				formValidationErrors.Add("You must enter a reply message.");
+			}
+
+			if (ShareLocationsRadioBtn.Checked && Locations.SelectedIndex == 0)
+			{
+				formValidationErrors.Add("You must select a location to share.");
+			}
+
+			if (formValidationErrors.Count > 0)
+			{
+				formErrors.CssClass = formErrors.CssClass + " has-error";
+				formErrors.ForeColor = Color.Red;
+				formErrors.DataSource = formValidationErrors;
+				formErrors.DataBind();
+				return;
+			}
+
+			#endregion Field Validation
+
 			ThreadComment comment = new ThreadComment();
 			comment.Message = ThreadReply.Value.Trim();
 			comment.ThreadId = threadId;
@@ -84,7 +120,7 @@ namespace FishingHole
 								"<span>" + thread.Message + "</span>" +
 							"</div>" +
 							"<div class=\"panel-footer\">" +
-								"<i class=\"glyphicon glyphicon-calendar\"></i>&nbsp;Create Date: " + thread.CreateDate.ToString("MM/dd/yyyy hh:ss") +
+								"<i class=\"glyphicon glyphicon-calendar\"></i>&nbsp;Create Date: " + thread.CreateDate.ToString("MM/dd/yyyy hh:ss tt") +
 							"</div>";
 
 			OriginalThreadMessage.Controls.AddAt(0, div);
@@ -122,11 +158,26 @@ namespace FishingHole
 									"<span>" + comment.Message + "</span>" +
 									"</div>" +
 								"<div class=\"panel-footer\">" +
-									"<i class=\"glyphicon glyphicon-calendar\"></i>&nbsp;Create Date: " + comment.CreateDate.ToString("MM/dd/yyyy hh:ss") +
+									"<i class=\"glyphicon glyphicon-calendar\"></i>&nbsp;Reply Date: " + comment.CreateDate.ToString("MM/dd/yyyy hh:ss tt") +
 								"</div>";
 
 				ThreadBody.Controls.AddAt(commentIndex, div);
 				commentIndex = commentIndex + 1;
+			}
+		}
+
+		/// <summary>
+		/// Enables the or disable locations drop down.
+		/// </summary>
+		private void EnableOrDisableLocationsDropDown()
+		{
+			if (ShareLocationsRadioBtn.Checked)
+			{
+				Locations.Disabled = false;
+			}
+			else
+			{
+				Locations.Disabled = true;
 			}
 		}
 

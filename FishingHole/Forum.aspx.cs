@@ -121,9 +121,9 @@ namespace FishingHole
 			string searchText = SearchThreadsText.Value.Trim();
 			List<ForumThread> threads = ForumActions.SearchForThreads(searchText);
 
-			//LoadRecentlyUpdatedThreads(ForumActions.SearchForThreads(searchText));
+			FilterCategoryTag.Visible = false;
 
-			DisplayFilterCategoryTag(searchText);
+			DisplayFilterSearchTextTag(searchText);
 
 			LoadThreadsForAllFilterScenarios();
 		}
@@ -152,9 +152,9 @@ namespace FishingHole
 			LinkButton topicButton = sender as LinkButton;
 			string topicSelected = topicButton.Text.Trim();
 
-			//LoadRecentlyUpdatedThreads(ForumActions.SearchForThreadsByCategory(topicSelected));
+			FilterSearchTextTag.Visible = false;
 
-			DisplayFilterSearchTextTag(topicSelected);
+			DisplayFilterCategoryTag(topicSelected);
 
 			LoadThreadsForAllFilterScenarios();
 
@@ -380,7 +380,7 @@ namespace FishingHole
 		{
 			if (FilterSearchTextTag.Visible)
 			{
-				return FilterSearchTextTag.InnerText;
+				return FilterSearchTagText.InnerText;
 			}
 
 			return string.Empty;
@@ -394,7 +394,7 @@ namespace FishingHole
 		{
 			if (FilterCategoryTag.Visible)
 			{
-				return FilterCategoryTag.InnerText;
+				return FilterCategoryTagText.InnerText;
 			}
 
 			return string.Empty;

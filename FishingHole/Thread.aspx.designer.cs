@@ -31,6 +31,15 @@ namespace FishingHole {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl ThreadBody;
         
         /// <summary>
+        /// formErrors control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.BulletedList formErrors;
+        
+        /// <summary>
         /// ThreadReply control.
         /// </summary>
         /// <remarks>
@@ -38,6 +47,33 @@ namespace FishingHole {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlTextArea ThreadReply;
+        
+        /// <summary>
+        /// DontShareLocationsRadioBtn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton DontShareLocationsRadioBtn;
+        
+        /// <summary>
+        /// ShareLocationsRadioBtn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton ShareLocationsRadioBtn;
+        
+        /// <summary>
+        /// Locations control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlSelect Locations;
         
         /// <summary>
         /// PostReply control.
