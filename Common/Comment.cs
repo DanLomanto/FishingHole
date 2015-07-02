@@ -19,7 +19,9 @@ namespace Common
         public int UserId { get; set; }
         public System.DateTime CreateDate { get; set; }
         public int ThreadId { get; set; }
+        public Nullable<int> LocationId { get; set; }
     
+        public virtual Location Location { get; set; }
         public virtual Thread Thread { get; set; }
         public virtual User User { get; set; }
     }

@@ -19,7 +19,6 @@
                             </div>
                             <hr />
                         </div>
-
                         <div id="ThreadBody" runat="server" class="container-fluid">
                         </div>
                     </div>
@@ -46,7 +45,7 @@
                                                     <input id="ShareLocationsRadioBtn" runat="server" type="radio" name="shareLocationBtns" class="pull-left" />Share location
                                                 </label>
                                                 <div class="top-buffer">
-                                                    <select id="Locations" runat="server" class="form-control" disabled="disabled"></select>
+                                                    <asp:DropDownList ID="Locations" runat="server" class="form-control" Enabled="false"></asp:DropDownList>
                                                 </div>
                                             </div>
                                         </div>

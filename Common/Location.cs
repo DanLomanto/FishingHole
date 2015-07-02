@@ -16,6 +16,7 @@ namespace Common
     {
         public Location()
         {
+            this.Comments = new HashSet<Comment>();
             this.LocationToTrips = new HashSet<LocationToTrip>();
         }
     
@@ -33,6 +34,7 @@ namespace Common
         public Nullable<decimal> Longitude { get; set; }
         public System.DateTime CreateDate { get; set; }
     
+        public virtual ICollection<Comment> Comments { get; set; }
         public virtual User User { get; set; }
         public virtual ICollection<LocationToTrip> LocationToTrips { get; set; }
     }

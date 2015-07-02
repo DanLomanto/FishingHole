@@ -21,6 +21,7 @@
           <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="CreateDate" Type="datetime" Nullable="false" />
           <Property Name="ThreadId" Type="int" Nullable="false" />
+          <Property Name="LocationId" Type="int" />
         </EntityType>
         <EntityType Name="ImagePaths">
           <Key>
@@ -102,6 +103,18 @@
           <Property Name="LastName" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="Password" Type="varchar" MaxLength="255" Nullable="false" />
         </EntityType>
+        <Association Name="FK_Comments_Locations">
+          <End Role="Locations" Type="Self.Locations" Multiplicity="0..1" />
+          <End Role="Comments" Type="Self.Comments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Locations">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Comments">
+              <PropertyRef Name="LocationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Comments_Threads">
           <End Role="Threads" Type="Self.Threads" Multiplicity="1" />
           <End Role="Comments" Type="Self.Comments" Multiplicity="*" />
@@ -359,6 +372,7 @@
           <Parameter Name="Comment" Type="varchar" Mode="In" />
           <Parameter Name="UserId" Type="int" Mode="In" />
           <Parameter Name="ThreadId" Type="int" Mode="In" />
+          <Parameter Name="LocationID" Type="int" Mode="In" />
         </Function>
         <Function Name="SearchForThreadsByCategory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Category" Type="varchar" Mode="In" />
@@ -401,6 +415,10 @@
           <EntitySet Name="Trips" EntityType="Self.Trips" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TripsToPhotos" EntityType="Self.TripsToPhotos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Comments_Locations" Association="Self.FK_Comments_Locations">
+            <End Role="Locations" EntitySet="Locations" />
+            <End Role="Comments" EntitySet="Comments" />
+          </AssociationSet>
           <AssociationSet Name="FK_Comments_Threads" Association="Self.FK_Comments_Threads">
             <End Role="Threads" EntitySet="Threads" />
             <End Role="Comments" EntitySet="Comments" />
@@ -468,6 +486,8 @@
           <Property Name="UserId" Type="Int32" Nullable="false" />
           <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ThreadId" Type="Int32" Nullable="false" />
+          <Property Name="LocationId" Type="Int32" />
+          <NavigationProperty Name="Location" Relationship="Self.FK_Comments_Locations" FromRole="Comments" ToRole="Locations" />
           <NavigationProperty Name="Thread" Relationship="Self.FK_Comments_Threads" FromRole="Comments" ToRole="Threads" />
           <NavigationProperty Name="User" Relationship="Self.FK_Comments_Users" FromRole="Comments" ToRole="Users" />
         </EntityType>
@@ -498,6 +518,7 @@
           <Property Name="LongitudeDirection" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
           <Property Name="Longitude" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Comments" Relationship="Self.FK_Comments_Locations" FromRole="Locations" ToRole="Comments" />
           <NavigationProperty Name="User" Relationship="Self.FK_Locations_Users" FromRole="Locations" ToRole="Users" />
           <NavigationProperty Name="LocationToTrips" Relationship="Self.FK_TripToLocation_TripToLocation" FromRole="Locations" ToRole="LocationToTrip" />
         </EntityType>
@@ -579,6 +600,18 @@
             </Principal>
             <Dependent Role="Threads">
               <PropertyRef Name="ThreadCategory" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Comments_Locations">
+          <End Role="Locations" Type="Self.Location" Multiplicity="0..1" />
+          <End Role="Comments" Type="Self.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Locations">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Comments">
+              <PropertyRef Name="LocationId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -715,6 +748,10 @@
           <AssociationSet Name="FK_Threads_Categories" Association="Self.FK_Threads_Categories">
             <End Role="Categories" EntitySet="Categories" />
             <End Role="Threads" EntitySet="Threads" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comments_Locations" Association="Self.FK_Comments_Locations">
+            <End Role="Locations" EntitySet="Locations" />
+            <End Role="Comments" EntitySet="Comments" />
           </AssociationSet>
           <AssociationSet Name="FK_Comments_Threads" Association="Self.FK_Comments_Threads">
             <End Role="Threads" EntitySet="Threads" />
@@ -881,6 +918,7 @@
             <Parameter Name="Comment" Mode="In" Type="String" />
             <Parameter Name="UserId" Mode="In" Type="Int32" />
             <Parameter Name="ThreadId" Mode="In" Type="Int32" />
+            <Parameter Name="LocationID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SearchForThreadsByCategory" ReturnType="Collection(FishModel.SearchForThreadsByCategory_Result)">
             <Parameter Name="Category" Mode="In" Type="String" />
@@ -1076,6 +1114,7 @@
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
                 <ScalarProperty Name="ThreadId" ColumnName="ThreadId" />
+                <ScalarProperty Name="LocationId" ColumnName="LocationId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

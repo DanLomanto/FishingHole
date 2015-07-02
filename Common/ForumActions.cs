@@ -405,13 +405,21 @@ namespace Common
 		}
 
 		/// <summary>
+		/// Gets or sets the location identifier.
+		/// </summary>
+		/// <value>
+		/// The location identifier.
+		/// </value>
+		public int LocationId { get; set; }
+
+		/// <summary>
 		/// Creates the thread.
 		/// </summary>
 		/// <param name="userId">The user identifier.</param>
-		public void CreateThread(int userId)
+		public void CreateThreadComment(int userId)
 		{
 			FishEntities fishDB = new FishEntities();
-			fishDB.InsertThreadComment(this.Message, userId, this.ThreadId);
+			fishDB.InsertThreadComment(this.Message, userId, this.ThreadId, this.LocationId);
 		}
 	}
 }

@@ -57,10 +57,7 @@ namespace FishingHole
 		/// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
 		protected void Page_Load(object sender, EventArgs e)
 		{
-			if (!Page.IsPostBack)
-			{
-				LoadDiscussionTopics();
-			}
+			LoadDiscussionTopics();
 
 			LoadThreadsForAllFilterScenarios();
 
@@ -216,8 +213,11 @@ namespace FishingHole
 				if (topics.Last() != topic)
 				{ ThreadTopics.Controls.Add(new HtmlGenericControl("hr")); }
 
-				// Populate the drop down in the Add New Thread modal.
-				AddThreadCategories.Items.Add(topic);
+				if (!Page.IsPostBack)
+				{
+					// Populate the drop down in the Add New Thread modal.
+					AddThreadCategories.Items.Add(topic);
+				}
 
 				counter++;
 			}

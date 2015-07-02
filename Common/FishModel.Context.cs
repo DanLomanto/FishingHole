@@ -427,7 +427,7 @@ namespace Common
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertThread", titleParameter, messageParameter, userIdParameter, threadCategoryParameter);
         }
     
-        public virtual int InsertThreadComment(string comment, Nullable<int> userId, Nullable<int> threadId)
+        public virtual int InsertThreadComment(string comment, Nullable<int> userId, Nullable<int> threadId, Nullable<int> locationID)
         {
             var commentParameter = comment != null ?
                 new ObjectParameter("Comment", comment) :
@@ -441,7 +441,11 @@ namespace Common
                 new ObjectParameter("ThreadId", threadId) :
                 new ObjectParameter("ThreadId", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertThreadComment", commentParameter, userIdParameter, threadIdParameter);
+            var locationIDParameter = locationID.HasValue ?
+                new ObjectParameter("LocationID", locationID) :
+                new ObjectParameter("LocationID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertThreadComment", commentParameter, userIdParameter, threadIdParameter, locationIDParameter);
         }
     
         public virtual ObjectResult<SearchForThreadsByCategory_Result> SearchForThreadsByCategory(string category)
