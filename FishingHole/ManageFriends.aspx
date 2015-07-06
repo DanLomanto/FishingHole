@@ -12,119 +12,25 @@
                 <h3>Manage Friends</h3>
             </div>
             <div class="panel-body">
-                <div class="container-fluid ">
-                    <div class="row">
-                        <div class="container-fluid ">
-                            <div class="col-xs-3">
-                                <div class="well user-padding">
-                                    <div class="row">
-                                        <button class="close pull-right">&times;</button>
-                                    </div>
-                                    <div class="row">
-                                        <span><strong>Dan Lomanto</strong></span>
-                                    </div>
-                                    <div class="row">
-                                        <span>something@gmail.com</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xs-3">
-                                <div class="well user-padding">
-                                    <div class="row">
-                                        <button class="close pull-right">&times;</button>
-                                    </div>
-                                    <div class="row">
-                                        <span><strong>Dan Lomanto</strong></span>
-                                    </div>
-                                    <div class="row">
-                                        <span>something@gmail.com</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xs-3">
-                                <div class="well user-padding">
-                                    <div class="row">
-                                        <button class="close pull-right">&times;</button>
-                                    </div>
-                                    <div class="row">
-                                        <span><strong>Dan Lomanto</strong></span>
-                                    </div>
-                                    <div class="row">
-                                        <span>something@gmail.com</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xs-3">
-                                <div class="well user-padding">
-                                    <div class="row">
-                                        <button class="close pull-right">&times;</button>
-                                    </div>
-                                    <div class="row">
-                                        <span><strong>Dan Lomanto</strong></span>
-                                    </div>
-                                    <div class="row">
-                                        <span>something@gmail.com</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="container-fluid ">
-                            <div class="col-xs-3">
-                                <div class="well user-padding">
-                                    <div class="row">
-                                        <button class="close pull-right">&times;</button>
-                                    </div>
-                                    <div class="row">
-                                        <span><strong>Dan Lomanto</strong></span>
-                                    </div>
-                                    <div class="row">
-                                        <span>something@gmail.com</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xs-3">
-                                <div class="well user-padding">
-                                    <div class="row">
-                                        <button class="close pull-right">&times;</button>
-                                    </div>
-                                    <div class="row">
-                                        <span><strong>Dan Lomanto</strong></span>
-                                    </div>
-                                    <div class="row">
-                                        <span>something@gmail.com</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xs-3">
-                                <div class="well user-padding">
-                                    <div class="row">
-                                        <button class="close pull-right">&times;</button>
-                                    </div>
-                                    <div class="row">
-                                        <span><strong>Dan Lomanto</strong></span>
-                                    </div>
-                                    <div class="row">
-                                        <span>something@gmail.com</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xs-3">
-                                <div class="well user-padding">
-                                    <div class="row">
-                                        <button class="close pull-right">&times;</button>
-                                    </div>
-                                    <div class="row">
-                                        <span><strong>Dan Lomanto</strong></span>
-                                    </div>
-                                    <div class="row">
-                                        <span>something@gmail.com</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="container-fluid" id="FriendsList" runat="server">
+                </div>
+            </div>
+        </div>
+    </div>
+    <input type="text" id="selectedFriendId" runat="server" style="display: none" />
+    <div class="modal fade" id="confirmDeletionModal">
+        <div class="modal-dialog" style="max-width: 375px; max-height: 200px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Delete Confirmation</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to remove this friend?</p>
+                </div>
+                <div class="modal-footer">
+                    <asp:LinkButton ID="DeleteSelectedPhotos" runat="server" CssClass="btn btn-primary" OnClick="DeleteFriend">Confirm</asp:LinkButton>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cancel</button>
                 </div>
             </div>
         </div>
