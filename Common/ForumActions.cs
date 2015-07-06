@@ -159,6 +159,7 @@ namespace Common
 				tc.ThreadId = threadId;
 				UserInformation userInfo = UserActions.GetUserInfo(comment.UserId);
 				tc.UserFirstLastNames = new KeyValuePair<string, string>(userInfo.FirstName, userInfo.LastName);
+				tc.LocationId = comment.LocationID.GetValueOrDefault();
 
 				comments.Add(tc);
 			}

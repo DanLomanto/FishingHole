@@ -16,5 +16,6 @@ namespace Common
         public string Comment { get; set; }
         public int UserId { get; set; }
         public System.DateTime CreateDate { get; set; }
+        public Nullable<int> LocationID { get; set; }
     }
 }

@@ -169,22 +169,25 @@ namespace FishingHole
 									"<h4><i class=\"fa fa-reply\"></i>&nbsp;Reply From: " + comment.FirstName + " " + comment.LastName + "</h4>" +
 								"</div>" +
 								"<div class=\"panel-body\">" +
-									"<span>" + comment.Message + "</span>";
+									"<div class=\"container-fluid\">" +
+									"<div class=\"row\">" +
+										"<span>" + comment.Message + "</span>" +
+									"</div>";
 
 				if (comment.LocationId > 0)
 				{
 					LocationObject assoclocation = LocationObject.GetLocationById(comment.LocationId);
 
 					div.InnerHtml = div.InnerHtml +
-						"<div class=\"row text-center\">" +
-							"<a href=\"https://www.google.com/maps/place/" + assoclocation.FormatGoogleMapsLocationInfo() + "\" target=\"_blank\" class=\"btn btn-primary\"><i class=\"fa fa-map-marker\">&nbsp;Open location in Google Maps</i></a>" +
-						"</div>" +
 						"<div class=\"row text-center top-buffer\">" +
-							  "<iframe class=\"col-md-12 col-xs-12\" height=\"450\" frameborder=\"0\" style=\"border: 0\" src=\"" + assoclocation.GetGoogleMapsUrl() + "\" />" +
+							"<span class=\"well\">Open shared location in Google Maps:&nbsp;" +
+								"<a href=\"https://www.google.com/maps/place/" + assoclocation.FormatGoogleMapsLocationInfo() + "\" target=\"_blank\" class=\"btn btn-default\"><i class=\"fa fa-external-link \"></i></a>" +
+							"</span>" +
 						"</div>";
 				}
 
 				div.InnerHtml = div.InnerHtml +
+							"</div>" +
 						"</div>" +
 						"<div class=\"panel-footer\">" +
 							"<i class=\"glyphicon glyphicon-calendar\"></i>&nbsp;Reply Date: " + comment.CreateDate.ToString("MM/dd/yyyy hh:ss tt") +

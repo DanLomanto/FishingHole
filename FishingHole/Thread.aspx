@@ -45,7 +45,7 @@
                                                     <input id="ShareLocationsRadioBtn" runat="server" type="radio" name="shareLocationBtns" class="pull-left" />Share location
                                                 </label>
                                                 <div class="top-buffer">
-                                                    <asp:DropDownList ID="Locations" runat="server" class="form-control" Enabled="false"></asp:DropDownList>
+                                                    <asp:DropDownList ID="Locations" runat="server" cssClass="form-control" Enabled="false"></asp:DropDownList>
                                                 </div>
                                             </div>
                                         </div>

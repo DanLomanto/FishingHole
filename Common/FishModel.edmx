@@ -997,6 +997,7 @@
           <Property Type="String" Name="Comment" Nullable="false" MaxLength="1000" />
           <Property Type="Int32" Name="UserId" Nullable="false" />
           <Property Type="DateTime" Name="CreateDate" Nullable="false" Precision="23" />
+          <Property Type="Int32" Name="LocationID" Nullable="true" />
         </ComplexType>
         <ComplexType Name="GetImagesForUser_Result">
           <Property Type="Int32" Name="ID" Nullable="false" />
@@ -1279,6 +1280,7 @@
                 <ScalarProperty Name="Comment" ColumnName="Comment" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="LocationID" ColumnName="LocationID" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
