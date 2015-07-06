@@ -35,3 +35,11 @@
 	right: -55px;
 	z-index: 1032;
 }
+
+.user-padding {
+	margin-top: 10px;
+	margin-bottom: 10px;
+	margin-left: 10px;
+	margin-right: 10px;
+	padding-top: 5px;
+}

@@ -2,10 +2,7 @@
 
 <%@ MasterType VirtualPath="~/MasterPage.master" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-</asp:Content>
-
-<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="Server">
+<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="Server">
     <div class="container-fluid col-md-6 col-md-offset-3">
         <div class="panel panel-default">
             <div class="panel-heading">

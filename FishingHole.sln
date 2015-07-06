@@ -10,15 +10,20 @@ EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Home|Any CPU = Home|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{A7C243FE-254D-4332-ABDB-AC2115072F5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A7C243FE-254D-4332-ABDB-AC2115072F5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7C243FE-254D-4332-ABDB-AC2115072F5B}.Home|Any CPU.ActiveCfg = Home|Any CPU
+		{A7C243FE-254D-4332-ABDB-AC2115072F5B}.Home|Any CPU.Build.0 = Home|Any CPU
 		{A7C243FE-254D-4332-ABDB-AC2115072F5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A7C243FE-254D-4332-ABDB-AC2115072F5B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{10FA3CA4-2541-4E83-AC97-FE528277FAE7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{10FA3CA4-2541-4E83-AC97-FE528277FAE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10FA3CA4-2541-4E83-AC97-FE528277FAE7}.Home|Any CPU.ActiveCfg = Home|Any CPU
+		{10FA3CA4-2541-4E83-AC97-FE528277FAE7}.Home|Any CPU.Build.0 = Home|Any CPU
 		{10FA3CA4-2541-4E83-AC97-FE528277FAE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{10FA3CA4-2541-4E83-AC97-FE528277FAE7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
