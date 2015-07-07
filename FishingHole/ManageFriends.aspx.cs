@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Common;
 
 namespace FishingHole
 {
@@ -13,7 +14,10 @@ namespace FishingHole
 		/// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
 		protected void Page_Load(object sender, EventArgs e)
 		{
-			LoadFriends();
+			if (!Page.IsPostBack)
+			{
+				LoadDataOnPage();
+			}
 		}
 
 		/// <summary>
@@ -24,81 +28,42 @@ namespace FishingHole
 		protected void DeleteFriend(object sender, EventArgs e)
 		{
 			int idOfFriendToDelete = Convert.ToInt32(selectedFriendId.Value);
+
+			FriendActions.DeleteFriendAssociation(Master.UsersInfo.ID, idOfFriendToDelete);
+
+			LoadDataOnPage();
 		}
 
+		/// <summary>
+		/// Accepts the friend request.
+		/// </summary>
+		/// <param name="sender">The sender.</param>
+		/// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+		protected void AcceptFriendRequest(object sender, EventArgs e)
+		{
+			int idOfNewFriend = Convert.ToInt32(acceptedFriendRequestId.Value);
+
+			FriendActions.MakePendingFriendActualFriend(Master.UsersInfo.ID, idOfNewFriend);
+
+			LoadDataOnPage();
+		}
+
+		/// <summary>
+		/// Loads the data on page.
+		/// </summary>
+		private void LoadDataOnPage()
+		{
+			LoadFriendRequests();
+
+			LoadFriends();
+		}
+
+		/// <summary>
+		/// Loads the friends.
+		/// </summary>
 		private void LoadFriends()
 		{
-			#region data setup
-
-			Friend person1 = new Friend
-			{
-				ID = 1,
-				FirstName = "Dan",
-				LastName = "Lomanto",
-				Email = "something@gmail.com"
-			};
-			Friend person2 = new Friend
-			{
-				ID = 2,
-				FirstName = "Dan",
-				LastName = "Lomanto",
-				Email = "something@gmail.com"
-			};
-			Friend person3 = new Friend
-			{
-				ID = 3,
-				FirstName = "Dan",
-				LastName = "Lomanto",
-				Email = "something@gmail.com"
-			};
-			Friend person4 = new Friend
-			{
-				ID = 4,
-				FirstName = "Dan",
-				LastName = "Lomanto",
-				Email = "something@gmail.com"
-			};
-
-			Friend person5 = new Friend
-			{
-				ID = 5,
-				FirstName = "Dan",
-				LastName = "Lomanto",
-				Email = "something@gmail.com"
-			};
-			Friend person6 = new Friend
-			{
-				ID = 6,
-				FirstName = "Dan",
-				LastName = "Lomanto",
-				Email = "something@gmail.com"
-			};
-			Friend person7 = new Friend
-			{
-				ID = 7,
-				FirstName = "Dan",
-				LastName = "Lomanto",
-				Email = "something@gmail.com"
-			};
-			Friend person8 = new Friend
-			{
-				ID = 8,
-				FirstName = "Dan",
-				LastName = "Lomanto",
-				Email = "something@gmail.com"
-			};
-
-			List<Friend> Friends = new List<Friend>();
-			Friends.Add(person1);
-			Friends.Add(person2);
-			Friends.Add(person3);
-			Friends.Add(person4);
-			Friends.Add(person5);
-			Friends.Add(person6);
-			Friends.Add(person7);
-			Friends.Add(person8);
-
-			#endregion data setup
+			List<UserInformation> friends = FriendActions.GetFriendsForUser(Master.UsersInfo.ID);
 
 			int numberOfThreads = FriendsList.Controls.Count;
 			for (int i = 0; i < numberOfThreads; i++)
@@ -112,7 +77,7 @@ namespace FishingHole
 			}
 
 			int friendCounter = 0;
-			foreach (Friend friend in Friends)
+			foreach (UserInformation friend in friends)
 			{
 				if (friendCounter % 4 == 0)
 				{
@@ -133,7 +98,7 @@ namespace FishingHole
 									"</div>" +
 								"</div>";
 
-				if (friendCounter % 4 == 3 || Friends.Last() == friend)
+				if (friendCounter % 4 == 3 || friends.Last() == friend)
 				{
 					FriendsList.InnerHtml = FriendsList.InnerHtml + "</div></div>";
 				}
@@ -141,13 +106,63 @@ namespace FishingHole
 				friendCounter++;
 			}
 		}
-	}
 
-	public class Friend
-	{
-		public int ID;
-		public string FirstName;
-		public string LastName;
-		public string Email;
+		/// <summary>
+		/// Loads the friend requests.
+		/// </summary>
+		private void LoadFriendRequests()
+		{
+			List<UserInformation> friendRequests = FriendActions.GetFriendRequestsForUser(Master.UsersInfo.ID);
+
+			if (friendRequests.Count > 0)
+			{
+				FriendRequestPanel.Visible = true;
+
+				int numberOfThreads = FriendRequestContainer.Controls.Count;
+				for (int i = 0; i < numberOfThreads; i++)
+				{
+					if (FriendRequestContainer.HasControls())
+					{
+						FriendRequestContainer.Controls.RemoveAt(0);
+					}
+					else
+					{ break; }
+				}
+
+				int friendCounter = 0;
+				foreach (UserInformation friend in friendRequests)
+				{
+					if (friendCounter % 4 == 0)
+					{
+						FriendRequestContainer.InnerHtml = FriendRequestContainer.InnerHtml + "<div class=\"row\"><div class=\"container-fluid\">";
+					}
+
+					FriendRequestContainer.InnerHtml = FriendRequestContainer.InnerHtml + "<div class=\"col-xs-12 col-sm-4 col-md-3\">" +
+										"<div class=\"well user-padding\">" +
+											"<div class=\"row text-center\">" +
+												"<span><strong>" + friend.FirstName + " " + friend.LastName + "</strong></span>" +
+											"</div>" +
+											"<div class=\"row text-center\">" +
+												"<span>" + friend.Email + "</span>" +
+											"</div>" +
+											"<div class=\"row text-center top-buffer\">" +
+												"<button type=\"button\" data-toggle=\"modal\" data-target=\"#acceptFriendRequestModal\" class=\"btn-sm btn-primary\" onclick=\"document.getElementById('MainContent_acceptedFriendRequestId').value = '" + friend.ID + "';\">Accept Request</button>" +
+											"</div>" +
+										"</div>" +
+									"</div>";
+
+					if (friendCounter % 4 == 3 || friendRequests.Last() == friend)
+					{
+						FriendRequestContainer.InnerHtml = FriendRequestContainer.InnerHtml + "</div></div>";
+					}
+
+					friendCounter++;
+				}
+			}
+			else
+			{
+				FriendRequestPanel.Visible = false;
+			}
+		}
 	}
 }

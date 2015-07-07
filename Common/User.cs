@@ -17,8 +17,12 @@ namespace Common
         public User()
         {
             this.Comments = new HashSet<Comment>();
+            this.FriendAssociations = new HashSet<FriendAssociation>();
+            this.FriendAssociations1 = new HashSet<FriendAssociation>();
             this.ImagePaths = new HashSet<ImagePath>();
             this.Locations = new HashSet<Location>();
+            this.PendingFriendRequests = new HashSet<PendingFriendRequest>();
+            this.PendingFriendRequests1 = new HashSet<PendingFriendRequest>();
             this.Threads = new HashSet<Thread>();
             this.Trips = new HashSet<Trip>();
         }
@@ -30,8 +34,12 @@ namespace Common
         public string Password { get; set; }
     
         public virtual ICollection<Comment> Comments { get; set; }
+        public virtual ICollection<FriendAssociation> FriendAssociations { get; set; }
+        public virtual ICollection<FriendAssociation> FriendAssociations1 { get; set; }
         public virtual ICollection<ImagePath> ImagePaths { get; set; }
         public virtual ICollection<Location> Locations { get; set; }
+        public virtual ICollection<PendingFriendRequest> PendingFriendRequests { get; set; }
+        public virtual ICollection<PendingFriendRequest> PendingFriendRequests1 { get; set; }
         public virtual ICollection<Thread> Threads { get; set; }
         public virtual ICollection<Trip> Trips { get; set; }
     }

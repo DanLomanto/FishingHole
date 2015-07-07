@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="FishModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="FishModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Categories">
           <Key>
             <PropertyRef Name="ID" />
@@ -22,6 +22,14 @@
           <Property Name="CreateDate" Type="datetime" Nullable="false" />
           <Property Name="ThreadId" Type="int" Nullable="false" />
           <Property Name="LocationId" Type="int" />
+        </EntityType>
+        <EntityType Name="FriendAssociations">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PrimaryUserId" Type="int" Nullable="false" />
+          <Property Name="AssocFriendId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="ImagePaths">
           <Key>
@@ -56,6 +64,14 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TripID" Type="int" Nullable="false" />
           <Property Name="LocationID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PendingFriendRequests">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PrimaryUserId" Type="int" Nullable="false" />
+          <Property Name="AssocFriendId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Threads">
           <Key>
@@ -139,6 +155,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_FriendAssociations_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="FriendAssociations" Type="Self.FriendAssociations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FriendAssociations">
+              <PropertyRef Name="PrimaryUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FriendAssociations_Users1">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="FriendAssociations" Type="Self.FriendAssociations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FriendAssociations">
+              <PropertyRef Name="AssocFriendId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ImagePaths_Users">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="ImagePaths" Type="Self.ImagePaths" Multiplicity="*" />
@@ -160,6 +200,30 @@
             </Principal>
             <Dependent Role="Locations">
               <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PendingFriendRequests_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="PendingFriendRequests" Type="Self.PendingFriendRequests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PendingFriendRequests">
+              <PropertyRef Name="PrimaryUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PendingFriendRequests_Users1">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="PendingFriendRequests" Type="Self.PendingFriendRequests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PendingFriendRequests">
+              <PropertyRef Name="AssocFriendId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -247,6 +311,10 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="CreateFriendAssociation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PrimaryUserId" Type="int" Mode="In" />
+          <Parameter Name="AssocFriendId" Type="int" Mode="In" />
+        </Function>
         <Function Name="CreateLocation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="UserID" Type="int" Mode="In" />
           <Parameter Name="Name" Type="varchar" Mode="In" />
@@ -260,6 +328,10 @@
           <Parameter Name="LongitudeDirection" Type="varchar" Mode="In" />
           <Parameter Name="Longitude" Type="decimal" Mode="In" />
           <Parameter Name="Output_Result" Type="bigint" Mode="InOut" />
+        </Function>
+        <Function Name="CreatePendingFriendRequest" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PrimaryUserId" Type="int" Mode="In" />
+          <Parameter Name="AssocFriendId" Type="int" Mode="In" />
         </Function>
         <Function Name="CreateTrip" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="UserID" Type="int" Mode="In" />
@@ -288,8 +360,16 @@
           <Parameter Name="Email" Type="varchar" Mode="In" />
           <Parameter Name="Password" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="DeleteFriendAssociation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PrimaryUserId" Type="int" Mode="In" />
+          <Parameter Name="AssocFriendId" Type="int" Mode="In" />
+        </Function>
         <Function Name="DeleteLocationForTrip" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="TripID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="DeletePendingFriendRequest" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PrimaryUserId" Type="int" Mode="In" />
+          <Parameter Name="AssocFriendId" Type="int" Mode="In" />
         </Function>
         <Function Name="DeletePhoto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="PhotoId" Type="int" Mode="In" />
@@ -320,6 +400,12 @@
         </Function>
         <Function Name="GetCommentsForThread" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetFriendRequestsForUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PrimaryUserId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetFriendsForUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PrimaryUserId" Type="int" Mode="In" />
         </Function>
         <Function Name="GetIdOfCategory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Category" Type="varchar" Mode="In" />
@@ -408,9 +494,11 @@
         <EntityContainer Name="FishModelStoreContainer">
           <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Comments" EntityType="Self.Comments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FriendAssociations" EntityType="Self.FriendAssociations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ImagePaths" EntityType="Self.ImagePaths" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Locations" EntityType="Self.Locations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LocationToTrip" EntityType="Self.LocationToTrip" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PendingFriendRequests" EntityType="Self.PendingFriendRequests" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Threads" EntityType="Self.Threads" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Trips" EntityType="Self.Trips" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TripsToPhotos" EntityType="Self.TripsToPhotos" Schema="dbo" store:Type="Tables" />
@@ -427,6 +515,14 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="Comments" EntitySet="Comments" />
           </AssociationSet>
+          <AssociationSet Name="FK_FriendAssociations_Users" Association="Self.FK_FriendAssociations_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="FriendAssociations" EntitySet="FriendAssociations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FriendAssociations_Users1" Association="Self.FK_FriendAssociations_Users1">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="FriendAssociations" EntitySet="FriendAssociations" />
+          </AssociationSet>
           <AssociationSet Name="FK_ImagePaths_Users" Association="Self.FK_ImagePaths_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="ImagePaths" EntitySet="ImagePaths" />
@@ -434,6 +530,14 @@
           <AssociationSet Name="FK_Locations_Users" Association="Self.FK_Locations_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="Locations" EntitySet="Locations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PendingFriendRequests_Users" Association="Self.FK_PendingFriendRequests_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="PendingFriendRequests" EntitySet="PendingFriendRequests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PendingFriendRequests_Users1" Association="Self.FK_PendingFriendRequests_Users1">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="PendingFriendRequests" EntitySet="PendingFriendRequests" />
           </AssociationSet>
           <AssociationSet Name="FK_Threads_Categories" Association="Self.FK_Threads_Categories">
             <End Role="Categories" EntitySet="Categories" />
@@ -464,8 +568,7 @@
             <End Role="LocationToTrip" EntitySet="LocationToTrip" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="FishModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -490,6 +593,16 @@
           <NavigationProperty Name="Location" Relationship="Self.FK_Comments_Locations" FromRole="Comments" ToRole="Locations" />
           <NavigationProperty Name="Thread" Relationship="Self.FK_Comments_Threads" FromRole="Comments" ToRole="Threads" />
           <NavigationProperty Name="User" Relationship="Self.FK_Comments_Users" FromRole="Comments" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="FriendAssociation">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PrimaryUserId" Type="Int32" Nullable="false" />
+          <Property Name="AssocFriendId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="Self.FK_FriendAssociations_Users" FromRole="FriendAssociations" ToRole="Users" />
+          <NavigationProperty Name="User1" Relationship="Self.FK_FriendAssociations_Users1" FromRole="FriendAssociations" ToRole="Users" />
         </EntityType>
         <EntityType Name="ImagePath">
           <Key>
@@ -531,6 +644,16 @@
           <Property Name="LocationID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Location" Relationship="Self.FK_TripToLocation_TripToLocation" FromRole="LocationToTrip" ToRole="Locations" />
           <NavigationProperty Name="Trip" Relationship="Self.FK_TripToLocation_Trips" FromRole="LocationToTrip" ToRole="Trips" />
+        </EntityType>
+        <EntityType Name="PendingFriendRequest">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PrimaryUserId" Type="Int32" Nullable="false" />
+          <Property Name="AssocFriendId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="Self.FK_PendingFriendRequests_Users" FromRole="PendingFriendRequests" ToRole="Users" />
+          <NavigationProperty Name="User1" Relationship="Self.FK_PendingFriendRequests_Users1" FromRole="PendingFriendRequests" ToRole="Users" />
         </EntityType>
         <EntityType Name="Thread">
           <Key>
@@ -586,8 +709,12 @@
           <Property Name="LastName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Password" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Comments" Relationship="Self.FK_Comments_Users" FromRole="Users" ToRole="Comments" />
+          <NavigationProperty Name="FriendAssociations" Relationship="Self.FK_FriendAssociations_Users" FromRole="Users" ToRole="FriendAssociations" />
+          <NavigationProperty Name="FriendAssociations1" Relationship="Self.FK_FriendAssociations_Users1" FromRole="Users" ToRole="FriendAssociations" />
           <NavigationProperty Name="ImagePaths" Relationship="Self.FK_ImagePaths_Users" FromRole="Users" ToRole="ImagePaths" />
           <NavigationProperty Name="Locations" Relationship="Self.FK_Locations_Users" FromRole="Users" ToRole="Locations" />
+          <NavigationProperty Name="PendingFriendRequests" Relationship="Self.FK_PendingFriendRequests_Users" FromRole="Users" ToRole="PendingFriendRequests" />
+          <NavigationProperty Name="PendingFriendRequests1" Relationship="Self.FK_PendingFriendRequests_Users1" FromRole="Users" ToRole="PendingFriendRequests" />
           <NavigationProperty Name="Threads" Relationship="Self.FK_Threads_Users" FromRole="Users" ToRole="Threads" />
           <NavigationProperty Name="Trips" Relationship="Self.FK_Trips_Users" FromRole="Users" ToRole="Trips" />
         </EntityType>
@@ -636,6 +763,30 @@
             </Principal>
             <Dependent Role="Comments">
               <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FriendAssociations_Users">
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="FriendAssociations" Type="Self.FriendAssociation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FriendAssociations">
+              <PropertyRef Name="PrimaryUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FriendAssociations_Users1">
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="FriendAssociations" Type="Self.FriendAssociation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FriendAssociations">
+              <PropertyRef Name="AssocFriendId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -699,6 +850,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_PendingFriendRequests_Users">
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="PendingFriendRequests" Type="Self.PendingFriendRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PendingFriendRequests">
+              <PropertyRef Name="PrimaryUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PendingFriendRequests_Users1">
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="PendingFriendRequests" Type="Self.PendingFriendRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PendingFriendRequests">
+              <PropertyRef Name="AssocFriendId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Threads_Users">
           <End Role="Users" Type="Self.User" Multiplicity="1" />
           <End Role="Threads" Type="Self.Thread" Multiplicity="*" />
@@ -738,9 +913,11 @@
         <EntityContainer Name="FishEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Categories" EntityType="Self.Category" />
           <EntitySet Name="Comments" EntityType="Self.Comment" />
+          <EntitySet Name="FriendAssociations" EntityType="Self.FriendAssociation" />
           <EntitySet Name="ImagePaths" EntityType="Self.ImagePath" />
           <EntitySet Name="Locations" EntityType="Self.Location" />
           <EntitySet Name="LocationToTrips" EntityType="Self.LocationToTrip" />
+          <EntitySet Name="PendingFriendRequests" EntityType="Self.PendingFriendRequest" />
           <EntitySet Name="Threads" EntityType="Self.Thread" />
           <EntitySet Name="Trips" EntityType="Self.Trip" />
           <EntitySet Name="TripsToPhotos" EntityType="Self.TripsToPhoto" />
@@ -760,6 +937,14 @@
           <AssociationSet Name="FK_Comments_Users" Association="Self.FK_Comments_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="Comments" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FriendAssociations_Users" Association="Self.FK_FriendAssociations_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="FriendAssociations" EntitySet="FriendAssociations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FriendAssociations_Users1" Association="Self.FK_FriendAssociations_Users1">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="FriendAssociations" EntitySet="FriendAssociations" />
           </AssociationSet>
           <AssociationSet Name="FK_ImagePaths_Users" Association="Self.FK_ImagePaths_Users">
             <End Role="Users" EntitySet="Users" />
@@ -781,6 +966,14 @@
             <End Role="Trips" EntitySet="Trips" />
             <End Role="LocationToTrip" EntitySet="LocationToTrips" />
           </AssociationSet>
+          <AssociationSet Name="FK_PendingFriendRequests_Users" Association="Self.FK_PendingFriendRequests_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="PendingFriendRequests" EntitySet="PendingFriendRequests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PendingFriendRequests_Users1" Association="Self.FK_PendingFriendRequests_Users1">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="PendingFriendRequests" EntitySet="PendingFriendRequests" />
+          </AssociationSet>
           <AssociationSet Name="FK_Threads_Users" Association="Self.FK_Threads_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="Threads" EntitySet="Threads" />
@@ -793,6 +986,10 @@
             <End Role="Trips" EntitySet="Trips" />
             <End Role="TripsToPhotos" EntitySet="TripsToPhotos" />
           </AssociationSet>
+          <FunctionImport Name="CreateFriendAssociation">
+            <Parameter Name="PrimaryUserId" Mode="In" Type="Int32" />
+            <Parameter Name="AssocFriendId" Mode="In" Type="Int32" />
+          </FunctionImport>
           <FunctionImport Name="CreateLocation">
             <Parameter Name="UserID" Mode="In" Type="Int32" />
             <Parameter Name="Name" Mode="In" Type="String" />
@@ -806,6 +1003,10 @@
             <Parameter Name="LongitudeDirection" Mode="In" Type="String" />
             <Parameter Name="Longitude" Mode="In" Type="Decimal" />
             <Parameter Name="Output_Result" Mode="InOut" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="CreatePendingFriendRequest">
+            <Parameter Name="PrimaryUserId" Mode="In" Type="Int32" />
+            <Parameter Name="AssocFriendId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="CreateTrip">
             <Parameter Name="UserID" Mode="In" Type="Int32" />
@@ -834,14 +1035,22 @@
             <Parameter Name="Email" Mode="In" Type="String" />
             <Parameter Name="Password" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="DeleteFriendAssociation">
+            <Parameter Name="PrimaryUserId" Mode="In" Type="Int32" />
+            <Parameter Name="AssocFriendId" Mode="In" Type="Int32" />
+          </FunctionImport>
           <FunctionImport Name="DeleteLocationForTrip">
-            <Parameter Name="TripID" Mode="In" Type="Int32" />
+          <Parameter Name="TripID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="DeletePendingFriendRequest">
+            <Parameter Name="PrimaryUserId" Mode="In" Type="Int32" />
+            <Parameter Name="AssocFriendId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="DeletePhoto">
-            <Parameter Name="PhotoId" Mode="In" Type="Int32" />
+          <Parameter Name="PhotoId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="DeleteTripForLocation">
-            <Parameter Name="LocationID" Mode="In" Type="Int32" />
+          <Parameter Name="LocationID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="DoesLoginExist" ReturnType="Collection(FishModel.DoesLoginExist_Result)">
             <Parameter Name="Email" Mode="In" Type="String" />
@@ -852,42 +1061,42 @@
             <Parameter Name="Title" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetAllLocationsForUser" ReturnType="Collection(FishModel.GetAllLocationsForUser_Result)">
-            <Parameter Name="UserID" Mode="In" Type="Int32" />
+          <Parameter Name="UserID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetAllThreads" ReturnType="Collection(FishModel.GetAllThreads_Result)" />
           <FunctionImport Name="GetAllTripsForUser" ReturnType="Collection(FishModel.GetAllTripsForUser_Result)">
-            <Parameter Name="UserID" Mode="In" Type="Int32" />
+          <Parameter Name="UserID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetAssociatedLocationForTrip" ReturnType="Collection(Int32)">
-            <Parameter Name="TripID" Mode="In" Type="Int32" />
+          <Parameter Name="TripID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetAssociatedTripForLocation" ReturnType="Collection(Int32)">
-            <Parameter Name="LocationId" Mode="In" Type="Int32" />
+          <Parameter Name="LocationId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetCommentsForThread" ReturnType="Collection(FishModel.GetCommentsForThread_Result)">
-            <Parameter Name="ID" Mode="In" Type="Int32" />
+          <Parameter Name="ID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetIdOfCategory" ReturnType="Collection(Int32)">
-            <Parameter Name="Category" Mode="In" Type="String" />
+          <Parameter Name="Category" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetImagesForUser" ReturnType="Collection(FishModel.GetImagesForUser_Result)">
-            <Parameter Name="UserID" Mode="In" Type="Int32" />
+          <Parameter Name="UserID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetLocation" ReturnType="Collection(FishModel.GetLocation_Result)">
             <Parameter Name="UserID" Mode="In" Type="Int32" />
             <Parameter Name="Name" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetLocationById" ReturnType="Collection(FishModel.GetLocationById_Result)">
-            <Parameter Name="ID" Mode="In" Type="Int32" />
+          <Parameter Name="ID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetPhotosForTrip" ReturnType="Collection(FishModel.GetPhotosForTrip_Result)">
-            <Parameter Name="TripId" Mode="In" Type="Int32" />
+          <Parameter Name="TripId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetThreadById" ReturnType="Collection(FishModel.GetThreadById_Result)">
-            <Parameter Name="ID" Mode="In" Type="Int32" />
+          <Parameter Name="ID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetThreadCategoryById" ReturnType="Collection(String)">
-            <Parameter Name="ID" Mode="In" Type="Int32" />
+          <Parameter Name="ID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetTopicNames" ReturnType="Collection(String)" />
           <FunctionImport Name="GetTrip" ReturnType="Collection(FishModel.GetTrip_Result)">
@@ -895,13 +1104,13 @@
             <Parameter Name="Title" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetTripById" ReturnType="Collection(FishModel.GetTripById_Result)">
-            <Parameter Name="ID" Mode="In" Type="Int32" />
+          <Parameter Name="ID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetUser" ReturnType="Collection(FishModel.GetUser_Result)">
-            <Parameter Name="Email" Mode="In" Type="String" />
+          <Parameter Name="Email" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetUserById" ReturnType="Collection(FishModel.GetUserById_Result)">
-            <Parameter Name="ID" Mode="In" Type="Int32" />
+          <Parameter Name="ID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="InsertImagePath">
             <Parameter Name="UserID" Mode="In" Type="Int32" />
@@ -921,10 +1130,10 @@
             <Parameter Name="LocationID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SearchForThreadsByCategory" ReturnType="Collection(FishModel.SearchForThreadsByCategory_Result)">
-            <Parameter Name="Category" Mode="In" Type="String" />
+          <Parameter Name="Category" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SearchThreads" ReturnType="Collection(FishModel.SearchThreads_Result)">
-            <Parameter Name="SearchText" Mode="In" Type="String" />
+          <Parameter Name="SearchText" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="UpdateLocation">
             <Parameter Name="ID" Mode="In" Type="Int32" />
@@ -950,6 +1159,12 @@
             <Parameter Name="FliesLuresUsed" Mode="In" Type="String" />
             <Parameter Name="CatchOfTheDay" Mode="In" Type="String" />
             <Parameter Name="OtherNotes" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetFriendRequestsForUser" ReturnType="Collection(Int32)">
+            <Parameter Name="PrimaryUserId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetFriendsForUser" ReturnType="Collection(Int32)">
+            <Parameter Name="PrimaryUserId" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="DoesLoginExist_Result">
@@ -1119,6 +1334,15 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="FriendAssociations">
+            <EntityTypeMapping TypeName="FishModel.FriendAssociation">
+              <MappingFragment StoreEntitySet="FriendAssociations">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="PrimaryUserId" ColumnName="PrimaryUserId" />
+                <ScalarProperty Name="AssocFriendId" ColumnName="AssocFriendId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="ImagePaths">
             <EntityTypeMapping TypeName="FishModel.ImagePath">
               <MappingFragment StoreEntitySet="ImagePaths">
@@ -1153,6 +1377,15 @@
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="TripID" ColumnName="TripID" />
                 <ScalarProperty Name="LocationID" ColumnName="LocationID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PendingFriendRequests">
+            <EntityTypeMapping TypeName="FishModel.PendingFriendRequest">
+              <MappingFragment StoreEntitySet="PendingFriendRequests">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="PrimaryUserId" ColumnName="PrimaryUserId" />
+                <ScalarProperty Name="AssocFriendId" ColumnName="AssocFriendId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1206,12 +1439,16 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="CreateFriendAssociation" FunctionName="FishModel.Store.CreateFriendAssociation" />
           <FunctionImportMapping FunctionImportName="CreateLocation" FunctionName="FishModel.Store.CreateLocation" />
+          <FunctionImportMapping FunctionImportName="CreatePendingFriendRequest" FunctionName="FishModel.Store.CreatePendingFriendRequest" />
           <FunctionImportMapping FunctionImportName="CreateTrip" FunctionName="FishModel.Store.CreateTrip" />
           <FunctionImportMapping FunctionImportName="CreateTripToPhoto" FunctionName="FishModel.Store.CreateTripToPhoto" />
           <FunctionImportMapping FunctionImportName="CreateUpdateLocationToTrip" FunctionName="FishModel.Store.CreateUpdateLocationToTrip" />
           <FunctionImportMapping FunctionImportName="CreateUser" FunctionName="FishModel.Store.CreateUser" />
+          <FunctionImportMapping FunctionImportName="DeleteFriendAssociation" FunctionName="FishModel.Store.DeleteFriendAssociation" />
           <FunctionImportMapping FunctionImportName="DeleteLocationForTrip" FunctionName="FishModel.Store.DeleteLocationForTrip" />
+          <FunctionImportMapping FunctionImportName="DeletePendingFriendRequest" FunctionName="FishModel.Store.DeletePendingFriendRequest" />
           <FunctionImportMapping FunctionImportName="DeletePhoto" FunctionName="FishModel.Store.DeletePhoto" />
           <FunctionImportMapping FunctionImportName="DeleteTripForLocation" FunctionName="FishModel.Store.DeleteTripForLocation" />
           <FunctionImportMapping FunctionImportName="DoesLoginExist" FunctionName="FishModel.Store.DoesLoginExist">
@@ -1430,6 +1667,8 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="UpdateLocation" FunctionName="FishModel.Store.UpdateLocation" />
           <FunctionImportMapping FunctionImportName="UpdateTrip" FunctionName="FishModel.Store.UpdateTrip" />
+          <FunctionImportMapping FunctionImportName="GetFriendRequestsForUser" FunctionName="FishModel.Store.GetFriendRequestsForUser" />
+          <FunctionImportMapping FunctionImportName="GetFriendsForUser" FunctionName="FishModel.Store.GetFriendsForUser" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

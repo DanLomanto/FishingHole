@@ -124,6 +124,10 @@
       <DependentUpon>FishModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="ForumActions.cs" />
+    <Compile Include="FriendActions.cs" />
+    <Compile Include="FriendAssociation.cs">
+      <DependentUpon>FishModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="GetAllLocationsForUser_Result.cs">
       <DependentUpon>FishModel.tt</DependentUpon>
     </Compile>
@@ -172,6 +176,9 @@
     <Compile Include="LocationObject.cs" />
     <Compile Include="LocationsGridViewModel.cs" />
     <Compile Include="LocationToTrip.cs">
+      <DependentUpon>FishModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PendingFriendRequest.cs">
       <DependentUpon>FishModel.tt</DependentUpon>
     </Compile>
     <Compile Include="PhotoActions.cs" />

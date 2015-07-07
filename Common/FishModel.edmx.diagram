@@ -4,25 +4,31 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="ca173b05561c4d65aa8c26d6ff0323b2" Name="Diagram1">
+      <Diagram DiagramId="fd2ca35d24dc456797302bc6083e3480" Name="Diagram1">
         <EntityTypeShape EntityType="FishModel.Category" Width="1.5" PointX="3.75" PointY="6.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="FishModel.Comment" Width="1.5" PointX="5.25" PointY="11.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="FishModel.ImagePath" Width="1.5" PointX="3" PointY="8.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="FishModel.Location" Width="1.5" PointX="3" PointY="11.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="FishModel.LocationToTrip" Width="1.5" PointX="5.25" PointY="18.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="FishModel.Thread" Width="1.5" PointX="6" PointY="7.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="FishModel.Trip" Width="1.5" PointX="3" PointY="19.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="FishModel.TripsToPhoto" Width="1.5" PointX="5.25" PointY="15.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="FishModel.User" Width="1.5" PointX="0.75" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="FishModel.Comment" Width="1.5" PointX="5.25" PointY="14" IsExpanded="true" />
+        <EntityTypeShape EntityType="FishModel.FriendAssociation" Width="1.5" PointX="3" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="FishModel.ImagePath" Width="1.5" PointX="3" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FishModel.Location" Width="1.5" PointX="3" PointY="14.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="FishModel.LocationToTrip" Width="1.5" PointX="5.25" PointY="23" IsExpanded="true" />
+        <EntityTypeShape EntityType="FishModel.PendingFriendRequest" Width="1.5" PointX="3" PointY="19.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="FishModel.Thread" Width="1.5" PointX="6" PointY="9.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="FishModel.Trip" Width="1.5" PointX="3" PointY="25.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="FishModel.TripsToPhoto" Width="1.5" PointX="5.25" PointY="19.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="FishModel.User" Width="1.5" PointX="0.75" PointY="12.125" IsExpanded="true" />
         <AssociationConnector Association="FishModel.FK_Threads_Categories" ManuallyRouted="false" />
         <AssociationConnector Association="FishModel.FK_Comments_Locations" ManuallyRouted="false" />
         <AssociationConnector Association="FishModel.FK_Comments_Threads" ManuallyRouted="false" />
         <AssociationConnector Association="FishModel.FK_Comments_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="FishModel.FK_FriendAssociations_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="FishModel.FK_FriendAssociations_Users1" ManuallyRouted="false" />
         <AssociationConnector Association="FishModel.FK_ImagePaths_Users" ManuallyRouted="false" />
         <AssociationConnector Association="FishModel.FK_TripsToPhotos_ImagePaths" ManuallyRouted="false" />
         <AssociationConnector Association="FishModel.FK_Locations_Users" ManuallyRouted="false" />
         <AssociationConnector Association="FishModel.FK_TripToLocation_TripToLocation" ManuallyRouted="false" />
         <AssociationConnector Association="FishModel.FK_TripToLocation_Trips" ManuallyRouted="false" />
+        <AssociationConnector Association="FishModel.FK_PendingFriendRequests_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="FishModel.FK_PendingFriendRequests_Users1" ManuallyRouted="false" />
         <AssociationConnector Association="FishModel.FK_Threads_Users" ManuallyRouted="false" />
         <AssociationConnector Association="FishModel.FK_Trips_Users" ManuallyRouted="false" />
         <AssociationConnector Association="FishModel.FK_TripsToPhotos_Trips" ManuallyRouted="false" />

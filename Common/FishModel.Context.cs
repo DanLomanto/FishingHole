@@ -29,13 +29,28 @@ namespace Common
     
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Comment> Comments { get; set; }
+        public virtual DbSet<FriendAssociation> FriendAssociations { get; set; }
         public virtual DbSet<ImagePath> ImagePaths { get; set; }
         public virtual DbSet<Location> Locations { get; set; }
         public virtual DbSet<LocationToTrip> LocationToTrips { get; set; }
+        public virtual DbSet<PendingFriendRequest> PendingFriendRequests { get; set; }
         public virtual DbSet<Thread> Threads { get; set; }
         public virtual DbSet<Trip> Trips { get; set; }
         public virtual DbSet<TripsToPhoto> TripsToPhotos { get; set; }
         public virtual DbSet<User> Users { get; set; }
+    
+        public virtual int CreateFriendAssociation(Nullable<int> primaryUserId, Nullable<int> assocFriendId)
+        {
+            var primaryUserIdParameter = primaryUserId.HasValue ?
+                new ObjectParameter("PrimaryUserId", primaryUserId) :
+                new ObjectParameter("PrimaryUserId", typeof(int));
+    
+            var assocFriendIdParameter = assocFriendId.HasValue ?
+                new ObjectParameter("AssocFriendId", assocFriendId) :
+                new ObjectParameter("AssocFriendId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CreateFriendAssociation", primaryUserIdParameter, assocFriendIdParameter);
+        }
     
         public virtual int CreateLocation(Nullable<int> userID, string name, string description, string streetAddress, string cityTown, string state, Nullable<int> zipcode, string lattitudeDirection, Nullable<decimal> lattitude, string longitudeDirection, Nullable<decimal> longitude, ObjectParameter output_Result)
         {
@@ -84,6 +99,19 @@ namespace Common
                 new ObjectParameter("Longitude", typeof(decimal));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CreateLocation", userIDParameter, nameParameter, descriptionParameter, streetAddressParameter, cityTownParameter, stateParameter, zipcodeParameter, lattitudeDirectionParameter, lattitudeParameter, longitudeDirectionParameter, longitudeParameter, output_Result);
+        }
+    
+        public virtual int CreatePendingFriendRequest(Nullable<int> primaryUserId, Nullable<int> assocFriendId)
+        {
+            var primaryUserIdParameter = primaryUserId.HasValue ?
+                new ObjectParameter("PrimaryUserId", primaryUserId) :
+                new ObjectParameter("PrimaryUserId", typeof(int));
+    
+            var assocFriendIdParameter = assocFriendId.HasValue ?
+                new ObjectParameter("AssocFriendId", assocFriendId) :
+                new ObjectParameter("AssocFriendId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CreatePendingFriendRequest", primaryUserIdParameter, assocFriendIdParameter);
         }
     
         public virtual int CreateTrip(Nullable<int> userID, string title, string description, string targetedSpecies, string waterConditions, string weatherConditions, string dateOfTrip, string fliesLuresUsed, string catchOfTheDay, string otherNotes, ObjectParameter output_Result)
@@ -178,6 +206,19 @@ namespace Common
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CreateUser", firstNameParameter, lastNameParameter, emailParameter, passwordParameter);
         }
     
+        public virtual int DeleteFriendAssociation(Nullable<int> primaryUserId, Nullable<int> assocFriendId)
+        {
+            var primaryUserIdParameter = primaryUserId.HasValue ?
+                new ObjectParameter("PrimaryUserId", primaryUserId) :
+                new ObjectParameter("PrimaryUserId", typeof(int));
+    
+            var assocFriendIdParameter = assocFriendId.HasValue ?
+                new ObjectParameter("AssocFriendId", assocFriendId) :
+                new ObjectParameter("AssocFriendId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteFriendAssociation", primaryUserIdParameter, assocFriendIdParameter);
+        }
+    
         public virtual int DeleteLocationForTrip(Nullable<int> tripID)
         {
             var tripIDParameter = tripID.HasValue ?
@@ -185,6 +226,19 @@ namespace Common
                 new ObjectParameter("TripID", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteLocationForTrip", tripIDParameter);
+        }
+    
+        public virtual int DeletePendingFriendRequest(Nullable<int> primaryUserId, Nullable<int> assocFriendId)
+        {
+            var primaryUserIdParameter = primaryUserId.HasValue ?
+                new ObjectParameter("PrimaryUserId", primaryUserId) :
+                new ObjectParameter("PrimaryUserId", typeof(int));
+    
+            var assocFriendIdParameter = assocFriendId.HasValue ?
+                new ObjectParameter("AssocFriendId", assocFriendId) :
+                new ObjectParameter("AssocFriendId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeletePendingFriendRequest", primaryUserIdParameter, assocFriendIdParameter);
         }
     
         public virtual int DeletePhoto(Nullable<int> photoId)
@@ -558,6 +612,24 @@ namespace Common
                 new ObjectParameter("OtherNotes", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateTrip", iDParameter, titleParameter, descriptionParameter, targetedSpeciesParameter, waterConditionsParameter, weatherConditionsParameter, dateOfTripParameter, fliesLuresUsedParameter, catchOfTheDayParameter, otherNotesParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> GetFriendRequestsForUser(Nullable<int> primaryUserId)
+        {
+            var primaryUserIdParameter = primaryUserId.HasValue ?
+                new ObjectParameter("PrimaryUserId", primaryUserId) :
+                new ObjectParameter("PrimaryUserId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("GetFriendRequestsForUser", primaryUserIdParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> GetFriendsForUser(Nullable<int> primaryUserId)
+        {
+            var primaryUserIdParameter = primaryUserId.HasValue ?
+                new ObjectParameter("PrimaryUserId", primaryUserId) :
+                new ObjectParameter("PrimaryUserId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("GetFriendsForUser", primaryUserIdParameter);
         }
     }
 }

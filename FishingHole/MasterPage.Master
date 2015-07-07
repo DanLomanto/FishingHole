@@ -62,7 +62,7 @@
                         <li id="mobileTripsNavItem"><a href="Trips.aspx">Trips</a></li>
                         <li id="mobileLocationsNavItem"><a href="Locations.aspx">Locations</a></li>
                         <li id="mobileforumNavItem"><a href="forum.aspx">Forum</a></li>
-                        <li><a href="ManageFriends.aspx">Manage Friends</a></li>
+                        <li><a href="ManageFriends.aspx">Friends</a></li>
                         <li id="mobileSignout">
                             <asp:LinkButton runat="server" ID="mobileSignOutBtn" OnClick="SignOut_Click"><i class="glyphicon glyphicon-log-out"></i>&nbsp;Sign Out</asp:LinkButton>
                         </li>
@@ -82,7 +82,7 @@
                         <li class="dropdown">
                             <a id="UsernameDropDown" runat="server" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"></a>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="ManageFriends.aspx"><i class="fa fa-users"></i>&nbsp;Manage Friends</a>
+                                <li><a href="ManageFriends.aspx"><i class="fa fa-users"></i>&nbsp;Friends</a>
                                 </li>
                                 <li>
                                     <asp:LinkButton runat="server" ID="SignOutButton" OnClick="SignOut_Click"><i class="glyphicon glyphicon-log-out"></i>&nbsp;Sign Out</asp:LinkButton>
