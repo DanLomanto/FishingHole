@@ -46,6 +46,8 @@ namespace FishingHole
 			FriendActions.MakePendingFriendActualFriend(Master.UsersInfo.ID, idOfNewFriend);
 
 			LoadDataOnPage();
+
+			Master.LoadUserNameDropDown();
 		}
 
 		/// <summary>

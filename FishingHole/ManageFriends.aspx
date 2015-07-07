@@ -10,30 +10,13 @@
             </div>
             <div class="panel-body">
                 <div class="container-fluid" id="FriendRequestContainer" runat="server">
-                    <div class="row">
-                        <div class="container-fluid">
-                            <div class="col-xs-12 col-sm-4 col-md-3">
-                                <div class="well user-padding">
-                                    <div class="row text-center">
-                                        <span><strong>Dan Lomanto</strong></span>
-                                    </div>
-                                    <div class="row text-center">
-                                        <span>something@gmail.com</span>
-                                    </div>
-                                    <div class="row text-center top-buffer">
-                                        <button type="button" data-toggle="modal" data-target="#acceptFriendRequestModal" class="btn-sm btn-primary" onclick="document.getElementById('MainContent_acceptedFriendRequestId').value = '33';\">Accept Request</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
         <div class="panel panel-default">
             <div class="panel-heading">
                 <div class="btn-group pull-right" style="padding-top: 15px;">
-                    <a href="Location.aspx?id=0&returnUrl=locations" id="AddLocation" runat="server" class="btn btn-large btn-primary"><i class="glyphicon glyphicon-search"></i>&nbsp;Find Friends</a>
+                    <a href="FindFriends.aspx" class="btn btn-large btn-primary"><i class="glyphicon glyphicon-search"></i>&nbsp;Find Friends</a>
                 </div>
                 <h3>Manage Friends</h3>
             </div>

@@ -40,6 +40,15 @@ namespace FishingHole {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl navMenu;
         
         /// <summary>
+        /// mobileFriendRequestNumber control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl mobileFriendRequestNumber;
+        
+        /// <summary>
         /// mobileSignOutBtn control.
         /// </summary>
         /// <remarks>
@@ -56,6 +65,15 @@ namespace FishingHole {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlAnchor UsernameDropDown;
+        
+        /// <summary>
+        /// friendRequestNumber control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl friendRequestNumber;
         
         /// <summary>
         /// SignOutButton control.
