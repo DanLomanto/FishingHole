@@ -68,8 +68,8 @@ namespace FishingHole
 						searchResults.InnerHtml = searchResults.InnerHtml + "<div class=\"row well\" style=\"background:#ffffff\">";
 					}
 
-					searchResults.InnerHtml = searchResults.InnerHtml + "<span class=\"col-xs-12 col-sm-10\"><strong>" + person.LastName + ", " + person.FirstName +
-									"</strong>&nbsp;(" + person.Email + ")</span>" +
+					searchResults.InnerHtml = searchResults.InnerHtml + "<span class=\"col-xs-12 col-sm-4\"><strong>Name:&nbsp;</strong>" + person.LastName + ", " + person.FirstName +
+									"&nbsp;</span><span class=\"col-xs-12 col-sm-6\"><strong>Email:&nbsp;</strong>" + person.Email + "</span>" +
 									"<div class=\"col-xs-12 col-sm-1 text-center\">" +
 										"<button type=\"button\" class=\"btn btn-sm btn-default\" data-toggle=\"modal\" data-target=\"#confirmSendRequest\" onclick=\"document.getElementById('MainContent_sendFriendRequestPersonId').value = '" + person.ID + "';\"><i class=\"fa fa-user-plus\"></i>&nbsp;Send Request</button>" +
 									"</div>" +

@@ -151,11 +151,12 @@ namespace FishingHole
 												"<span>" + friend.Email + "</span>" +
 											"</div>" +
 											"<div class=\"row text-center top-buffer\">" +
-												"<button type=\"button\" data-toggle=\"modal\" data-target=\"#acceptFriendRequestModal\" class=\"btn-sm btn-primary\" onclick=\"document.getElementById('MainContent_acceptDeclineFriendRequestId').value = '" + friend.ID + "';\">Accept Request</button>" +
+												"<button type=\"button\" data-toggle=\"modal\" data-target=\"#acceptFriendRequestModal\" class=\"btn-sm btn-primary\" onclick=\"document.getElementById('MainContent_acceptDenyFriendRequestId').value = '" + friend.ID + "'; style=\"margin-right: 5px;\" >Accept</button>" +
+												"<button type=\"button\" data-toggle=\"modal\" data-target=\"#declineFriendRequestModal\" class=\"btn-sm btn-primary\" onclick=\"document.getElementById('MainContent_acceptDenyFriendRequestId').value = '" + friend.ID + "';\" style=\"margin-left: 5px;\" >Decline</button>" +
 											"</div>" +
-											"<div class=\"row text-center top-buffer\">" +
-												"<button type=\"button\" data-toggle=\"modal\" data-target=\"#declineFriendRequestModal\" class=\"btn-sm btn-primary\" onclick=\"document.getElementById('MainContent_acceptDeclineFriendRequestId').value = '" + friend.ID + "';\">Decline Request</button>" +
-											"</div>" +
+						//"<div class=\"row text-center top-buffer\">" +
+						//	"<button type=\"button\" data-toggle=\"modal\" data-target=\"#declineFriendRequestModal\" class=\"btn-sm btn-primary\" onclick=\"document.getElementById('MainContent_acceptDeclineFriendRequestId').value = '" + friend.ID + "';\">Decline Request</button>" +
+						//"</div>" +
 										"</div>" +
 									"</div>";
 
