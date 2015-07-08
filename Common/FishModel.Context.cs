@@ -335,6 +335,24 @@ namespace Common
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetCommentsForThread_Result>("GetCommentsForThread", iDParameter);
         }
     
+        public virtual ObjectResult<Nullable<int>> GetFriendRequestsForUser(Nullable<int> primaryUserId)
+        {
+            var primaryUserIdParameter = primaryUserId.HasValue ?
+                new ObjectParameter("PrimaryUserId", primaryUserId) :
+                new ObjectParameter("PrimaryUserId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("GetFriendRequestsForUser", primaryUserIdParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> GetFriendsForUser(Nullable<int> primaryUserId)
+        {
+            var primaryUserIdParameter = primaryUserId.HasValue ?
+                new ObjectParameter("PrimaryUserId", primaryUserId) :
+                new ObjectParameter("PrimaryUserId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("GetFriendsForUser", primaryUserIdParameter);
+        }
+    
         public virtual ObjectResult<Nullable<int>> GetIdOfCategory(string category)
         {
             var categoryParameter = category != null ?
@@ -511,6 +529,19 @@ namespace Common
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SearchForThreadsByCategory_Result>("SearchForThreadsByCategory", categoryParameter);
         }
     
+        public virtual ObjectResult<SearchForUsers_Result> SearchForUsers(Nullable<int> primaryUserId, string searchText)
+        {
+            var primaryUserIdParameter = primaryUserId.HasValue ?
+                new ObjectParameter("PrimaryUserId", primaryUserId) :
+                new ObjectParameter("PrimaryUserId", typeof(int));
+    
+            var searchTextParameter = searchText != null ?
+                new ObjectParameter("SearchText", searchText) :
+                new ObjectParameter("SearchText", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SearchForUsers_Result>("SearchForUsers", primaryUserIdParameter, searchTextParameter);
+        }
+    
         public virtual ObjectResult<SearchThreads_Result> SearchThreads(string searchText)
         {
             var searchTextParameter = searchText != null ?
@@ -612,24 +643,6 @@ namespace Common
                 new ObjectParameter("OtherNotes", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateTrip", iDParameter, titleParameter, descriptionParameter, targetedSpeciesParameter, waterConditionsParameter, weatherConditionsParameter, dateOfTripParameter, fliesLuresUsedParameter, catchOfTheDayParameter, otherNotesParameter);
-        }
-    
-        public virtual ObjectResult<Nullable<int>> GetFriendRequestsForUser(Nullable<int> primaryUserId)
-        {
-            var primaryUserIdParameter = primaryUserId.HasValue ?
-                new ObjectParameter("PrimaryUserId", primaryUserId) :
-                new ObjectParameter("PrimaryUserId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("GetFriendRequestsForUser", primaryUserIdParameter);
-        }
-    
-        public virtual ObjectResult<Nullable<int>> GetFriendsForUser(Nullable<int> primaryUserId)
-        {
-            var primaryUserIdParameter = primaryUserId.HasValue ?
-                new ObjectParameter("PrimaryUserId", primaryUserId) :
-                new ObjectParameter("PrimaryUserId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("GetFriendsForUser", primaryUserIdParameter);
         }
     }
 }

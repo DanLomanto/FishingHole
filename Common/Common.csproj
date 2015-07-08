@@ -186,6 +186,9 @@
     <Compile Include="SearchForThreadsByCategory_Result.cs">
       <DependentUpon>FishModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="SearchForUsers_Result.cs">
+      <DependentUpon>FishModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="SearchThreads_Result.cs">
       <DependentUpon>FishModel.tt</DependentUpon>
     </Compile>

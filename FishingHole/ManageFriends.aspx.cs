@@ -41,9 +41,20 @@ namespace FishingHole
 		/// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
 		protected void AcceptFriendRequest(object sender, EventArgs e)
 		{
-			int idOfNewFriend = Convert.ToInt32(acceptedFriendRequestId.Value);
+			int idOfNewFriend = Convert.ToInt32(acceptDenyFriendRequestId.Value);
 
-			FriendActions.MakePendingFriendActualFriend(Master.UsersInfo.ID, idOfNewFriend);
+			FriendActions.MakePendingFriendActualFriend(idOfNewFriend, Master.UsersInfo.ID);
+
+			LoadDataOnPage();
+
+			Master.LoadUserNameDropDown();
+		}
+
+		protected void DeclineFriendRequest(object sender, EventArgs e)
+		{
+			int idOfPersonToDecline = Convert.ToInt32(acceptDenyFriendRequestId.Value);
+
+			FriendActions.DeletePendingFriendRequest(idOfPersonToDecline, Master.UsersInfo.ID);
 
 			LoadDataOnPage();
 
@@ -66,46 +77,46 @@ namespace FishingHole
 		private void LoadFriends()
 		{
 			List<UserInformation> friends = FriendActions.GetFriendsForUser(Master.UsersInfo.ID);
+			//Resetting the friends section.
+			FriendsList.InnerHtml = string.Empty;
 
-			int numberOfThreads = FriendsList.Controls.Count;
-			for (int i = 0; i < numberOfThreads; i++)
+			if (friends.Count > 0)
 			{
-				if (FriendsList.HasControls())
+				int friendCounter = 0;
+				foreach (UserInformation friend in friends)
 				{
-					FriendsList.Controls.RemoveAt(0);
+					if (friendCounter % 4 == 0)
+					{
+						FriendsList.InnerHtml = FriendsList.InnerHtml + "<div class=\"row\"><div class=\"container-fluid\">";
+					}
+
+					FriendsList.InnerHtml = FriendsList.InnerHtml + "<div class=\"col-xs-12 col-sm-4 col-md-3\">" +
+										"<div class=\"well user-padding\">" +
+											"<div class=\"row\">" +
+												"<button type=\"button\" data-toggle=\"modal\" data-target=\"#confirmDeletionModal\" class=\"close pull-right\" onclick=\"document.getElementById('MainContent_selectedFriendId').value = '" + friend.ID + "';\">&times;</button>" +
+											"</div>" +
+											"<div class=\"row text-center\">" +
+												"<span><strong>" + friend.FirstName + " " + friend.LastName + "</strong></span>" +
+											"</div>" +
+											"<div class=\"row text-center\">" +
+												"<span>" + friend.Email + "</span>" +
+											"</div>" +
+										"</div>" +
+									"</div>";
+
+					if (friendCounter % 4 == 3 || friends.Last() == friend)
+					{
+						FriendsList.InnerHtml = FriendsList.InnerHtml + "</div></div>";
+					}
+
+					friendCounter++;
 				}
-				else
-				{ break; }
 			}
-
-			int friendCounter = 0;
-			foreach (UserInformation friend in friends)
+			else
 			{
-				if (friendCounter % 4 == 0)
-				{
-					FriendsList.InnerHtml = FriendsList.InnerHtml + "<div class=\"row\"><div class=\"container-fluid\">";
-				}
-
-				FriendsList.InnerHtml = FriendsList.InnerHtml + "<div class=\"col-xs-12 col-sm-4 col-md-3\">" +
-									"<div class=\"well user-padding\">" +
-										"<div class=\"row\">" +
-											"<button type=\"button\" data-toggle=\"modal\" data-target=\"#confirmDeletionModal\" class=\"close pull-right\" onclick=\"document.getElementById('MainContent_selectedFriendId').value = '" + friend.ID + "';\">&times;</button>" +
-										"</div>" +
-										"<div class=\"row text-center\">" +
-											"<span><strong>" + friend.FirstName + " " + friend.LastName + "</strong></span>" +
-										"</div>" +
-										"<div class=\"row text-center\">" +
-											"<span>" + friend.Email + "</span>" +
-										"</div>" +
-									"</div>" +
-								"</div>";
-
-				if (friendCounter % 4 == 3 || friends.Last() == friend)
-				{
-					FriendsList.InnerHtml = FriendsList.InnerHtml + "</div></div>";
-				}
-
-				friendCounter++;
+				FriendsList.InnerHtml = "<div class=\"row\">" +
+											 "<span>You have not added any friends yet...</span>" +
+										 "</div>";
 			}
 		}
 
@@ -116,20 +127,12 @@ namespace FishingHole
 		{
 			List<UserInformation> friendRequests = FriendActions.GetFriendRequestsForUser(Master.UsersInfo.ID);
 
+			//Resetting the friend requests section.
+			FriendRequestContainer.InnerHtml = string.Empty;
+
 			if (friendRequests.Count > 0)
 			{
 				FriendRequestPanel.Visible = true;
-
-				int numberOfThreads = FriendRequestContainer.Controls.Count;
-				for (int i = 0; i < numberOfThreads; i++)
-				{
-					if (FriendRequestContainer.HasControls())
-					{
-						FriendRequestContainer.Controls.RemoveAt(0);
-					}
-					else
-					{ break; }
-				}
 
 				int friendCounter = 0;
 				foreach (UserInformation friend in friendRequests)
@@ -148,7 +151,10 @@ namespace FishingHole
 												"<span>" + friend.Email + "</span>" +
 											"</div>" +
 											"<div class=\"row text-center top-buffer\">" +
-												"<button type=\"button\" data-toggle=\"modal\" data-target=\"#acceptFriendRequestModal\" class=\"btn-sm btn-primary\" onclick=\"document.getElementById('MainContent_acceptedFriendRequestId').value = '" + friend.ID + "';\">Accept Request</button>" +
+												"<button type=\"button\" data-toggle=\"modal\" data-target=\"#acceptFriendRequestModal\" class=\"btn-sm btn-primary\" onclick=\"document.getElementById('MainContent_acceptDeclineFriendRequestId').value = '" + friend.ID + "';\">Accept Request</button>" +
+											"</div>" +
+											"<div class=\"row text-center top-buffer\">" +
+												"<button type=\"button\" data-toggle=\"modal\" data-target=\"#declineFriendRequestModal\" class=\"btn-sm btn-primary\" onclick=\"document.getElementById('MainContent_acceptDeclineFriendRequestId').value = '" + friend.ID + "';\">Decline Request</button>" +
 											"</div>" +
 										"</div>" +
 									"</div>";

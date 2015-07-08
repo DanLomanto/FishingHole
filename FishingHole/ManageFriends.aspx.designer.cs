@@ -49,13 +49,13 @@ namespace FishingHole {
         protected global::System.Web.UI.HtmlControls.HtmlInputText selectedFriendId;
         
         /// <summary>
-        /// acceptedFriendRequestId control.
+        /// acceptDenyFriendRequestId control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText acceptedFriendRequestId;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText acceptDenyFriendRequestId;
         
         /// <summary>
         /// DeleteSelectedPhotos control.
@@ -74,6 +74,15 @@ namespace FishingHole {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton AcceptFriendRequestBtn;
+        
+        /// <summary>
+        /// DeclineFriendRequestBtn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton DeclineFriendRequestBtn;
         
         /// <summary>
         /// Master property.

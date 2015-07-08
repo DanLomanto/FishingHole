@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Common
 {
@@ -32,8 +33,8 @@ namespace Common
 		/// <summary>
 		/// Creates the pending friend request.
 		/// </summary>
-		/// <param name="primaryUserId">The primary user identifier.</param>
-		/// <param name="assocFriendId">The assoc friend identifier.</param>
+		/// <param name="primaryUserId">The primary user identifier. This is the person who's getting the request.</param>
+		/// <param name="assocFriendId">The assoc friend identifier. This is the person who's sending the request.</param>
 		public static void CreatePendingFriendRequest(int primaryUserId, int assocFriendId)
 		{
 			FishEntities fishDB = new FishEntities();
@@ -103,6 +104,32 @@ namespace Common
 			CreateFriendAssociation(primaryUserId, assocFriendId);
 
 			DeletePendingFriendRequest(primaryUserId, assocFriendId);
+		}
+
+		/// <summary>
+		/// Searches for users.
+		/// </summary>
+		/// <param name="searchText">The search text.</param>
+		/// <returns></returns>
+		public static List<UserInformation> SearchForUsers(int primaryUserId, string searchText)
+		{
+			FishEntities fishDB = new FishEntities();
+			var result = fishDB.SearchForUsers(primaryUserId, searchText);
+
+			List<UserInformation> searchResults = new List<UserInformation>();
+			foreach (SearchForUsers_Result item in result)
+			{
+				UserInformation user = new UserInformation
+				{
+					ID = Convert.ToInt32(item.ID),
+					FirstName = item.FirstName,
+					LastName = item.LastName,
+					Email = item.Email
+				};
+				searchResults.Add(user);
+			}
+
+			return searchResults;
 		}
 	}
 }

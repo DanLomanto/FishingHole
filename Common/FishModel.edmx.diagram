@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="fd2ca35d24dc456797302bc6083e3480" Name="Diagram1">
+      <Diagram DiagramId="ef21656e44164369a49b35799b82828e" Name="Diagram1">
         <EntityTypeShape EntityType="FishModel.Category" Width="1.5" PointX="3.75" PointY="6.25" IsExpanded="true" />
         <EntityTypeShape EntityType="FishModel.Comment" Width="1.5" PointX="5.25" PointY="14" IsExpanded="true" />
         <EntityTypeShape EntityType="FishModel.FriendAssociation" Width="1.5" PointX="3" PointY="9" IsExpanded="true" />

@@ -27,7 +27,7 @@
         </div>
     </div>
     <input type="text" id="selectedFriendId" runat="server" style="display: none" />
-    <input type="text" id="acceptedFriendRequestId" runat="server" style="display: none" />
+    <input type="text" id="acceptDenyFriendRequestId" runat="server" style="display: none" />
     <div class="modal fade" id="confirmDeletionModal">
         <div class="modal-dialog" style="max-width: 375px; max-height: 200px">
             <div class="modal-content">
@@ -57,6 +57,23 @@
                 </div>
                 <div class="modal-footer">
                     <asp:LinkButton ID="AcceptFriendRequestBtn" runat="server" CssClass="btn btn-primary" OnClick="AcceptFriendRequest">Accept</asp:LinkButton>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="declineFriendRequestModal">
+        <div class="modal-dialog" style="max-width: 375px; max-height: 200px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Decline Request</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to decline this friend request?</p>
+                </div>
+                <div class="modal-footer">
+                    <asp:LinkButton ID="DeclineFriendRequestBtn" runat="server" CssClass="btn btn-primary" OnClick="DeclineFriendRequest">Decline</asp:LinkButton>
                     <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cancel</button>
                 </div>
             </div>
