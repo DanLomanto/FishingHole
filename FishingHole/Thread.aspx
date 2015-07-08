@@ -6,7 +6,7 @@
     <div class="container-fluid">
         <div class="col-xs-10 col-xs-offset-1">
             <div class="row">
-                <a href="Forum.aspx" class="btn btn-primary"><i class="glyphicon glyphicon-arrow-left"></i>&nbsp;Return to all threads</a>
+                <a href="Forum.aspx" class="btn btn-primary"><i class="fa fa-arrow-circle-o-left"></i>&nbsp;Return to all threads</a>
             </div>
             <div class="row top-buffer">
                 <div class="panel panel-default">
@@ -45,7 +45,7 @@
                                                     <input id="ShareLocationsRadioBtn" runat="server" type="radio" name="shareLocationBtns" class="pull-left" />Share location
                                                 </label>
                                                 <div class="top-buffer">
-                                                    <asp:DropDownList ID="Locations" runat="server" cssClass="form-control" Enabled="false"></asp:DropDownList>
+                                                    <asp:DropDownList ID="Locations" runat="server" CssClass="form-control" Enabled="false"></asp:DropDownList>
                                                 </div>
                                             </div>
                                         </div>
@@ -60,7 +60,7 @@
                 </div>
             </div>
             <div class="row">
-                <a href="Forum.aspx" class="btn btn-primary"><i class="glyphicon glyphicon-arrow-left"></i>&nbsp;Return to all threads</a>
+                <a href="Forum.aspx" class="btn btn-primary"><i class="fa fa-arrow-circle-o-left"></i>&nbsp;Return to all threads</a>
             </div>
         </div>
     </div>
