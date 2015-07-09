@@ -448,6 +448,9 @@
         <Function Name="GetUserById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ID" Type="int" Mode="In" />
         </Function>
+        <Function Name="GetViewStatusOfLocation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="LocationId" Type="int" Mode="In" />
+        </Function>
         <Function Name="HowManyUnviewedSharedLocationsForUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="UserID" Type="int" Mode="In" />
         </Function>
@@ -1202,6 +1205,9 @@
           <Parameter Name="UserID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="MarkLocationAsViewed">
+          <Parameter Name="LocationId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetViewStatusOfLocation" ReturnType="Collection(Boolean)">
             <Parameter Name="LocationId" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
@@ -1760,6 +1766,7 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="MarkLocationAsViewed" FunctionName="FishModel.Store.MarkLocationAsViewed" />
+          <FunctionImportMapping FunctionImportName="GetViewStatusOfLocation" FunctionName="FishModel.Store.GetViewStatusOfLocation" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

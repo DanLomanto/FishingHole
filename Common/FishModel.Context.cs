@@ -684,5 +684,14 @@ namespace Common
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("MarkLocationAsViewed", locationIdParameter);
         }
+    
+        public virtual ObjectResult<Nullable<bool>> GetViewStatusOfLocation(Nullable<int> locationId)
+        {
+            var locationIdParameter = locationId.HasValue ?
+                new ObjectParameter("LocationId", locationId) :
+                new ObjectParameter("LocationId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<bool>>("GetViewStatusOfLocation", locationIdParameter);
+        }
     }
 }

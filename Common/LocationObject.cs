@@ -233,6 +233,22 @@ namespace Common
 			fishDb.MarkLocationAsViewed(this.ID);
 		}
 
+		/// <summary>
+		/// Determines whether [has location been viewed].
+		/// </summary>
+		/// <returns></returns>
+		public bool HasLocationBeenViewed()
+		{
+			FishEntities fishDb = new FishEntities();
+			var result = fishDb.GetViewStatusOfLocation(this.ID).FirstOrDefault();
+
+			if (result == null)
+			{
+				return false;
+			}
+			return Convert.ToBoolean(result);
+		}
+
 		#region Private Methods
 
 		/// <summary>

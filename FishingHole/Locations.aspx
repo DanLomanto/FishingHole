@@ -19,7 +19,7 @@
                     <div id="NoLocationsMessage" runat="server" class="row alert alert-info col-md-offset-1 col-md-4">
                         <span>You have not created any Locations yet...</span>
                     </div>
-                    <div class="row">
+                    <div class="row" id="yourLocationsTableContainer" runat="server">
                         <div class="table-responsive">
                             <table class="table table-striped table-bordered">
                                 <thead>
@@ -51,7 +51,7 @@
                     <div id="NoSharedLocationsText" runat="server" class="row alert alert-info col-md-offset-1 col-md-4">
                         <span>No one has shared any Locations with you yet...</span>
                     </div>
-                    <div class="table-responsive">
+                    <div class="table-responsive" id="sharedLocationsTableContainer" runat="server">
                         <table class="table table-striped table-bordered">
                             <thead>
                                 <tr>

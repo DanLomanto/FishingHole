@@ -51,6 +51,7 @@ namespace FishingHole
 			else
 			{
 				NoLocationsMessage.Visible = true;
+				yourLocationsTableContainer.Visible = false;
 			}
 		}
 
@@ -66,8 +67,17 @@ namespace FishingHole
 			foreach (LocationObject loc in SharedLocations)
 			{
 				sharedLocationsTableBody.InnerHtml = sharedLocationsTableBody.InnerHtml + "<tr>" +
-												"<td><a href=\"Location?id=" + loc.ID.ToString() + "&returnUrl=locations\">Select</a></td>" +
-												"<td>" + loc.Name + "</td>" +
+												"<td><a href=\"Location?id=" + loc.ID.ToString() + "&returnUrl=locations\">Select</a></td>";
+				if (loc.HasLocationBeenViewed())
+				{
+					sharedLocationsTableBody.InnerHtml = sharedLocationsTableBody.InnerHtml + "<td>" + loc.Name + "</td>";
+				}
+				else
+				{
+					sharedLocationsTableBody.InnerHtml = sharedLocationsTableBody.InnerHtml + "<td>" + loc.Name + "<span class=\"label label-primary\">New</span></td>";
+				}
+
+				sharedLocationsTableBody.InnerHtml = sharedLocationsTableBody.InnerHtml + "<td>" + loc.Name + "</td>" +
 												"<td>" + loc.LattitudeDirection + "</td>" +
 												"<td>" + loc.Lattitude + "</td>" +
 												"<td>" + loc.LongitudeDirection + "</td>" +
@@ -84,6 +94,7 @@ namespace FishingHole
 			else
 			{
 				NoSharedLocationsText.Visible = true;
+				sharedLocationsTableContainer.Visible = false;
 			}
 		}
 
