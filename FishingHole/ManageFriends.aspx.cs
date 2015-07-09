@@ -47,9 +47,14 @@ namespace FishingHole
 
 			LoadDataOnPage();
 
-			Master.LoadUserNameDropDown();
+			Master.LoadMenu();
 		}
 
+		/// <summary>
+		/// Declines the friend request.
+		/// </summary>
+		/// <param name="sender">The sender.</param>
+		/// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
 		protected void DeclineFriendRequest(object sender, EventArgs e)
 		{
 			int idOfPersonToDecline = Convert.ToInt32(acceptDenyFriendRequestId.Value);
@@ -58,7 +63,7 @@ namespace FishingHole
 
 			LoadDataOnPage();
 
-			Master.LoadUserNameDropDown();
+			Master.LoadMenu();
 		}
 
 		/// <summary>
@@ -151,7 +156,7 @@ namespace FishingHole
 												"<span>" + friend.Email + "</span>" +
 											"</div>" +
 											"<div class=\"row text-center top-buffer\">" +
-												"<button type=\"button\" data-toggle=\"modal\" data-target=\"#acceptFriendRequestModal\" class=\"btn-sm btn-primary\" onclick=\"document.getElementById('MainContent_acceptDenyFriendRequestId').value = '" + friend.ID + "'; style=\"margin-right: 5px;\" >Accept</button>" +
+												"<button type=\"button\" data-toggle=\"modal\" data-target=\"#acceptFriendRequestModal\" class=\"btn-sm btn-primary\" onclick=\"document.getElementById('MainContent_acceptDenyFriendRequestId').value = '" + friend.ID + "';\" style=\"margin-right: 5px;\" >Accept</button>" +
 												"<button type=\"button\" data-toggle=\"modal\" data-target=\"#declineFriendRequestModal\" class=\"btn-sm btn-primary\" onclick=\"document.getElementById('MainContent_acceptDenyFriendRequestId').value = '" + friend.ID + "';\" style=\"margin-left: 5px;\" >Decline</button>" +
 											"</div>" +
 						//"<div class=\"row text-center top-buffer\">" +

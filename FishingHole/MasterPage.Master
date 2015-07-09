@@ -60,7 +60,7 @@
                         <li id="mobileDashboardNavItem"><a href="Dashboard.aspx">Dashboard</a></li>
                         <li id="mobilePhotoGalleryNavItem"><a href="PhotoGallery.aspx">Photo Gallery</a></li>
                         <li id="mobileTripsNavItem"><a href="Trips.aspx">Trips</a></li>
-                        <li id="mobileLocationsNavItem"><a href="Locations.aspx">Locations</a></li>
+                        <li id="mobileLocationsNavItem"><a href="Locations.aspx">Locations&nbsp;<span id="mobileSharedLocationsNumber" runat="server" class="label label-primary"></span></a></li>
                         <li id="mobileforumNavItem"><a href="forum.aspx">Forum</a></li>
                         <li><a href="ManageFriends.aspx">Friends&nbsp;<span id="mobileFriendRequestNumber" runat="server" class="label label-primary"></span>&nbsp;</a></li>
                         <li id="mobileSignout">
@@ -75,7 +75,7 @@
                         <li id="DashboardNavItem" class="nav-menu-right-buffer"><a class="navbar-brand" href="Dashboard.aspx">Dashboard</a></li>
                         <li id="PhotoGalleryNavItem" class="nav-menu-right-buffer"><a class="navbar-brand" href="PhotoGallery.aspx">Photo Gallery</a></li>
                         <li id="TripsNavItem" class="nav-menu-right-buffer"><a class="navbar-brand" href="Trips.aspx">Trips</a></li>
-                        <li id="LocationsNavItem" class="nav-menu-right-buffer"><a class="navbar-brand" href="Locations.aspx">Locations</a></li>
+                        <li id="LocationsNavItem" class="nav-menu-right-buffer"><a class="navbar-brand" href="Locations.aspx">Locations&nbsp;<span id="sharedLocationsNumber" runat="server" class="label label-primary"></span></a></li>
                         <li id="ForumNavItem" class="nav-menu-right-buffer"><a class="navbar-brand" href="forum.aspx">Forum</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">

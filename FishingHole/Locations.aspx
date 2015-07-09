@@ -10,9 +10,9 @@
         <div class="panel panel-default">
             <div class="panel-heading clearfix">
                 <div class="btn-group pull-right" style="padding-top: 15px;">
-                    <a href="Location.aspx?id=0&returnUrl=locations" id="AddLocation" runat="server" class="btn btn-large btn-primary"><i class="glyphicon glyphicon-plus"></i>&nbsp;Locations</a>
+                    <a href="Location.aspx?id=0&returnUrl=locations" id="AddLocation" runat="server" class="btn btn-large btn-primary"><i class="fa fa-plus-square"></i>&nbsp;Add Location</a>
                 </div>
-                <h3>Locations</h3>
+                <h3>Your Locations</h3>
             </div>
             <div class="panel-body">
                 <div class="container-fluid">
@@ -21,32 +21,58 @@
                     </div>
                     <div class="row">
                         <div class="table-responsive">
-                            <asp:UpdatePanel ID="LocationsGridUpdatePanel" UpdateMode="Conditional" runat="server">
-                                <ContentTemplate>
-                                    <asp:GridView ID="LocationsGrid" OnSorting="LocationsGrid_Sorting" runat="server" AllowPaging="True" AllowSorting="True"
-                                        CssClass="table table-striped table-bordered table-hover" BorderStyle="NotSet" AutoGenerateColumns="false"
-                                        OnRowDataBound="OnLocationsRowDataBound" OnSelectedIndexChanged="OnLocationsSelectedIndexChanged" AutoGenerateSelectButton="true">
-                                        <Columns>
-                                            <asp:BoundField ItemStyle-CssClass="maxWidthGrid" DataField="ID" HeaderText="ID" Visible="false" />
-                                            <asp:BoundField ItemStyle-CssClass="maxWidthGrid" DataField="Name" HeaderText="Name" />
-                                            <asp:BoundField ItemStyle-CssClass="maxWidthGrid" DataField="LattitudeDirection" HeaderText="Lattitude Direction" />
-                                            <asp:BoundField ItemStyle-CssClass="maxWidthGrid" DataField="Lattitude" HeaderText="Lattitude" />
-                                            <asp:BoundField ItemStyle-CssClass="maxWidthGrid" DataField="LongitudeDirection" HeaderText="Longitude Direction" />
-                                            <asp:BoundField ItemStyle-CssClass="maxWidthGrid" DataField="Longitude" HeaderText="Longitude" />
-                                            <asp:BoundField ItemStyle-CssClass="maxWidthGrid" DataField="StreetAddress" HeaderText="Street Address" />
-                                            <asp:BoundField ItemStyle-CssClass="maxWidthGrid" DataField="CityTown" HeaderText="City/Town" />
-                                            <asp:BoundField ItemStyle-CssClass="maxWidthGrid" DataField="CreateDate" HeaderText="Create Date" />
-                                        </Columns>
-                                    </asp:GridView>
-                                </ContentTemplate>
-                            </asp:UpdatePanel>
+                            <table class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Name</th>
+                                        <th>Lattitude Direction</th>
+                                        <th>Lattitude</th>
+                                        <th>Longitude Direction</th>
+                                        <th>Longitude</th>
+                                        <th>Street Address</th>
+                                        <th>City/Town</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="yourLocationsTableBody" runat="server">
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="panel panel-default">
+            <div class="panel-heading clearfix">
+                <h3>Locations Shared with You</h3>
+            </div>
+            <div class="panel-body">
+                <div class="container-fluid">
+                    <div id="NoSharedLocationsText" runat="server" class="row alert alert-info col-md-offset-1 col-md-4">
+                        <span>No one has shared any Locations with you yet...</span>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Name</th>
+                                    <th>Lattitude Direction</th>
+                                    <th>Lattitude</th>
+                                    <th>Longitude Direction</th>
+                                    <th>Longitude</th>
+                                    <th>Street Address</th>
+                                    <th>City/Town</th>
+                                </tr>
+                            </thead>
+                            <tbody id="sharedLocationsTableBody" runat="server">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-
     <script type="text/javascript">
         $(document).ready(function () {
             document.getElementById("LocationsNavItem").className = "active";

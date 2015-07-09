@@ -30,74 +30,9 @@ namespace FishingHole
 			{
 				PopulateTripsDropDown();
 
-				string queryStringId = Request.QueryString["id"];
-				if (!string.IsNullOrWhiteSpace(queryStringId))
-				{
-					int locationId = Convert.ToInt32(queryStringId);
-					if (locationId > 0)
-					{
-						LocationObject location = LocationObject.GetLocationById(locationId);
-						LocationName.Value = location.Name;
-						Description.Value = location.Description;
-						StreetAddress.Value = location.StreetAddress;
-						CityTown.Value = location.CityTown;
-						States.SelectedIndex = States.Items.IndexOf(States.Items.FindByValue(location.State));
-						ZipCode.Value = location.Zipcode.ToString();
-						Lattitude.Value = location.Lattitude.ToString();
-						LattitudeDropDown.SelectedIndex = LattitudeDropDown.Items.IndexOf(LattitudeDropDown.Items.FindByValue(location.LattitudeDirection));
-						Longitude.Value = location.Longitude.ToString();
-						LongitudeDropDown.SelectedIndex = LongitudeDropDown.Items.IndexOf(LongitudeDropDown.Items.FindByValue(location.LongitudeDirection));
+				PopulateTripInfo();
 
-						int associatedLocationId = TripObject.GetTripIdForLocation(locationId);
-						if (associatedLocationId > 0)
-						{
-							AssociatedTrip.SelectedIndex = AssociatedTrip.Items.IndexOf(AssociatedTrip.Items.FindByValue(associatedLocationId.ToString()));
-						}
-						else
-						{
-							AssociatedTrip.SelectedIndex = 0;
-						}
-
-						if (!string.IsNullOrWhiteSpace(location.StreetAddress))
-						{
-							locationType.SelectedIndex = 1;
-							Lattitude.Value = string.Empty;
-							LattitudeDropDown.SelectedIndex = 0;
-							Longitude.Value = string.Empty;
-							LongitudeDropDown.SelectedIndex = 0;
-
-							SetGoogleMapsUrl(location);
-						}
-						else if (location.Lattitude != null || location.Lattitude > 0)
-						{
-							locationType.SelectedIndex = 2;
-							StreetAddress.Value = string.Empty;
-							CityTown.Value = string.Empty;
-							States.SelectedIndex = 0;
-							ZipCode.Value = string.Empty;
-
-							SetGoogleMapsUrl(location);
-						}
-						else
-						{
-							locationType.SelectedIndex = 0;
-							Lattitude.Value = string.Empty;
-							LattitudeDropDown.SelectedIndex = 0;
-							Longitude.Value = string.Empty;
-							LongitudeDropDown.SelectedIndex = 0;
-							StreetAddress.Value = string.Empty;
-							CityTown.Value = string.Empty;
-							States.SelectedIndex = 0;
-							ZipCode.Value = string.Empty;
-						}
-					}
-				}
-
-				string tripId = Request.QueryString["tripId"];
-				if (!string.IsNullOrWhiteSpace(tripId))
-				{
-					AssociatedTrip.SelectedIndex = AssociatedTrip.Items.IndexOf(AssociatedTrip.Items.FindByValue(tripId));
-				}
+				SetAssociatedTrip();
 			}
 		}
 
@@ -263,6 +198,89 @@ namespace FishingHole
 			}
 
 			AssociatedTrip.DataBind();
+		}
+
+		/// <summary>
+		/// Populates the trip information.
+		/// </summary>
+		private void PopulateTripInfo()
+		{
+			string queryStringId = Request.QueryString["id"];
+			if (!string.IsNullOrWhiteSpace(queryStringId))
+			{
+				int locationId = Convert.ToInt32(queryStringId);
+				if (locationId > 0)
+				{
+					LocationObject location = LocationObject.GetLocationById(locationId);
+					LocationName.Value = location.Name;
+					Description.Value = location.Description;
+					StreetAddress.Value = location.StreetAddress;
+					CityTown.Value = location.CityTown;
+					States.SelectedIndex = States.Items.IndexOf(States.Items.FindByValue(location.State));
+					ZipCode.Value = location.Zipcode.ToString();
+					Lattitude.Value = location.Lattitude.ToString();
+					LattitudeDropDown.SelectedIndex = LattitudeDropDown.Items.IndexOf(LattitudeDropDown.Items.FindByValue(location.LattitudeDirection));
+					Longitude.Value = location.Longitude.ToString();
+					LongitudeDropDown.SelectedIndex = LongitudeDropDown.Items.IndexOf(LongitudeDropDown.Items.FindByValue(location.LongitudeDirection));
+
+					int associatedLocationId = TripObject.GetTripIdForLocation(locationId);
+					if (associatedLocationId > 0)
+					{
+						AssociatedTrip.SelectedIndex = AssociatedTrip.Items.IndexOf(AssociatedTrip.Items.FindByValue(associatedLocationId.ToString()));
+					}
+					else
+					{
+						AssociatedTrip.SelectedIndex = 0;
+					}
+
+					if (!string.IsNullOrWhiteSpace(location.StreetAddress))
+					{
+						locationType.SelectedIndex = 1;
+						Lattitude.Value = string.Empty;
+						LattitudeDropDown.SelectedIndex = 0;
+						Longitude.Value = string.Empty;
+						LongitudeDropDown.SelectedIndex = 0;
+
+						SetGoogleMapsUrl(location);
+					}
+					else if (location.Lattitude != null || location.Lattitude > 0)
+					{
+						locationType.SelectedIndex = 2;
+						StreetAddress.Value = string.Empty;
+						CityTown.Value = string.Empty;
+						States.SelectedIndex = 0;
+						ZipCode.Value = string.Empty;
+
+						SetGoogleMapsUrl(location);
+					}
+					else
+					{
+						locationType.SelectedIndex = 0;
+						Lattitude.Value = string.Empty;
+						LattitudeDropDown.SelectedIndex = 0;
+						Longitude.Value = string.Empty;
+						LongitudeDropDown.SelectedIndex = 0;
+						StreetAddress.Value = string.Empty;
+						CityTown.Value = string.Empty;
+						States.SelectedIndex = 0;
+						ZipCode.Value = string.Empty;
+					}
+
+					location.MarkLocationAsViewed();
+				}
+			}
+		}
+
+		/// <summary>
+		/// Sets the associated trip.
+		/// </summary>
+		private void SetAssociatedTrip()
+		{
+			string tripId = Request.QueryString["tripId"];
+			if (!string.IsNullOrWhiteSpace(tripId))
+			{
+				AssociatedTrip.SelectedIndex = AssociatedTrip.Items.IndexOf(AssociatedTrip.Items.FindByValue(tripId));
+			}
 		}
 
 		#endregion Private Methods

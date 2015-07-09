@@ -17,11 +17,9 @@
                                 <div class="form-inline">
                                     <div class="form-group">
                                         <label for="SearchFieldText" id="SearchFieldLabel">Search for friend by:</label>
-                                        <div>
-                                            <input type="text" id="SearchFieldText" runat="server" class="form-control" placeholder="Email or Name..." maxlength="50" />
-                                            <asp:LinkButton ID="SearchBtn" runat="server" CssClass="btn btn-primary" OnClick="LoadSearchResults"><i class="fa fa-search"></i></asp:LinkButton>
-                                            <a href="FindFriends.aspx" class="btn btn-default">Reset</a>
-                                        </div>
+                                        <input type="text" id="SearchFieldText" runat="server" class="form-control" placeholder="Email or Name..." maxlength="50" />
+                                        <asp:LinkButton ID="SearchBtn" runat="server" CssClass="btn btn-primary" OnClick="LoadSearchResults"><i class="fa fa-search"></i></asp:LinkButton>
+                                        <a href="FindFriends.aspx" class="btn btn-default">Reset</a>
                                     </div>
                                 </div>
                             </div>

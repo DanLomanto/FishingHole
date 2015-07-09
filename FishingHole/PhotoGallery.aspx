@@ -14,7 +14,7 @@
         <div class="panel panel-default">
             <div class="panel-heading clearfix">
                 <div class="btn-group pull-right" style="padding-top: 15px;">
-                    <a href="UploadPhotos.aspx?returnUrl=PhotoGallery" class="btn btn-large btn-primary"><i class="glyphicon glyphicon-plus"></i>&nbsp;Upload Photos</a>
+                    <a href="UploadPhotos.aspx?returnUrl=PhotoGallery" class="btn btn-large btn-primary"><i class="fa fa-plus-square"></i>&nbsp;Upload Photos</a>
                 </div>
                 <h3>Photo Gallery</h3>
             </div>

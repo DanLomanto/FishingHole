@@ -10,7 +10,7 @@
         <div class="panel panel-default">
             <div class="panel-heading clearfix">
                 <div class="btn-group pull-right" style="padding-top: 15px;">
-                    <a href="Trip.aspx?id=0&returnUrl=Trips" class="btn btn-large btn-primary"><i class="glyphicon glyphicon-plus"></i>&nbsp;Add Trip</a>
+                    <a href="Trip.aspx?id=0&returnUrl=Trips" class="btn btn-large btn-primary"><i class="fa fa-plus-square"></i>&nbsp;Add Trip</a>
                 </div>
                 <h3>Trips</h3>
             </div>

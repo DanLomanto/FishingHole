@@ -19,7 +19,7 @@ namespace FishingHole
 		{
 			if (Session["Email"] != null || UsersInfo != null)
 			{
-				LoadUserNameDropDown();
+				LoadMenu();
 			}
 		}
 
@@ -59,7 +59,17 @@ namespace FishingHole
 		/// <summary>
 		/// Loads the pending friend requests label.
 		/// </summary>
-		public void LoadUserNameDropDown()
+		public void LoadMenu()
+		{
+			PopulateFriendRequestNumbers();
+
+			PopulateSharedLocationNumbers();
+		}
+
+		/// <summary>
+		/// Populates the friend request numbers.
+		/// </summary>
+		private void PopulateFriendRequestNumbers()
 		{
 			int numberOfFriendRequests = FriendActions.GetFriendRequestsForUser(UsersInfo.ID).Count;
 
@@ -72,8 +82,33 @@ namespace FishingHole
 			else
 			{
 				UsernameDropDown.InnerHtml = UsersInfo.FirstName + " " + UsersInfo.LastName + "<span class=\"caret\"></span>";
+				mobileFriendRequestNumber.Visible = false;
 				mobileFriendRequestNumber.InnerHtml = string.Empty;
+
+				friendRequestNumber.Visible = false;
 				friendRequestNumber.InnerHtml = string.Empty;
+			}
+		}
+
+		/// <summary>
+		/// Populates the shared location numbers.
+		/// </summary>
+		private void PopulateSharedLocationNumbers()
+		{
+			int numberOfUnviewedSharedLocations = LocationObject.GetNumberOfUnviewedSharedLocationsForUser(UsersInfo.ID);
+
+			if (numberOfUnviewedSharedLocations > 0)
+			{
+				sharedLocationsNumber.InnerHtml = numberOfUnviewedSharedLocations.ToString();
+				mobileSharedLocationsNumber.InnerHtml = numberOfUnviewedSharedLocations.ToString();
+			}
+			else
+			{
+				sharedLocationsNumber.Visible = false;
+				sharedLocationsNumber.InnerHtml = string.Empty;
+
+				mobileSharedLocationsNumber.Visible = false;
+				mobileSharedLocationsNumber.InnerHtml = string.Empty;
 			}
 		}
 

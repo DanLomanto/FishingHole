@@ -10,18 +10,10 @@
 namespace Common
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class Location
+    public partial class GetSharedLocationsForUser_Result
     {
-        public Location()
-        {
-            this.Comments = new HashSet<Comment>();
-            this.LocationToTrips = new HashSet<LocationToTrip>();
-        }
-    
         public int ID { get; set; }
-        public int UserID { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public string StreetAddress { get; set; }
@@ -33,11 +25,5 @@ namespace Common
         public string LongitudeDirection { get; set; }
         public Nullable<decimal> Longitude { get; set; }
         public System.DateTime CreateDate { get; set; }
-        public bool Shared { get; set; }
-        public bool Viewed { get; set; }
-    
-        public virtual ICollection<Comment> Comments { get; set; }
-        public virtual User User { get; set; }
-        public virtual ICollection<LocationToTrip> LocationToTrips { get; set; }
     }
 }

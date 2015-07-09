@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Drawing;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
@@ -220,9 +219,9 @@ namespace FishingHole
 		{
 			Locations.Items.Add(new ListItem("Select Location...", "-1"));
 
-			foreach (DataRow row in LocationObject.GetLocationsForUser(Master.UsersInfo.ID).Rows)
+			foreach (LocationObject location in LocationObject.GetLocationsForUser(Master.UsersInfo.ID))
 			{
-				Locations.Items.Add(new ListItem(row["Name"].ToString(), row["ID"].ToString()));
+				Locations.Items.Add(new ListItem(location.Name, location.ID.ToString()));
 			}
 
 			Locations.DataBind();

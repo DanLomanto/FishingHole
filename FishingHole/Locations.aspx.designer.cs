@@ -40,22 +40,31 @@ namespace FishingHole {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl NoLocationsMessage;
         
         /// <summary>
-        /// LocationsGridUpdatePanel control.
+        /// yourLocationsTableBody control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel LocationsGridUpdatePanel;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl yourLocationsTableBody;
         
         /// <summary>
-        /// LocationsGrid control.
+        /// NoSharedLocationsText control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView LocationsGrid;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl NoSharedLocationsText;
+        
+        /// <summary>
+        /// sharedLocationsTableBody control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl sharedLocationsTableBody;
         
         /// <summary>
         /// Master property.

@@ -12,7 +12,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading clearfix">
                         <div class="btn-group pull-right" style="padding-top: 15px;">
-                            <a href="UploadPhotos.aspx" class="btn btn-large btn-primary"><i class="glyphicon glyphicon-plus"></i>&nbsp;Upload Photos</a>
+                            <a href="UploadPhotos.aspx" class="btn btn-large btn-primary"><i class="fa fa-plus-square"></i>&nbsp;Upload Photos</a>
                         </div>
                         <h3>Photo Gallery</h3>
                     </div>
@@ -40,7 +40,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading clearfix">
                             <div class="btn-group pull-right" style="padding-top: 15px;">
-                                <a href="Trip.aspx?id=0" class="btn btn-large btn-primary"><i class="glyphicon glyphicon-plus"></i>&nbsp;Add Trip</a>
+                                <a href="Trip.aspx?id=0" class="btn btn-large btn-primary"><i class="fa fa-plus-square"></i>&nbsp;Add Trip</a>
                             </div>
                             <h3>Trips</h3>
                         </div>
@@ -85,7 +85,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading clearfix">
                             <div class="btn-group pull-right" style="padding-top: 15px;">
-                                <a href="Location.aspx?id=0" id="AddLocation" runat="server" class="btn btn-large btn-primary"><i class="glyphicon glyphicon-plus"></i>&nbsp;Locations</a>
+                                <a href="Location.aspx?id=0" id="AddLocation" runat="server" class="btn btn-large btn-primary"><i class="fa fa-plus-square"></i>&nbsp;Locations</a>
                             </div>
                             <h3>Locations</h3>
                         </div>

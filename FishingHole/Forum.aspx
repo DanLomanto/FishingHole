@@ -37,7 +37,7 @@
                                     <h3>Recently Updated Threads</h3>
                                 </div>
                                 <div class="col-xs-12 col-md-2 pull-right" style="padding-top: 15px;">
-                                    <a id="LaunchNewThreadModal" href="#AddThreadModal" class="btn btn-large btn-primary" data-toggle="modal"><i class="glyphicon glyphicon-plus"></i>&nbsp New Thread</a>
+                                    <a id="LaunchNewThreadModal" href="#AddThreadModal" class="btn btn-large btn-primary" data-toggle="modal"><i class="fa fa-plus-square"></i>&nbsp New Thread</a>
                                 </div>
                             </div>
                         </div>

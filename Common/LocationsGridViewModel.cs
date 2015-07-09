@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Data;
-using System.Linq;
+using System.Collections.Generic;
 
 namespace Common
 {
@@ -79,21 +78,69 @@ namespace Common
 		/// </summary>
 		/// <param name="userId"></param>
 		/// <returns></returns>
-		public static DataTable GetLocationsForUser(int userId)
+		public static List<LocationObject> GetLocationsForUser(int userId)
 		{
 			FishEntities fishDb = new FishEntities();
 			var result = fishDb.GetAllLocationsForUser(userId);
-			DataTable table = DataActions.ConvertToDataTable(result);
 
-			if (table == null || table.Rows.Count == 0)
+			List<LocationObject> locations = new List<LocationObject>();
+
+			foreach (GetAllLocationsForUser_Result location in result)
 			{
-				return null;
+				LocationObject newLocation = new LocationObject
+				{
+					ID = location.ID,
+					Name = location.Name,
+					StreetAddress = location.StreetAddress,
+					CityTown = location.CityTown,
+					Zipcode = location.Zipcode,
+					State = location.State,
+					LattitudeDirection = location.LattitudeDirection,
+					Lattitude = location.Lattitude,
+					LongitudeDirection = location.LongitudeDirection,
+					Longitude = location.Longitude,
+					CreateDate = location.CreateDate
+				};
+
+				locations.Add(newLocation);
 			}
 
-			table.DefaultView.Sort = "ID DESC";
-			table = table.DefaultView.ToTable();
+			return locations;
+		}
 
-			return table;
+		/// <summary>
+		/// Gets the shared locations for user.
+		/// </summary>
+		/// <param name="userId">The user identifier.</param>
+		/// <returns></returns>
+		public static List<LocationObject> GetSharedLocationsForUser(int userId)
+		{
+			FishEntities fishDb = new FishEntities();
+			var result = fishDb.GetSharedLocationsForUser(userId);
+
+			List<LocationObject> locations = new List<LocationObject>();
+
+			foreach (GetSharedLocationsForUser_Result location in result)
+			{
+				LocationObject newLocation = new LocationObject
+				{
+					ID = location.ID,
+					Name = location.Name,
+					StreetAddress = location.StreetAddress,
+					CityTown = location.CityTown,
+					Zipcode = location.Zipcode,
+					State = location.State,
+					LattitudeDirection = location.LattitudeDirection,
+					Lattitude = location.Lattitude,
+					LongitudeDirection = location.LongitudeDirection,
+					Longitude = location.Longitude,
+					CreateDate = location.CreateDate
+				};
+
+				locations.Add(newLocation);
+			}
+
+			return locations;
 		}
 
 		/// <summary>
@@ -101,15 +148,16 @@ namespace Common
 		/// </summary>
 		/// <param name="userId">The user identifier.</param>
 		/// <returns></returns>
-		public static DataTable GetTopFiveLocationsForUser(int userId)
+		public static List<LocationObject> GetTopFiveLocationsForUser(int userId)
 		{
-			DataTable table = GetLocationsForUser(userId);
-			if (table != null)
+			List<LocationObject> allLocations = GetLocationsForUser(userId);
+
+			if (allLocations.Count < 5)
 			{
-				table.AsEnumerable().Take(5);
+				return allLocations.GetRange(0, allLocations.Count);
 			}
 
-			return table;
+			return allLocations.GetRange(0, 5);
 		}
 	}
 }

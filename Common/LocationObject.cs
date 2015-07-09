@@ -49,6 +49,7 @@ namespace Common
 			{ return null; }
 
 			LocationObject location = new LocationObject();
+			location.ID = id;
 			location.Name = result.Name;
 			location.Description = result.Description;
 			location.StreetAddress = result.StreetAddress;
@@ -193,6 +194,43 @@ namespace Common
 			}
 
 			return locationToAppendOnLink;
+		}
+
+		/// <summary>
+		/// Shares the location.
+		/// </summary>
+		/// <param name="userIdToShareTo">The user identifier to share to.</param>
+		public void ShareLocation(int userIdToShareTo)
+		{
+			FishEntities fishDb = new FishEntities();
+			fishDb.ShareLocation(this.ID, userIdToShareTo);
+		}
+
+		/// <summary>
+		/// Gets the number of unviewed shared locations for user.
+		/// </summary>
+		/// <param name="userId">The user identifier.</param>
+		/// <returns></returns>
+		public static int GetNumberOfUnviewedSharedLocationsForUser(int userId)
+		{
+			FishEntities fishDb = new FishEntities();
+			var numberOfUnviewedLocations = fishDb.HowManyUnviewedSharedLocationsForUser(userId).FirstOrDefault();
+
+			if (numberOfUnviewedLocations == null)
+			{
+				return 0;
+			}
+
+			return Convert.ToInt32(numberOfUnviewedLocations);
+		}
+
+		/// <summary>
+		/// Marks the location as viewed.
+		/// </summary>
+		public void MarkLocationAsViewed()
+		{
+			FishEntities fishDb = new FishEntities();
+			fishDb.MarkLocationAsViewed(this.ID);
 		}
 
 		#region Private Methods

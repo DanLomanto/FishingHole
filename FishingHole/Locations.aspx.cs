@@ -1,89 +1,92 @@
 ﻿using System;
-using System.Data;
+using System.Collections.Generic;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 using Common;
 
 namespace FishingHole
 {
 	public partial class Locations : Page
 	{
+		/// <summary>
+		/// Handles the Load event of the Page control.
+		/// </summary>
+		/// <param name="sender">The source of the event.</param>
+		/// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
 		protected void Page_Load(object sender, EventArgs e)
 		{
-			LocationsGrid.Columns[0].Visible = true;
-			LocationsGrid.DataSource = LocationObject.GetLocationsForUser(Master.UsersInfo.ID);
-			LocationsGrid.DataBind();
-			LocationsGrid.Columns[0].Visible = false;
-			Session["LocationsData"] = LocationsGrid.DataSource;
+			LoadPersonalLocationsGrid();
 
-			if (LocationsGrid.Rows.Count > 0)
+			LoadSharedLocationsGrid();
+		}
+
+		#region Private Methods
+
+		/// <summary>
+		/// Loads the personal locations grid.
+		/// </summary>
+		private void LoadPersonalLocationsGrid()
+		{
+			yourLocationsTableBody.InnerHtml = string.Empty;
+
+			List<LocationObject> YourLocations = LocationObject.GetLocationsForUser(Master.UsersInfo.ID);
+
+			foreach (LocationObject loc in YourLocations)
+			{
+				yourLocationsTableBody.InnerHtml = yourLocationsTableBody.InnerHtml + "<tr>" +
+												"<td><a href=\"Location?id=" + loc.ID.ToString() + "&returnUrl=locations\">Select</a></td>" +
+												"<td>" + loc.Name + "</td>" +
+												"<td>" + loc.LattitudeDirection + "</td>" +
+												"<td>" + loc.Lattitude + "</td>" +
+												"<td>" + loc.LongitudeDirection + "</td>" +
+												"<td>" + loc.Longitude + "</td>" +
+												"<td>" + loc.StreetAddress + "</td>" +
+												"<td>" + loc.CityTown + "</td>" +
+											"</tr>";
+			}
+
+			if (YourLocations.Count > 0)
 			{
 				NoLocationsMessage.Visible = false;
 			}
-		}
-
-		protected void LocationsGrid_Sorting(object sender, GridViewSortEventArgs e)
-		{
-			//Retrieve the table from the session object.
-			DataTable dt = Session["LocationsData"] as DataTable;
-
-			if (dt != null)
+			else
 			{
-				//Sort the data.
-				dt.DefaultView.Sort = e.SortExpression + " " + GetSortDirection(e.SortExpression);
-				LocationsGrid.DataSource = dt;
-				LocationsGrid.DataBind();
+				NoLocationsMessage.Visible = true;
 			}
-		}
-
-		protected void OnLocationsRowDataBound(object sender, GridViewRowEventArgs e)
-		{
-			if (e.Row.RowType == DataControlRowType.DataRow)
-			{
-				e.Row.Attributes["onclick"] = Page.ClientScript.GetPostBackClientHyperlink(LocationsGrid, "Select$" + e.Row.RowIndex);
-				e.Row.Attributes["style"] = "cursor:pointer";
-			}
-		}
-
-		protected void OnLocationsSelectedIndexChanged(object sender, EventArgs e)
-		{
-			string id = LocationsGrid.SelectedRow.Cells[1].Text;
-
-			Response.Redirect("Location?id=" + id + "&returnUrl=locations");
 		}
 
 		/// <summary>
-		/// Gets the sort direction.
+		/// Loads the shared locations grid.
 		/// </summary>
-		/// <param name="column">The column.</param>
-		/// <returns></returns>
-		private string GetSortDirection(string column)
+		private void LoadSharedLocationsGrid()
 		{
-			// By default, set the sort direction to ascending.
-			string sortDirection = "ASC";
+			sharedLocationsTableBody.InnerHtml = string.Empty;
 
-			// Retrieve the last column that was sorted.
-			string sortExpression = ViewState["SortExpression"] as string;
+			List<LocationObject> SharedLocations = LocationObject.GetSharedLocationsForUser(Master.UsersInfo.ID);
 
-			if (sortExpression != null)
+			foreach (LocationObject loc in SharedLocations)
 			{
-				// Check if the same column is being sorted.
-				// Otherwise, the default value can be returned.
-				if (sortExpression == column)
-				{
-					string lastDirection = ViewState["SortDirection"] as string;
-					if ((lastDirection != null) && (lastDirection == "ASC"))
-					{
-						sortDirection = "DESC";
-					}
-				}
+				sharedLocationsTableBody.InnerHtml = sharedLocationsTableBody.InnerHtml + "<tr>" +
+												"<td><a href=\"Location?id=" + loc.ID.ToString() + "&returnUrl=locations\">Select</a></td>" +
+												"<td>" + loc.Name + "</td>" +
+												"<td>" + loc.LattitudeDirection + "</td>" +
+												"<td>" + loc.Lattitude + "</td>" +
+												"<td>" + loc.LongitudeDirection + "</td>" +
+												"<td>" + loc.Longitude + "</td>" +
+												"<td>" + loc.StreetAddress + "</td>" +
+												"<td>" + loc.CityTown + "</td>" +
+											"</tr>";
 			}
 
-			// Save new values in ViewState.
-			ViewState["SortDirection"] = sortDirection;
-			ViewState["SortExpression"] = column;
-
-			return sortDirection;
+			if (SharedLocations.Count > 0)
+			{
+				NoSharedLocationsText.Visible = false;
+			}
+			else
+			{
+				NoSharedLocationsText.Visible = true;
+			}
 		}
+
+		#endregion Private Methods
 	}
 }

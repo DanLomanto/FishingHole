@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -195,9 +194,9 @@ namespace FishingHole
 		{
 			AttachedLocation.Items.Add(new ListItem("Please select a Location...", "-1"));
 
-			foreach (DataRow row in LocationObject.GetLocationsForUser(Master.UsersInfo.ID).Rows)
+			foreach (LocationObject location in LocationObject.GetLocationsForUser(Master.UsersInfo.ID))
 			{
-				AttachedLocation.Items.Add(new ListItem(row["Name"].ToString(), row["ID"].ToString()));
+				AttachedLocation.Items.Add(new ListItem(location.Name, location.ID.ToString()));
 			}
 
 			AttachedLocation.DataBind();
