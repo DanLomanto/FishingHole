@@ -12,8 +12,10 @@
                 </div>
                 <div class="panel-body">
                     <div class="container-fluid">
-                        <div class="row col-md-8 col-md-offset-2">
-                            <asp:BulletedList ID="formErrors" runat="server" CssClass="no-bullets list-group-item-danger center-block text-center" />
+                        <div class="row">
+                            <div class="col-md-8 col-md-offset-2">
+                                <asp:BulletedList ID="formErrors" runat="server" CssClass="no-bullets list-group-item-danger center-block text-center" />
+                            </div>
                         </div>
                         <div class="row">
                             <div class="form-inline">

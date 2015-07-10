@@ -21,6 +21,8 @@ namespace FishingHole
 				PopulateLocationsDropDown();
 
 				PopulateFriendsDropDown();
+
+				selectedPeople.Value = "|";
 			}
 		}
 
