@@ -12,33 +12,31 @@
                 </div>
                 <div class="panel-body">
                     <div class="container-fluid">
+                        <div class="row col-md-8 col-md-offset-2">
+                            <asp:BulletedList ID="formErrors" runat="server" CssClass="no-bullets list-group-item-danger center-block text-center" />
+                        </div>
                         <div class="row">
                             <div class="form-inline">
                                 <label>Select a location to share:</label>
-                                <select class="form-control">
-                                    <option>Please select a location...</option>
-                                    <option>Location 1</option>
-                                    <option>Location 2</option>
-                                </select>
+                                <asp:DropDownList ID="locationsDropDown" runat="server" class="form-control"></asp:DropDownList>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row top-buffer">
                             <div class="form-inline">
-                                <label>Select a person to share to:</label>
-                                <select id="friendsDropDown" runat="server" class="form-control">
-                                    <option value="0">Please select a Person...</option>
-                                    <option value="1">Person 1</option>
-                                    <option value="2">Person 2</option>
-                                </select>
-                                <a href="#" class="btn btn-primary" onclick="AddPerson();">Add to List</a>
+                                <label>Select a person to share the location with:</label>
+                                <asp:DropDownList ID="friendsDropDown" runat="server" class="form-control"></asp:DropDownList>
+                                <a href="#" class="btn btn-primary" onclick="AddPerson();"><i class="fa fa-plus-square"></i>&nbsp;Add to List</a>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row top-buffer">
                             <h4>Share location with:</h4>
                             <div class="panel panel-default">
                                 <div id="selectedFriends" class="panel-body">
                                 </div>
                             </div>
+                        </div>
+                        <div class="row top-buffer text-center">
+                            <asp:LinkButton ID="ShareLocationWithFriends" runat="server" CssClass="btn btn-primary" OnClick="ShareLocationWithFriends_Click">Share Location&nbsp;<i class="fa fa-share-square-o"></i></asp:LinkButton>
                         </div>
                     </div>
                 </div>
@@ -56,7 +54,7 @@
             var name = personDropDown.options[personDropDown.selectedIndex].text;
             var idOfSelectedPerson = personDropDown.options[personDropDown.selectedIndex].value;
 
-            if (name == 'Please select a Person...')
+            if (idOfSelectedPerson < 0)
             { return; }
 
             var isPersonAlreadyAdded = false;

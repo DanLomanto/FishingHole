@@ -13,13 +13,40 @@ namespace FishingHole {
     public partial class ShareLocation {
         
         /// <summary>
+        /// formErrors control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.BulletedList formErrors;
+        
+        /// <summary>
+        /// locationsDropDown control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList locationsDropDown;
+        
+        /// <summary>
         /// friendsDropDown control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlSelect friendsDropDown;
+        protected global::System.Web.UI.WebControls.DropDownList friendsDropDown;
+        
+        /// <summary>
+        /// ShareLocationWithFriends control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton ShareLocationWithFriends;
         
         /// <summary>
         /// selectedPeople control.

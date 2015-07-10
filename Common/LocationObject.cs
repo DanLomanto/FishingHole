@@ -166,6 +166,16 @@ namespace Common
 		}
 
 		/// <summary>
+		/// Shares the location.
+		/// </summary>
+		/// <param name="userIdToShareTo">The user identifier to share to.</param>
+		public static void ShareLocation(int locationId, int userIdToShareTo)
+		{
+			FishEntities fishDb = new FishEntities();
+			fishDb.ShareLocation(locationId, userIdToShareTo);
+		}
+
+		/// <summary>
 		/// Gets the google maps URL.
 		/// </summary>
 		/// <returns></returns>
@@ -194,16 +204,6 @@ namespace Common
 			}
 
 			return locationToAppendOnLink;
-		}
-
-		/// <summary>
-		/// Shares the location.
-		/// </summary>
-		/// <param name="userIdToShareTo">The user identifier to share to.</param>
-		public void ShareLocation(int userIdToShareTo)
-		{
-			FishEntities fishDb = new FishEntities();
-			fishDb.ShareLocation(this.ID, userIdToShareTo);
 		}
 
 		/// <summary>
