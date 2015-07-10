@@ -44,6 +44,9 @@
         </div>
         <div class="panel panel-default">
             <div class="panel-heading clearfix">
+                <div class="btn-group pull-right" style="padding-top: 15px;">
+                    <a href="ShareLocation.aspx" class="btn btn-large btn-primary">Share Location&nbsp;<i class="fa fa-share-square-o"></i></a>
+                </div>
                 <h3>Locations Shared with You</h3>
             </div>
             <div class="panel-body">
