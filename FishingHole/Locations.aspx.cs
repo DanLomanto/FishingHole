@@ -74,11 +74,10 @@ namespace FishingHole
 				}
 				else
 				{
-					sharedLocationsTableBody.InnerHtml = sharedLocationsTableBody.InnerHtml + "<td>" + loc.Name + "<span class=\"label label-primary\">New</span></td>";
+					sharedLocationsTableBody.InnerHtml = sharedLocationsTableBody.InnerHtml + "<td>" + loc.Name + "&nbsp;<span class=\"label label-primary\"><i class=\"fa fa-star\"></i>&nbsp;New&nbsp;<i class=\"fa fa-star\"></i></span></td>";
 				}
 
-				sharedLocationsTableBody.InnerHtml = sharedLocationsTableBody.InnerHtml + "<td>" + loc.Name + "</td>" +
-												"<td>" + loc.LattitudeDirection + "</td>" +
+				sharedLocationsTableBody.InnerHtml = sharedLocationsTableBody.InnerHtml + "<td>" + loc.LattitudeDirection + "</td>" +
 												"<td>" + loc.Lattitude + "</td>" +
 												"<td>" + loc.LongitudeDirection + "</td>" +
 												"<td>" + loc.Longitude + "</td>" +
