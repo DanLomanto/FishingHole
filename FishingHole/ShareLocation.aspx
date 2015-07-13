@@ -34,7 +34,13 @@
                             <h4>Share location with:</h4>
                             <div class="panel panel-default">
                                 <div id="selectedFriends" class="panel-body">
+                                    <span id="NoFriendsSelectedMessage">You have not selected any friends yet...</span>
                                 </div>
+                            </div>
+                        </div>
+                        <div id="LocationSharedNotification" runat="server" class="row">
+                            <div class="text-center">
+                                <span class="alert alert-info">Your location has been shared.&nbsp;<i class="fa fa-check"></i></span>
                             </div>
                         </div>
                         <div class="row top-buffer text-center">
@@ -69,6 +75,9 @@
                 }
             }
             if (!isPersonAlreadyAdded) {
+
+                document.getElementById("NoFriendsSelectedMessage").style.display = "none";
+
                 addedPeople.push(name);
 
                 $('#selectedFriends').append("<div class=\"col-xs-6 col-sm-3 col-md-2\">" +
@@ -104,6 +113,10 @@
 
             // Remove the html element.
             element.parentNode.parentNode.parentNode.parentNode.removeChild(element.parentNode.parentNode.parentNode);
+
+            if (addedPeople.length == 0) {
+                document.getElementById("NoFriendsSelectedMessage").style.display = "";
+            }
         };
     </script>
 </asp:Content>

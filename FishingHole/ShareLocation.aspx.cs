@@ -22,8 +22,10 @@ namespace FishingHole
 
 				PopulateFriendsDropDown();
 
-				selectedPeople.Value = "|";
+				IntializePeopleToShareWithInput();
 			}
+
+			LocationSharedNotification.Visible = false;
 		}
 
 		protected void ShareLocationWithFriends_Click(object sender, EventArgs e)
@@ -40,12 +42,13 @@ namespace FishingHole
 				formValidationErrors.Add("You must select a valid friend.");
 			}
 
+			formErrors.CssClass = formErrors.CssClass + " has-error";
+			formErrors.ForeColor = Color.Red;
+			formErrors.DataSource = formValidationErrors;
+			formErrors.DataBind();
+
 			if (formValidationErrors.Count > 0)
 			{
-				formErrors.CssClass = formErrors.CssClass + " has-error";
-				formErrors.ForeColor = Color.Red;
-				formErrors.DataSource = formValidationErrors;
-				formErrors.DataBind();
 				return;
 			}
 
@@ -56,6 +59,10 @@ namespace FishingHole
 			{
 				LocationObject.ShareLocation(Convert.ToInt32(locationsDropDown.SelectedValue), Convert.ToInt32(friendId));
 			}
+
+			IntializePeopleToShareWithInput();
+
+			LocationSharedNotification.Visible = true;
 		}
 
 		#region Private Methods
@@ -88,6 +95,14 @@ namespace FishingHole
 			}
 
 			friendsDropDown.DataBind();
+		}
+
+		/// <summary>
+		/// Intializes the people to share with input.
+		/// </summary>
+		private void IntializePeopleToShareWithInput()
+		{
+			selectedPeople.Value = "|";
 		}
 
 		#endregion Private Methods

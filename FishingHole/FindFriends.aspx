@@ -26,7 +26,7 @@
                         </div>
                         <div id="requestSentConfirmation" runat="server" class="row" visible="false" style="white-space: nowrap">
                             <div class="text-center">
-                                <span class="alert alert-info">Your friend request has been sent.</span>
+                                <span class="alert alert-info">Your friend request has been sent.&nbsp;<i class="fa fa-check"></i></span>
                             </div>
                             <br />
                         </div>

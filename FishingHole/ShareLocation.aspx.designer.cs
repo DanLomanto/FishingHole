@@ -40,6 +40,15 @@ namespace FishingHole {
         protected global::System.Web.UI.WebControls.DropDownList friendsDropDown;
         
         /// <summary>
+        /// LocationSharedNotification control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl LocationSharedNotification;
+        
+        /// <summary>
         /// ShareLocationWithFriends control.
         /// </summary>
         /// <remarks>
