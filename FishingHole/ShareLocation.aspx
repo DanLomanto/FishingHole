@@ -40,11 +40,11 @@
                         </div>
                         <div id="LocationSharedNotification" runat="server" class="row">
                             <div class="text-center">
-                                <span class="alert alert-info">Your location has been shared.&nbsp;<i class="fa fa-check"></i></span>
+                                <span class="alert alert-info">Location shared.&nbsp;<i class="fa fa-check"></i></span>
                             </div>
                         </div>
                         <div class="row top-buffer text-center">
-                            <asp:LinkButton ID="ShareLocationWithFriends" runat="server" CssClass="btn btn-primary" OnClick="ShareLocationWithFriends_Click">Share Location&nbsp;<i class="fa fa-share-square-o"></i></asp:LinkButton>
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#confirmLocationShare">Share Location&nbsp;<i class="fa fa-share-square-o"></i></button>
                         </div>
                     </div>
                 </div>
@@ -53,6 +53,23 @@
         <a href="Locations.aspx" class="btn btn-primary"><i class="fa fa-arrow-circle-o-left"></i>&nbsp;Return to all locations</a>
     </div>
     <input id="selectedPeople" runat="server" type="text" value="|" style="display: none;" />
+    <div class="modal fade" id="confirmLocationShare">
+        <div class="modal-dialog" style="max-width: 375px; max-height: 200px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Share Location</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to share this location?</p>
+                </div>
+                <div class="modal-footer">
+                    <asp:LinkButton ID="LinkButton1" runat="server" CssClass="btn btn-primary" OnClick="ShareLocationWithFriends_Click">Confirm</asp:LinkButton>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <script type="text/javascript">
 
         var addedPeople = [];
@@ -80,7 +97,7 @@
 
                 addedPeople.push(name);
 
-                $('#selectedFriends').append("<div class=\"col-xs-6 col-sm-3 col-md-2\">" +
+                $('#selectedFriends').append("<div class=\"col-xs-12 col-sm-3 col-md-2\">" +
                                             "<div class=\"well user-padding\">" +
                                                 "<div class=\"row\">" +
                                                     "<button type=\"button\" data-toggle=\"modal\" data-target=\"#confirmDeletionModal\" class=\"close pull-right\" onclick=\"DeleteAddedPerson(this, '" + name + "', " + idOfSelectedPerson + ");\">&times;</button>" +
