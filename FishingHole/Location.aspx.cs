@@ -30,7 +30,7 @@ namespace FishingHole
 			{
 				PopulateTripsDropDown();
 
-				PopulateTripInfo();
+				PopulateLocationInfo();
 
 				SetAssociatedTrip();
 			}
@@ -203,7 +203,7 @@ namespace FishingHole
 		/// <summary>
 		/// Populates the trip information.
 		/// </summary>
-		private void PopulateTripInfo()
+		private void PopulateLocationInfo()
 		{
 			string queryStringId = Request.QueryString["id"];
 			if (!string.IsNullOrWhiteSpace(queryStringId))
