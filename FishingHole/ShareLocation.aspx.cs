@@ -28,6 +28,11 @@ namespace FishingHole
 			LocationSharedNotification.Visible = false;
 		}
 
+		/// <summary>
+		/// Handles the Click event of the ShareLocationWithFriends control.
+		/// </summary>
+		/// <param name="sender">The source of the event.</param>
+		/// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
 		protected void ShareLocationWithFriends_Click(object sender, EventArgs e)
 		{
 			List<string> formValidationErrors = new List<string>();
