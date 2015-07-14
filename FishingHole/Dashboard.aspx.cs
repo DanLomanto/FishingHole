@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
-using System.Web.UI.WebControls;
 using Common;
 
 namespace FishingHole
 {
+	/// <summary>
+	///	The Dashboard page.
+	/// </summary>
 	public partial class Dashboard : Page
 	{
 		#region Properties
@@ -53,39 +54,9 @@ namespace FishingHole
 		{
 			LoadPhotoGalleryImages();
 
-			TripsDataGrid.Columns[0].Visible = true;
-			TripsDataGrid.DataSource = TripGridViewModel.GetTopFiveTripsForUser(Master.UsersInfo.ID);
-			TripsDataGrid.DataBind();
-			TripsDataGrid.Columns[0].Visible = false;
-			Session["TripsData"] = TripsDataGrid.DataSource;
-			if (TripsDataGrid.Rows.Count > 0)
-			{
-				RecentlyAddedTripsMessage.Visible = true;
-				NoTripsMessage.Visible = false;
-			}
-			else
-			{
-				TripsDataGrid.Visible = false;
-				RecentlyAddedTripsMessage.Visible = false;
-				NoTripsMessage.Visible = true;
-			}
+			LoadRecentlyAddedTripsGrid();
 
-			LocationsGrid.Columns[0].Visible = true;
-			LocationsGrid.DataSource = LocationsGridViewModel.GetTopFiveLocationsForUser(Master.UsersInfo.ID);
-			LocationsGrid.DataBind();
-			LocationsGrid.Columns[0].Visible = false;
-			Session["LocationsData"] = LocationsGrid.DataSource;
-			if (LocationsGrid.Rows.Count > 0)
-			{
-				RecentlyAddedLocationsMessage.Visible = true;
-				NoLocationsMessage.Visible = false;
-			}
-			else
-			{
-				LocationsGrid.Visible = false;
-				RecentlyAddedLocationsMessage.Visible = false;
-				NoLocationsMessage.Visible = true;
-			}
+			LoadRecentlyAddedLocationsGrid();
 		}
 
 		/// <summary>
@@ -116,106 +87,6 @@ namespace FishingHole
 		{
 			photoGalleryIndex = photoGalleryIndex - numberOfImagesDisplayedInGallery;
 			LoadPhotoGalleryImages();
-		}
-
-		/// <summary>
-		/// Handles the Sorting event of the LocationsGrid control.
-		/// </summary>
-		/// <param name="sender">The source of the event.</param>
-		/// <param name="e">The <see cref="GridViewSortEventArgs"/> instance containing the event data.</param>
-		protected void LocationsGrid_Sorting(object sender, GridViewSortEventArgs e)
-		{
-			//Retrieve the table from the session object.
-			DataTable dt = Session["LocationsData"] as DataTable;
-
-			if (dt != null)
-			{
-				//Sort the data.
-				dt.DefaultView.Sort = e.SortExpression + " " + GetSortDirection(e.SortExpression);
-				LocationsGrid.DataSource = dt;
-				LocationsGrid.DataBind();
-			}
-		}
-
-		/// <summary>
-		/// Handles the Sorting event of the TripsDataGrid control.
-		/// </summary>
-		/// <param name="sender">The source of the event.</param>
-		/// <param name="e">The <see cref="GridViewSortEventArgs"/> instance containing the event data.</param>
-		protected void TripsDataGrid_Sorting(object sender, GridViewSortEventArgs e)
-		{
-			//Retrieve the table from the session object.
-			DataTable dt = Session["TripsData"] as DataTable;
-
-			if (dt != null)
-			{
-				//Sort the data.
-				dt.DefaultView.Sort = e.SortExpression + " " + GetSortDirection(e.SortExpression);
-				TripsDataGrid.DataSource = dt;
-				TripsDataGrid.DataBind();
-			}
-		}
-
-		/// <summary>
-		/// Called when [trips row data bound].
-		/// </summary>
-		/// <param name="sender">The sender.</param>
-		/// <param name="e">The <see cref="GridViewRowEventArgs"/> instance containing the event data.</param>
-		protected void OnTripsRowDataBound(object sender, GridViewRowEventArgs e)
-		{
-			if (e.Row.RowType == DataControlRowType.DataRow)
-			{
-				e.Row.Attributes["onclick"] = Page.ClientScript.GetPostBackClientHyperlink(TripsDataGrid, "Select$" + e.Row.RowIndex);
-				e.Row.Attributes["style"] = "cursor:pointer";
-			}
-		}
-
-		/// <summary>
-		/// Called when [locations row data bound].
-		/// </summary>
-		/// <param name="sender">The sender.</param>
-		/// <param name="e">The <see cref="GridViewRowEventArgs"/> instance containing the event data.</param>
-		protected void OnLocationsRowDataBound(object sender, GridViewRowEventArgs e)
-		{
-			if (e.Row.RowType == DataControlRowType.DataRow)
-			{
-				e.Row.Attributes["onclick"] = Page.ClientScript.GetPostBackClientHyperlink(LocationsGrid, "Select$" + e.Row.RowIndex);
-				e.Row.Attributes["style"] = "cursor:pointer";
-			}
-		}
-
-		/// <summary>
-		/// Called when [locations selected index changed].
-		/// </summary>
-		/// <param name="sender">The sender.</param>
-		/// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
-		protected void OnLocationsSelectedIndexChanged(object sender, EventArgs e)
-		{
-			string id = LocationsGrid.SelectedRow.Cells[1].Text;
-
-			Response.Redirect("Location?id=" + id);
-		}
-
-		/// <summary>
-		/// Called when [trips selected index changed].
-		/// </summary>
-		/// <param name="sender">The sender.</param>
-		/// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
-		protected void OnTripsSelectedIndexChanged(object sender, EventArgs e)
-		{
-			string id = TripsDataGrid.SelectedRow.Cells[1].Text;
-
-			Response.Redirect("Trip?id=" + id);
-		}
-
-		/// <summary>
-		/// Handles the Click event of the AddTrip control.
-		/// </summary>
-		/// <param name="sender">The source of the event.</param>
-		/// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
-		protected void AddTrip_Click(object sender, EventArgs e)
-		{
-			Response.Redirect("Trip?id=0");
 		}
 
 		#region Private Methods
@@ -281,37 +152,62 @@ namespace FishingHole
 		}
 
 		/// <summary>
-		/// Gets the sort direction.
+		/// Loads the recently added trips grid.
 		/// </summary>
-		/// <param name="column">The column.</param>
-		/// <returns></returns>
-		private string GetSortDirection(string column)
+		private void LoadRecentlyAddedTripsGrid()
 		{
-			// By default, set the sort direction to ascending.
-			string sortDirection = "ASC";
+			recentlyAddedTripsBody.InnerHtml = string.Empty;
 
-			// Retrieve the last column that was sorted.
-			string sortExpression = ViewState["SortExpression"] as string;
+			List<TripObject> trips = TripObject.GetTopFiveTripsForUser(Master.UsersInfo.ID);
 
-			if (sortExpression != null)
+			foreach (TripObject trip in trips)
 			{
-				// Check if the same column is being sorted.
-				// Otherwise, the default value can be returned.
-				if (sortExpression == column)
-				{
-					string lastDirection = ViewState["SortDirection"] as string;
-					if ((lastDirection != null) && (lastDirection == "ASC"))
-					{
-						sortDirection = "DESC";
-					}
-				}
+				recentlyAddedTripsBody.InnerHtml = recentlyAddedTripsBody.InnerHtml + "<tr>" +
+												"<td class=\"text-center\"><a href=\"Trip.aspx?id=" + trip.ID.ToString() + "&returnUrl=Trips\" style=\"margin-right:10px;\">Select</a></td>" +
+												"<td>" + trip.Title + "</td>" +
+												"<td>" + trip.TripDate + "</td>" +
+												"<td>" + trip.CreateDate.ToString("MM/dd/yyyy") + "</td>" +
+											"</tr>";
 			}
 
-			// Save new values in ViewState.
-			ViewState["SortDirection"] = sortDirection;
-			ViewState["SortExpression"] = column;
+			if (trips.Count > 0)
+			{
+				NoTripsMessage.Visible = false;
+			}
+			else
+			{
+				NoTripsMessage.Visible = true;
+				recentlyAddedTripsTableContainer.Visible = false;
+			}
+		}
 
-			return sortDirection;
+		/// <summary>
+		/// Loads the recently added locations grid.
+		/// </summary>
+		private void LoadRecentlyAddedLocationsGrid()
+		{
+			recentlyAddedLocationsBody.InnerHtml = string.Empty;
+
+			List<LocationObject> YourLocations = LocationObject.GetTopFiveLocationsForUser(Master.UsersInfo.ID);
+
+			foreach (LocationObject loc in YourLocations)
+			{
+				recentlyAddedLocationsBody.InnerHtml = recentlyAddedLocationsBody.InnerHtml + "<tr>" +
+												"<td class=\"text-center\"><a href=\"Location?id=" + loc.ID.ToString() + "&returnUrl=locations\" style=\"margin-right:10px;\">Select</a></td>" +
+												"<td>" + loc.Name + "</td>" +
+												"<td>" + loc.CreateDate.ToString("MM/dd/yyyy") + "</td>" +
+											"</tr>";
+			}
+
+			if (YourLocations.Count > 0)
+			{
+				NoLocationsMessage.Visible = false;
+			}
+			else
+			{
+				NoLocationsMessage.Visible = true;
+				recentlyAddedLocationsTableContainer.Visible = false;
+			}
 		}
 
 		#endregion Private Methods

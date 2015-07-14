@@ -249,6 +249,16 @@ namespace Common
 			return Convert.ToBoolean(result);
 		}
 
+		/// <summary>
+		/// Deletes the location.
+		/// </summary>
+		/// <param name="locationId">The location identifier.</param>
+		public static void DeleteLocation(int locationId)
+		{
+			FishEntities fishDb = new FishEntities();
+			fishDb.DeleteLocation(locationId);
+		}
+
 		#region Private Methods
 
 		/// <summary>

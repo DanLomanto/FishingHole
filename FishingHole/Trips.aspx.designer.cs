@@ -31,22 +31,40 @@ namespace FishingHole {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl NoTripsMessage;
         
         /// <summary>
-        /// TripsDataGridUpdatePanel control.
+        /// yourLocationsTableContainer control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel TripsDataGridUpdatePanel;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl yourLocationsTableContainer;
         
         /// <summary>
-        /// TripsDataGrid control.
+        /// yourTripsTableBody control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView TripsDataGrid;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl yourTripsTableBody;
+        
+        /// <summary>
+        /// tripToDelete control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText tripToDelete;
+        
+        /// <summary>
+        /// ConfirmLocationDeletion control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton ConfirmLocationDeletion;
         
         /// <summary>
         /// Master property.

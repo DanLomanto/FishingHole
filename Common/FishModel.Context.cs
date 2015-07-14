@@ -693,5 +693,23 @@ namespace Common
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<bool>>("GetViewStatusOfLocation", locationIdParameter);
         }
+    
+        public virtual int DeleteLocation(Nullable<int> locationID)
+        {
+            var locationIDParameter = locationID.HasValue ?
+                new ObjectParameter("LocationID", locationID) :
+                new ObjectParameter("LocationID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteLocation", locationIDParameter);
+        }
+    
+        public virtual int DeleteTrip(Nullable<int> tripID)
+        {
+            var tripIDParameter = tripID.HasValue ?
+                new ObjectParameter("TripID", tripID) :
+                new ObjectParameter("TripID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteTrip", tripIDParameter);
+        }
     }
 }

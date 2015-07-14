@@ -54,21 +54,21 @@
                                         <span>You have not created any Trips yet...</span>
                                     </div>
                                 </div>
-                                <div class="row top-buffer table-responsive col-md-12">
-                                    <asp:UpdatePanel ID="TripsDataGridUpdatePanel" UpdateMode="Conditional" runat="server">
-                                        <ContentTemplate>
-                                            <asp:GridView ID="TripsDataGrid" OnSorting="TripsDataGrid_Sorting" runat="server" AllowPaging="True" AllowSorting="True"
-                                                CssClass="table table-striped table-bordered table-hover" BorderStyle="NotSet" AutoGenerateColumns="false"
-                                                OnRowDataBound="OnTripsRowDataBound" OnSelectedIndexChanged="OnTripsSelectedIndexChanged" AutoGenerateSelectButton="true">
-                                                <Columns>
-                                                    <asp:BoundField DataField="ID" HeaderText="ID" Visible="false" />
-                                                    <asp:BoundField DataField="Title" HeaderText="Title" />
-                                                    <asp:BoundField DataField="DateOfTrip" HeaderText="Trip Date" />
-                                                    <asp:BoundField DataField="CreateDate" HeaderText="Create Date" />
-                                                </Columns>
-                                            </asp:GridView>
-                                        </ContentTemplate>
-                                    </asp:UpdatePanel>
+                                <div class="row top-buffer" id="recentlyAddedTripsTableContainer" runat="server">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th></th>
+                                                    <th>Title</th>
+                                                    <th>Date of Trip</th>
+                                                    <th>Create Date</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="recentlyAddedTripsBody" runat="server">
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                                 <div class="row top-buffer col-md-10">
                                     <a href="Trips.aspx">View all trips</a>
@@ -99,20 +99,20 @@
                                         <span>You have not created any Locations yet...</span>
                                     </div>
                                 </div>
-                                <div class="row top-buffer table-responsive col-md-12">
-                                    <asp:UpdatePanel ID="LocationsGridUpdatePanel" UpdateMode="Conditional" runat="server">
-                                        <ContentTemplate>
-                                            <asp:GridView ID="LocationsGrid" OnSorting="LocationsGrid_Sorting" runat="server" AllowPaging="True" AllowSorting="True"
-                                                CssClass="table table-striped table-bordered table-hover" BorderStyle="NotSet" AutoGenerateColumns="false"
-                                                OnRowDataBound="OnLocationsRowDataBound" OnSelectedIndexChanged="OnLocationsSelectedIndexChanged" AutoGenerateSelectButton="true">
-                                                <Columns>
-                                                    <asp:BoundField DataField="ID" HeaderText="ID" Visible="false" />
-                                                    <asp:BoundField DataField="Name" HeaderText="Name" />
-                                                    <asp:BoundField DataField="CreateDate" HeaderText="Create Date" />
-                                                </Columns>
-                                            </asp:GridView>
-                                        </ContentTemplate>
-                                    </asp:UpdatePanel>
+                                <div class="row top-buffer" id="recentlyAddedLocationsTableContainer" runat="server">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th></th>
+                                                    <th>Name</th>
+                                                    <th>Create Date</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="recentlyAddedLocationsBody" runat="server">
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                                 <div class="row top-buffer col-md-10">
                                     <a href="Locations.aspx">View all locations</a>

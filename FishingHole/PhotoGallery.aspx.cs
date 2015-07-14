@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
+using System.Web.UI.WebControls;
 using Common;
 
 namespace FishingHole
@@ -284,9 +284,9 @@ namespace FishingHole
 		{
 			TripAssociationDropDown.Items.Add(new System.Web.UI.WebControls.ListItem("Select a Trip...", "-1"));
 
-			foreach (DataRow row in TripObject.GetTripsForUser(Master.UsersInfo.ID).Rows)
+			foreach (TripObject trip in TripObject.GetTripsForUser(Master.UsersInfo.ID))
 			{
-				TripAssociationDropDown.Items.Add(new System.Web.UI.WebControls.ListItem(row["Title"].ToString(), row["ID"].ToString()));
+				TripAssociationDropDown.Items.Add(new ListItem(trip.Title, trip.ID.ToString()));
 			}
 
 			TripAssociationDropDown.DataBind();
@@ -299,9 +299,9 @@ namespace FishingHole
 		{
 			FilterByTripDropDown.Items.Add(new System.Web.UI.WebControls.ListItem("All", "-1"));
 
-			foreach (DataRow row in TripObject.GetTripsForUser(Master.UsersInfo.ID).Rows)
+			foreach (TripObject trip in TripObject.GetTripsForUser(Master.UsersInfo.ID))
 			{
-				FilterByTripDropDown.Items.Add(new System.Web.UI.WebControls.ListItem(row["Title"].ToString(), row["ID"].ToString()));
+				FilterByTripDropDown.Items.Add(new ListItem(trip.Title, trip.ID.ToString()));
 			}
 
 			FilterByTripDropDown.DataBind();

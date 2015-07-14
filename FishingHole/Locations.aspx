@@ -76,6 +76,24 @@
             </div>
         </div>
     </div>
+    <input type="text" id="locationToDelete" runat="server" style="display: none;" />
+    <div class="modal fade" id="confirmLocationDeletion">
+        <div class="modal-dialog" style="max-width: 375px; max-height: 200px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Confirm Deletion</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete this location?</p>
+                </div>
+                <div class="modal-footer">
+                    <asp:LinkButton ID="ConfirmLocationDeletion" runat="server" CssClass="btn btn-primary" OnClick="DeleteLocation">Delete</asp:LinkButton>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <script type="text/javascript">
         $(document).ready(function () {
             document.getElementById("LocationsNavItem").className = "active";

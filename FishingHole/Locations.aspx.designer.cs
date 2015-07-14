@@ -85,6 +85,24 @@ namespace FishingHole {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl sharedLocationsTableBody;
         
         /// <summary>
+        /// locationToDelete control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText locationToDelete;
+        
+        /// <summary>
+        /// ConfirmLocationDeletion control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton ConfirmLocationDeletion;
+        
+        /// <summary>
         /// Master property.
         /// </summary>
         /// <remarks>

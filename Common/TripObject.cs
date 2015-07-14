@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Data;
+using System.Collections.Generic;
 using System.Data.Entity.Core.Objects;
 using System.Linq;
 
@@ -17,18 +17,60 @@ namespace Common
 		/// </summary>
 		public string Description { get; set; }
 
+		/// <summary>
+		/// Gets or sets the targeted species.
+		/// </summary>
+		/// <value>
+		/// The targeted species.
+		/// </value>
 		public string TargetedSpecies { get; set; }
 
+		/// <summary>
+		/// Gets or sets the weather conditions.
+		/// </summary>
+		/// <value>
+		/// The weather conditions.
+		/// </value>
 		public string WeatherConditions { get; set; }
 
+		/// <summary>
+		/// Gets or sets the catch of the day.
+		/// </summary>
+		/// <value>
+		/// The catch of the day.
+		/// </value>
 		public string CatchOfTheDay { get; set; }
 
+		/// <summary>
+		/// Gets or sets the other notes.
+		/// </summary>
+		/// <value>
+		/// The other notes.
+		/// </value>
 		public string OtherNotes { get; set; }
 
+		/// <summary>
+		/// Gets or sets the location.
+		/// </summary>
+		/// <value>
+		/// The location.
+		/// </value>
 		public LocationObject Location { get; set; }
 
+		/// <summary>
+		/// Gets or sets the flies lures used.
+		/// </summary>
+		/// <value>
+		/// The flies lures used.
+		/// </value>
 		public string FliesLuresUsed { get; set; }
 
+		/// <summary>
+		/// Gets or sets the water conditions.
+		/// </summary>
+		/// <value>
+		/// The water conditions.
+		/// </value>
 		public string WaterConditions { get; set; }
 
 		#endregion Properties
@@ -38,22 +80,44 @@ namespace Common
 		/// </summary>
 		/// <param name="userId"></param>
 		/// <returns></returns>
-		public static DataTable GetTripsForUser(int userId)
+		public static List<TripObject> GetTripsForUser(int userId)
 		{
 			FishEntities fishDb = new FishEntities();
 			var result = fishDb.GetAllTripsForUser(userId);
 
-			DataTable table = DataActions.ConvertToDataTable(result);
+			List<TripObject> trips = new List<TripObject>();
 
-			if (table == null || table.Rows.Count == 0)
+			foreach (GetAllTripsForUser_Result trip in result)
 			{
-				return new DataTable();
+				TripObject newTrip = new TripObject
+				{
+					ID = trip.ID,
+					Title = trip.Title,
+					CatchOfTheDay = trip.CatchOfTheDay,
+					CreateDate = trip.CreateDate,
+					TripDate = trip.DateOfTrip,
+					Description = trip.Description,
+					FliesLuresUsed = trip.FliesLuresUsed,
+					OtherNotes = trip.OtherNotes,
+					TargetedSpecies = trip.TargetedSpecies,
+					WaterConditions = trip.WaterConditions,
+					WeatherConditions = trip.WeatherConditions
+				};
+				trips.Add(newTrip);
 			}
 
-			table.DefaultView.Sort = "ID DESC";
-			table = table.DefaultView.ToTable();
+			return trips;
+		}
 
-			return table;
+		/// <summary>
+		/// Gets the top five trips for user.
+		/// </summary>
+		/// <param name="userId">The user identifier.</param>
+		/// <returns></returns>
+		public static List<TripObject> GetTopFiveTripsForUser(int userId)
+		{
+			List<TripObject> allTrips = GetTripsForUser(userId);
+			return allTrips.GetRange(0, 5);
 		}
 
 		/// <summary>
@@ -192,6 +256,16 @@ namespace Common
 		{
 			FishEntities fishDb = new FishEntities();
 			fishDb.DeleteLocationForTrip(tripId);
+		}
+
+		/// <summary>
+		/// Deletes the trip.
+		/// </summary>
+		/// <param name="tripId">The trip identifier.</param>
+		public static void DeleteTrip(int tripId)
+		{
+			FishEntities fishDb = new FishEntities();
+			fishDb.DeleteTrip(tripId);
 		}
 	}
 }

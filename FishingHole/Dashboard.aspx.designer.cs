@@ -76,22 +76,22 @@ namespace FishingHole {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl NoTripsMessage;
         
         /// <summary>
-        /// TripsDataGridUpdatePanel control.
+        /// recentlyAddedTripsTableContainer control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel TripsDataGridUpdatePanel;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl recentlyAddedTripsTableContainer;
         
         /// <summary>
-        /// TripsDataGrid control.
+        /// recentlyAddedTripsBody control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView TripsDataGrid;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl recentlyAddedTripsBody;
         
         /// <summary>
         /// LocationsPanel control.
@@ -130,22 +130,22 @@ namespace FishingHole {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl NoLocationsMessage;
         
         /// <summary>
-        /// LocationsGridUpdatePanel control.
+        /// recentlyAddedLocationsTableContainer control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel LocationsGridUpdatePanel;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl recentlyAddedLocationsTableContainer;
         
         /// <summary>
-        /// LocationsGrid control.
+        /// recentlyAddedLocationsBody control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView LocationsGrid;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl recentlyAddedLocationsBody;
         
         /// <summary>
         /// Master property.

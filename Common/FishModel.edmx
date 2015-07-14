@@ -366,6 +366,9 @@
           <Parameter Name="PrimaryUserId" Type="int" Mode="In" />
           <Parameter Name="AssocFriendId" Type="int" Mode="In" />
         </Function>
+        <Function Name="DeleteLocation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="LocationID" Type="int" Mode="In" />
+        </Function>
         <Function Name="DeleteLocationForTrip" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="TripID" Type="int" Mode="In" />
         </Function>
@@ -375,6 +378,9 @@
         </Function>
         <Function Name="DeletePhoto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="PhotoId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="DeleteTrip" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="TripID" Type="int" Mode="In" />
         </Function>
         <Function Name="DeleteTripForLocation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="LocationID" Type="int" Mode="In" />
@@ -1208,7 +1214,13 @@
           <Parameter Name="LocationId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetViewStatusOfLocation" ReturnType="Collection(Boolean)">
-            <Parameter Name="LocationId" Mode="In" Type="Int32" />
+          <Parameter Name="LocationId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteLocation">
+            <Parameter Name="LocationID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteTrip">
+            <Parameter Name="TripID" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="DoesLoginExist_Result">
@@ -1767,6 +1779,8 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="MarkLocationAsViewed" FunctionName="FishModel.Store.MarkLocationAsViewed" />
           <FunctionImportMapping FunctionImportName="GetViewStatusOfLocation" FunctionName="FishModel.Store.GetViewStatusOfLocation" />
+          <FunctionImportMapping FunctionImportName="DeleteLocation" FunctionName="FishModel.Store.DeleteLocation" />
+          <FunctionImportMapping FunctionImportName="DeleteTrip" FunctionName="FishModel.Store.DeleteTrip" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

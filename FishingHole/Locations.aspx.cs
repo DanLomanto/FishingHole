@@ -19,6 +19,18 @@ namespace FishingHole
 			LoadSharedLocationsGrid();
 		}
 
+		/// <summary>
+		/// Deletes the location.
+		/// </summary>
+		/// <param name="sender">The sender.</param>
+		/// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+		protected void DeleteLocation(object sender, EventArgs e)
+		{
+			int locationToDeleteId = Convert.ToInt32(locationToDelete.Value);
+
+			LocationObject.DeleteLocation(locationToDeleteId);
+		}
+
 		#region Private Methods
 
 		/// <summary>
@@ -33,7 +45,8 @@ namespace FishingHole
 			foreach (LocationObject loc in YourLocations)
 			{
 				yourLocationsTableBody.InnerHtml = yourLocationsTableBody.InnerHtml + "<tr>" +
-												"<td><a href=\"Location?id=" + loc.ID.ToString() + "&returnUrl=locations\">Select</a></td>" +
+												"<td class=\"text-center\"><a href=\"Location?id=" + loc.ID.ToString() + "&returnUrl=locations\" style=\"margin-right:10px;\">Select</a>" +
+												"<a href=\"#\" data-toggle=\"modal\" data-target=\"#confirmLocationDeletion\" onclick=\"document.getElementById('MainContent_locationToDelete').value = '" + loc.ID.ToString() + "';\">Delete</a></td>" +
 												"<td>" + loc.Name + "</td>" +
 												"<td>" + loc.LattitudeDirection + "</td>" +
 												"<td>" + loc.Lattitude + "</td>" +
@@ -67,7 +80,9 @@ namespace FishingHole
 			foreach (LocationObject loc in SharedLocations)
 			{
 				sharedLocationsTableBody.InnerHtml = sharedLocationsTableBody.InnerHtml + "<tr>" +
-												"<td><a href=\"Location?id=" + loc.ID.ToString() + "&returnUrl=locations\">Select</a></td>";
+												"<td class=\"text-center\"><a href=\"Location?id=" + loc.ID.ToString() + "&returnUrl=locations\" style=\"margin-right:10px;\">Select</a>" +
+												"<a href=\"#\" data-toggle=\"modal\" data-target=\"#confirmLocationDeletion\" onclick=\"document.getElementById('MainContent_locationToDelete').value = '" + loc.ID.ToString() + "';\">Delete</a></td>";
+
 				if (loc.HasLocationBeenViewed())
 				{
 					sharedLocationsTableBody.InnerHtml = sharedLocationsTableBody.InnerHtml + "<td>" + loc.Name + "</td>";

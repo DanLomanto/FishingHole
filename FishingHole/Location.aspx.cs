@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Drawing;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -192,9 +191,9 @@ namespace FishingHole
 		{
 			AssociatedTrip.Items.Add(new ListItem("Please select a Trip...", "-1"));
 
-			foreach (DataRow row in TripObject.GetTripsForUser(Master.UsersInfo.ID).Rows)
+			foreach (TripObject trip in TripObject.GetTripsForUser(Master.UsersInfo.ID))
 			{
-				AssociatedTrip.Items.Add(new ListItem(row["Title"].ToString(), row["ID"].ToString()));
+				AssociatedTrip.Items.Add(new ListItem(trip.Title, trip.ID.ToString()));
 			}
 
 			AssociatedTrip.DataBind();

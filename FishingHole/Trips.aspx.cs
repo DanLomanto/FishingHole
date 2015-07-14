@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Data;
+using System.Collections.Generic;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 using Common;
 
 namespace FishingHole
@@ -15,95 +14,60 @@ namespace FishingHole
 		/// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
 		protected void Page_Load(object sender, EventArgs e)
 		{
-			TripsDataGrid.Columns[0].Visible = true;
-			TripsDataGrid.DataSource = TripObject.GetTripsForUser(Master.UsersInfo.ID);
-			TripsDataGrid.DataBind();
-			TripsDataGrid.Columns[0].Visible = false;
-			Session["TripsData"] = TripsDataGrid.DataSource;
-
-			if (TripsDataGrid.Rows.Count > 0)
-			{
-				NoTripsMessage.Visible = false;
-			}
+			LoadTripsGrid();
 		}
 
 		/// <summary>
-		/// Handles the Sorting event of the TripsDataGrid control.
-		/// </summary>
-		/// <param name="sender">The source of the event.</param>
-		/// <param name="e">The <see cref="GridViewSortEventArgs"/> instance containing the event data.</param>
-		protected void TripsDataGrid_Sorting(object sender, GridViewSortEventArgs e)
-		{
-			//Retrieve the table from the session object.
-			DataTable dt = Session["TripsData"] as DataTable;
-
-			if (dt != null)
-			{
-				//Sort the data.
-				dt.DefaultView.Sort = e.SortExpression + " " + GetSortDirection(e.SortExpression);
-				TripsDataGrid.DataSource = dt;
-				TripsDataGrid.DataBind();
-			}
-		}
-
-		/// <summary>
-		/// Called when [trips selected index changed].
+		/// Deletes the trip.
 		/// </summary>
 		/// <param name="sender">The sender.</param>
 		/// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
-		protected void OnTripsSelectedIndexChanged(object sender, EventArgs e)
+		protected void DeleteTrip(object sender, EventArgs e)
 		{
-			string id = TripsDataGrid.SelectedRow.Cells[1].Text;
+			int tripToDeleteId = Convert.ToInt32(tripToDelete.Value);
 
-			Response.Redirect("Trip?id=" + id + "&returnUrl=Trips");
+			TripObject.DeleteTrip(tripToDeleteId);
 		}
 
+		#region Private Methods
+
 		/// <summary>
-		/// Called when [trips row data bound].
+		/// Loads the trips grid.
 		/// </summary>
-		/// <param name="sender">The sender.</param>
-		/// <param name="e">The <see cref="GridViewRowEventArgs"/> instance containing the event data.</param>
-		protected void OnTripsRowDataBound(object sender, GridViewRowEventArgs e)
+		private void LoadTripsGrid()
 		{
-			if (e.Row.RowType == DataControlRowType.DataRow)
+			yourTripsTableBody.InnerHtml = string.Empty;
+
+			List<TripObject> trips = TripObject.GetTripsForUser(Master.UsersInfo.ID);
+
+			foreach (TripObject trip in trips)
 			{
-				e.Row.Attributes["onclick"] = Page.ClientScript.GetPostBackClientHyperlink(TripsDataGrid, "Select$" + e.Row.RowIndex);
-				e.Row.Attributes["style"] = "cursor:pointer";
+				yourTripsTableBody.InnerHtml = yourTripsTableBody.InnerHtml + "<tr>" +
+												"<td class=\"text-center\"><a href=\"Trip.aspx?id=" + trip.ID.ToString() + "&returnUrl=Trips\" style=\"margin-right:10px;\">Select</a>" +
+												"<a href=\"#\" data-toggle=\"modal\" data-target=\"#confirmTripDeletion\" onclick=\"document.getElementById('MainContent_tripToDelete').value = '" + trip.ID.ToString() + "';\">Delete</a></td>" +
+												"<td>" + trip.Title + "</td>" +
+												"<td>" + trip.Description + "</td>" +
+												"<td>" + trip.TargetedSpecies + "</td>" +
+												"<td>" + trip.WaterConditions + "</td>" +
+												"<td>" + trip.WeatherConditions + "</td>" +
+												"<td>" + trip.TripDate + "</td>" +
+												"<td>" + trip.FliesLuresUsed + "</td>" +
+												"<td>" + trip.CatchOfTheDay + "</td>" +
+												"<td>" + trip.CreateDate.ToString("MM/dd/yyyy") + "</td>" +
+											"</tr>";
+			}
+
+			if (trips.Count > 0)
+			{
+				NoTripsMessage.Visible = false;
+			}
+			else
+			{
+				NoTripsMessage.Visible = true;
+				yourTripsTableBody.Visible = false;
 			}
 		}
 
-		/// <summary>
-		/// Gets the sort direction.
-		/// </summary>
-		/// <param name="column">The column.</param>
-		/// <returns></returns>
-		private string GetSortDirection(string column)
-		{
-			// By default, set the sort direction to ascending.
-			string sortDirection = "ASC";
-
-			// Retrieve the last column that was sorted.
-			string sortExpression = ViewState["SortExpression"] as string;
-
-			if (sortExpression != null)
-			{
-				// Check if the same column is being sorted.
-				// Otherwise, the default value can be returned.
-				if (sortExpression == column)
-				{
-					string lastDirection = ViewState["SortDirection"] as string;
-					if ((lastDirection != null) && (lastDirection == "ASC"))
-					{
-						sortDirection = "DESC";
-					}
-				}
-			}
-
-			// Save new values in ViewState.
-			ViewState["SortDirection"] = sortDirection;
-			ViewState["SortExpression"] = column;
-
-			return sortDirection;
-		}
+		#endregion Private Methods
 	}
 }
