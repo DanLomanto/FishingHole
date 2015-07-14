@@ -45,8 +45,10 @@ namespace FishingHole
 			foreach (LocationObject loc in YourLocations)
 			{
 				yourLocationsTableBody.InnerHtml = yourLocationsTableBody.InnerHtml + "<tr>" +
-												"<td class=\"text-center\"><a href=\"Location?id=" + loc.ID.ToString() + "&returnUrl=locations\" style=\"margin-right:10px;\">Select</a>" +
-												"<a href=\"#\" data-toggle=\"modal\" data-target=\"#confirmLocationDeletion\" onclick=\"document.getElementById('MainContent_locationToDelete').value = '" + loc.ID.ToString() + "';\">Delete</a></td>" +
+												"<td class=\"text-center\">" +
+													"<a class=\"btn-sm btn-primary\" href=\"Location?id=" + loc.ID.ToString() + "&returnUrl=locations\" style=\"text-decoration:none; margin-right:10px;\"><span><i class=\"fa fa-pencil-square-o\"></i>&nbsp;Select</span></a>" +
+													"<a class=\"btn-sm btn-default\" style=\"text-decoration:none;\" href=\"#\" data-toggle=\"modal\" data-target=\"#confirmLocationDeletion\" onclick=\"document.getElementById('MainContent_locationToDelete').value = '" + loc.ID.ToString() + "';\"><span><i class=\"fa fa-trash-o\"></i>&nbsp;Delete</span></a>" +
+												"</td>" +
 												"<td>" + loc.Name + "</td>" +
 												"<td>" + loc.LattitudeDirection + "</td>" +
 												"<td>" + loc.Lattitude + "</td>" +
@@ -80,8 +82,10 @@ namespace FishingHole
 			foreach (LocationObject loc in SharedLocations)
 			{
 				sharedLocationsTableBody.InnerHtml = sharedLocationsTableBody.InnerHtml + "<tr>" +
-												"<td class=\"text-center\"><a href=\"Location?id=" + loc.ID.ToString() + "&returnUrl=locations\" style=\"margin-right:10px;\">Select</a>" +
-												"<a href=\"#\" data-toggle=\"modal\" data-target=\"#confirmLocationDeletion\" onclick=\"document.getElementById('MainContent_locationToDelete').value = '" + loc.ID.ToString() + "';\">Delete</a></td>";
+												"<td class=\"text-center\">" +
+													"<a class=\"btn-sm btn-primary\" href=\"Location?id=" + loc.ID.ToString() + "&returnUrl=locations\" style=\"text-decoration:none; margin-right:10px;\"><span><i class=\"fa fa-pencil-square-o\"></i>&nbsp;Select</span></a>" +
+													"<a class=\"btn-sm btn-default\" style=\"text-decoration:none;\" href=\"#\" data-toggle=\"modal\" data-target=\"#confirmLocationDeletion\" onclick=\"document.getElementById('MainContent_locationToDelete').value = '" + loc.ID.ToString() + "';\"><span><i class=\"fa fa-trash-o\"></i>&nbsp;Delete</span></a>" +
+												"</td>";
 
 				if (loc.HasLocationBeenViewed())
 				{

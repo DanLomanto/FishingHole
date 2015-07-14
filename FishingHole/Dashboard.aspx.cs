@@ -163,7 +163,9 @@ namespace FishingHole
 			foreach (TripObject trip in trips)
 			{
 				recentlyAddedTripsBody.InnerHtml = recentlyAddedTripsBody.InnerHtml + "<tr>" +
-												"<td class=\"text-center\"><a href=\"Trip.aspx?id=" + trip.ID.ToString() + "&returnUrl=Trips\" style=\"margin-right:10px;\">Select</a></td>" +
+												"<td class=\"text-center\">" +
+													"<a class=\"btn-sm btn-primary\" style=\"text-decoration:none;\" href=\"Trip.aspx?id=" + trip.ID.ToString() + "\" style=\"margin-right:10px;\"><i class=\"fa fa-pencil-square-o\"></i>&nbsp;Select</a>" +
+												"</td>" +
 												"<td>" + trip.Title + "</td>" +
 												"<td>" + trip.TripDate + "</td>" +
 												"<td>" + trip.CreateDate.ToString("MM/dd/yyyy") + "</td>" +
@@ -193,7 +195,9 @@ namespace FishingHole
 			foreach (LocationObject loc in YourLocations)
 			{
 				recentlyAddedLocationsBody.InnerHtml = recentlyAddedLocationsBody.InnerHtml + "<tr>" +
-												"<td class=\"text-center\"><a href=\"Location?id=" + loc.ID.ToString() + "&returnUrl=locations\" style=\"margin-right:10px;\">Select</a></td>" +
+												"<td class=\"text-center\">" +
+													"<a class=\"btn-sm btn-primary\" style=\"text-decoration:none;\" href=\"Location?id=" + loc.ID.ToString() + "\" style=\"margin-right:10px;\"><i class=\"fa fa-pencil-square-o\"></i>&nbsp;Select</a>" +
+												"</td>" +
 												"<td>" + loc.Name + "</td>" +
 												"<td>" + loc.CreateDate.ToString("MM/dd/yyyy") + "</td>" +
 											"</tr>";
