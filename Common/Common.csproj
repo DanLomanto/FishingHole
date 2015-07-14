@@ -177,7 +177,6 @@
       <DependentUpon>FishModel.tt</DependentUpon>
     </Compile>
     <Compile Include="LocationObject.cs" />
-    <Compile Include="LocationsGridViewModel.cs" />
     <Compile Include="LocationToTrip.cs">
       <DependentUpon>FishModel.tt</DependentUpon>
     </Compile>
@@ -201,7 +200,6 @@
     <Compile Include="Trip.cs">
       <DependentUpon>FishModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="TripGridViewModel.cs" />
     <Compile Include="TripObject.cs" />
     <Compile Include="TripsToPhoto.cs">
       <DependentUpon>FishModel.tt</DependentUpon>
