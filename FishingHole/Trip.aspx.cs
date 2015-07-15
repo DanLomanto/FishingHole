@@ -68,7 +68,7 @@ namespace FishingHole
 			else
 			{
 				NoPhotosAttachedMessage.Visible = true;
-				CarouselImages.Visible = false;
+				CarouselContainer.Visible = false;
 				leftCarouselControl.Visible = false;
 				rightCarouselControl.Visible = false;
 			}
