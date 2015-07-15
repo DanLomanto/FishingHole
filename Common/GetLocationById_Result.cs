@@ -20,8 +20,8 @@ namespace Common
         public string State { get; set; }
         public Nullable<int> Zipcode { get; set; }
         public string LattitudeDirection { get; set; }
-        public Nullable<decimal> Lattitude { get; set; }
+        public Nullable<double> Lattitude { get; set; }
         public string LongitudeDirection { get; set; }
-        public Nullable<decimal> Longitude { get; set; }
+        public Nullable<double> Longitude { get; set; }
     }
 }

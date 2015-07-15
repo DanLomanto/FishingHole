@@ -42,7 +42,7 @@ namespace Common
 		/// <summary>
 		/// The location's lattitude coordinates
 		/// </summary>
-		public decimal? Lattitude { get; set; }
+		public double? Latitude { get; set; }
 
 		/// <summary>
 		/// Gets or sets the lattitude direction.
@@ -50,7 +50,7 @@ namespace Common
 		/// <value>
 		/// The lattitude direction.
 		/// </value>
-		public string LattitudeDirection { get; set; }
+		public string LatitudeDirection { get; set; }
 
 		/// <summary>
 		/// Gets or sets the longitude.
@@ -58,7 +58,7 @@ namespace Common
 		/// <value>
 		/// The longitude.
 		/// </value>
-		public decimal? Longitude { get; set; }
+		public double? Longitude { get; set; }
 
 		/// <summary>
 		/// Gets or sets the longitude direction.
@@ -126,8 +126,8 @@ namespace Common
 					CityTown = location.CityTown,
 					Zipcode = location.Zipcode,
 					State = location.State,
-					LattitudeDirection = location.LattitudeDirection,
-					Lattitude = location.Lattitude,
+					LatitudeDirection = location.LattitudeDirection,
+					Latitude = location.Lattitude,
 					LongitudeDirection = location.LongitudeDirection,
 					Longitude = location.Longitude,
 					CreateDate = location.CreateDate
@@ -161,8 +161,8 @@ namespace Common
 					CityTown = location.CityTown,
 					Zipcode = location.Zipcode,
 					State = location.State,
-					LattitudeDirection = location.LattitudeDirection,
-					Lattitude = location.Lattitude,
+					LatitudeDirection = location.LattitudeDirection,
+					Latitude = location.Lattitude,
 					LongitudeDirection = location.LongitudeDirection,
 					Longitude = location.Longitude,
 					CreateDate = location.CreateDate
@@ -212,10 +212,10 @@ namespace Common
 			location.CityTown = result.CityTown;
 			location.State = result.State;
 			location.Zipcode = result.Zipcode;
-			location.LattitudeDirection = result.LattitudeDirection;
-			location.Lattitude = result.Lattitude;
+			location.LatitudeDirection = result.LattitudeDirection;
+			location.Latitude = Convert.ToDouble(result.Lattitude);
 			location.LongitudeDirection = result.LongitudeDirection;
-			location.Longitude = result.Longitude;
+			location.Longitude = Convert.ToDouble(result.Longitude);
 
 			return location;
 		}
@@ -241,8 +241,8 @@ namespace Common
 			location.CityTown = result.CityTown;
 			location.State = result.State;
 			location.Zipcode = result.Zipcode;
-			location.LattitudeDirection = result.LattitudeDirection;
-			location.Lattitude = result.Lattitude;
+			location.LatitudeDirection = result.LattitudeDirection;
+			location.Latitude = result.Lattitude;
 			location.LongitudeDirection = result.LongitudeDirection;
 			location.Longitude = result.Longitude;
 
@@ -267,10 +267,10 @@ namespace Common
 				StreetAddress,
 				CityTown, State,
 				Zipcode,
-				LattitudeDirection,
-				Convert.ToDecimal(Lattitude),
+				LatitudeDirection,
+				Latitude,
 				LongitudeDirection,
-				Convert.ToDecimal(Longitude),
+				Longitude,
 				Output);
 
 			return Convert.ToInt32(Output.Value);
@@ -283,7 +283,7 @@ namespace Common
 		{
 			FishEntities fishDb = new FishEntities();
 			int returnValue = fishDb.UpdateLocation(ID, Name, Description, StreetAddress, CityTown,
-				State, Zipcode, LattitudeDirection, Lattitude, LongitudeDirection, Longitude);
+				State, Zipcode, LatitudeDirection, Latitude, LongitudeDirection, Longitude);
 
 			if (returnValue != 1)
 			{
@@ -356,7 +356,7 @@ namespace Common
 			else
 			{
 				// Lat/Long Coordinates
-				locationToAppendOnLink = formatCoordinates(this.LattitudeDirection, this.Lattitude, this.LongitudeDirection, this.Longitude);
+				locationToAppendOnLink = formatCoordinates(this.LatitudeDirection, this.Latitude, this.LongitudeDirection, this.Longitude);
 			}
 
 			return locationToAppendOnLink;
@@ -425,7 +425,7 @@ namespace Common
 		/// <param name="longDirection">The long direction.</param>
 		/// <param name="longitude">The longitude.</param>
 		/// <returns></returns>
-		private string formatCoordinates(string latDirection, decimal? lattitude, string longDirection, decimal? longitude)
+		private string formatCoordinates(string latDirection, double? lattitude, string longDirection, double? longitude)
 		{
 			string actualLattitude = lattitude.ToString();
 			if (latDirection == "S")

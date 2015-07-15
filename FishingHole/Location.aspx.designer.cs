@@ -94,22 +94,22 @@ namespace FishingHole {
         protected global::System.Web.UI.HtmlControls.HtmlInputText ZipCode;
         
         /// <summary>
-        /// LattitudeDropDown control.
+        /// LatitudeDropDown control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlSelect LattitudeDropDown;
+        protected global::System.Web.UI.HtmlControls.HtmlSelect LatitudeDropDown;
         
         /// <summary>
-        /// Lattitude control.
+        /// Latitude control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText Lattitude;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText Latitude;
         
         /// <summary>
         /// LongitudeDropDown control.

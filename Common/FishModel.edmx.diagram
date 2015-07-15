@@ -4,18 +4,18 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="ef21656e44164369a49b35799b82828e" Name="Diagram1">
-        <EntityTypeShape EntityType="FishModel.Category" Width="1.5" PointX="3.75" PointY="6.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="FishModel.Comment" Width="1.5" PointX="5.25" PointY="14" IsExpanded="true" />
+      <Diagram DiagramId="679ec799fa134c5c859e395f82615eb8" Name="Diagram1">
+        <EntityTypeShape EntityType="FishModel.Category" Width="1.5" PointX="3.75" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="FishModel.Comment" Width="1.5" PointX="5.25" PointY="14.25" IsExpanded="true" />
         <EntityTypeShape EntityType="FishModel.FriendAssociation" Width="1.5" PointX="3" PointY="9" IsExpanded="true" />
         <EntityTypeShape EntityType="FishModel.ImagePath" Width="1.5" PointX="3" PointY="11.75" IsExpanded="true" />
         <EntityTypeShape EntityType="FishModel.Location" Width="1.5" PointX="3" PointY="14.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="FishModel.LocationToTrip" Width="1.5" PointX="5.25" PointY="23" IsExpanded="true" />
-        <EntityTypeShape EntityType="FishModel.PendingFriendRequest" Width="1.5" PointX="3" PointY="19.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="FishModel.Thread" Width="1.5" PointX="6" PointY="9.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="FishModel.Trip" Width="1.5" PointX="3" PointY="25.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="FishModel.TripsToPhoto" Width="1.5" PointX="5.25" PointY="19.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="FishModel.User" Width="1.5" PointX="0.75" PointY="12.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="FishModel.LocationToTrip" Width="1.5" PointX="5.25" PointY="23.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="FishModel.PendingFriendRequest" Width="1.5" PointX="3" PointY="19.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FishModel.Thread" Width="1.5" PointX="6" PointY="9.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="FishModel.Trip" Width="1.5" PointX="3" PointY="26" IsExpanded="true" />
+        <EntityTypeShape EntityType="FishModel.TripsToPhoto" Width="1.5" PointX="5.25" PointY="19.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="FishModel.User" Width="1.5" PointX="0.75" PointY="12.375" IsExpanded="true" />
         <AssociationConnector Association="FishModel.FK_Threads_Categories" ManuallyRouted="false" />
         <AssociationConnector Association="FishModel.FK_Comments_Locations" ManuallyRouted="false" />
         <AssociationConnector Association="FishModel.FK_Comments_Threads" ManuallyRouted="false" />

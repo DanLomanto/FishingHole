@@ -52,7 +52,7 @@ namespace Common
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CreateFriendAssociation", primaryUserIdParameter, assocFriendIdParameter);
         }
     
-        public virtual int CreateLocation(Nullable<int> userID, string name, string description, string streetAddress, string cityTown, string state, Nullable<int> zipcode, string lattitudeDirection, Nullable<decimal> lattitude, string longitudeDirection, Nullable<decimal> longitude, ObjectParameter output_Result)
+        public virtual int CreateLocation(Nullable<int> userID, string name, string description, string streetAddress, string cityTown, string state, Nullable<int> zipcode, string lattitudeDirection, Nullable<double> lattitude, string longitudeDirection, Nullable<double> longitude, ObjectParameter output_Result)
         {
             var userIDParameter = userID.HasValue ?
                 new ObjectParameter("UserID", userID) :
@@ -88,7 +88,7 @@ namespace Common
     
             var lattitudeParameter = lattitude.HasValue ?
                 new ObjectParameter("Lattitude", lattitude) :
-                new ObjectParameter("Lattitude", typeof(decimal));
+                new ObjectParameter("Lattitude", typeof(double));
     
             var longitudeDirectionParameter = longitudeDirection != null ?
                 new ObjectParameter("LongitudeDirection", longitudeDirection) :
@@ -96,7 +96,7 @@ namespace Common
     
             var longitudeParameter = longitude.HasValue ?
                 new ObjectParameter("Longitude", longitude) :
-                new ObjectParameter("Longitude", typeof(decimal));
+                new ObjectParameter("Longitude", typeof(double));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CreateLocation", userIDParameter, nameParameter, descriptionParameter, streetAddressParameter, cityTownParameter, stateParameter, zipcodeParameter, lattitudeDirectionParameter, lattitudeParameter, longitudeDirectionParameter, longitudeParameter, output_Result);
         }
@@ -219,6 +219,15 @@ namespace Common
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteFriendAssociation", primaryUserIdParameter, assocFriendIdParameter);
         }
     
+        public virtual int DeleteLocation(Nullable<int> locationID)
+        {
+            var locationIDParameter = locationID.HasValue ?
+                new ObjectParameter("LocationID", locationID) :
+                new ObjectParameter("LocationID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteLocation", locationIDParameter);
+        }
+    
         public virtual int DeleteLocationForTrip(Nullable<int> tripID)
         {
             var tripIDParameter = tripID.HasValue ?
@@ -248,6 +257,15 @@ namespace Common
                 new ObjectParameter("PhotoId", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeletePhoto", photoIdParameter);
+        }
+    
+        public virtual int DeleteTrip(Nullable<int> tripID)
+        {
+            var tripIDParameter = tripID.HasValue ?
+                new ObjectParameter("TripID", tripID) :
+                new ObjectParameter("TripID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteTrip", tripIDParameter);
         }
     
         public virtual int DeleteTripForLocation(Nullable<int> locationID)
@@ -402,6 +420,15 @@ namespace Common
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetPhotosForTrip_Result>("GetPhotosForTrip", tripIdParameter);
         }
     
+        public virtual ObjectResult<GetSharedLocationsForUser_Result> GetSharedLocationsForUser(Nullable<int> userID)
+        {
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("UserID", userID) :
+                new ObjectParameter("UserID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetSharedLocationsForUser_Result>("GetSharedLocationsForUser", userIDParameter);
+        }
+    
         public virtual ObjectResult<GetThreadById_Result> GetThreadById(Nullable<int> iD)
         {
             var iDParameter = iD.HasValue ?
@@ -465,6 +492,24 @@ namespace Common
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetUserById_Result>("GetUserById", iDParameter);
         }
     
+        public virtual ObjectResult<Nullable<bool>> GetViewStatusOfLocation(Nullable<int> locationId)
+        {
+            var locationIdParameter = locationId.HasValue ?
+                new ObjectParameter("LocationId", locationId) :
+                new ObjectParameter("LocationId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<bool>>("GetViewStatusOfLocation", locationIdParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> HowManyUnviewedSharedLocationsForUser(Nullable<int> userID)
+        {
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("UserID", userID) :
+                new ObjectParameter("UserID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("HowManyUnviewedSharedLocationsForUser", userIDParameter);
+        }
+    
         public virtual int InsertImagePath(Nullable<int> userID, string imagePath, ObjectParameter output_Result)
         {
             var userIDParameter = userID.HasValue ?
@@ -520,6 +565,15 @@ namespace Common
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertThreadComment", commentParameter, userIdParameter, threadIdParameter, locationIDParameter);
         }
     
+        public virtual int MarkLocationAsViewed(Nullable<int> locationId)
+        {
+            var locationIdParameter = locationId.HasValue ?
+                new ObjectParameter("LocationId", locationId) :
+                new ObjectParameter("LocationId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("MarkLocationAsViewed", locationIdParameter);
+        }
+    
         public virtual ObjectResult<SearchForThreadsByCategory_Result> SearchForThreadsByCategory(string category)
         {
             var categoryParameter = category != null ?
@@ -551,7 +605,20 @@ namespace Common
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SearchThreads_Result>("SearchThreads", searchTextParameter);
         }
     
-        public virtual int UpdateLocation(Nullable<int> iD, string name, string description, string streetAddress, string cityTown, string state, Nullable<int> zipcode, string lattitudeDirection, Nullable<decimal> lattitude, string longitudeDirection, Nullable<decimal> longitude)
+        public virtual int ShareLocation(Nullable<int> locationIdToShare, Nullable<int> userIdToShareTo)
+        {
+            var locationIdToShareParameter = locationIdToShare.HasValue ?
+                new ObjectParameter("LocationIdToShare", locationIdToShare) :
+                new ObjectParameter("LocationIdToShare", typeof(int));
+    
+            var userIdToShareToParameter = userIdToShareTo.HasValue ?
+                new ObjectParameter("UserIdToShareTo", userIdToShareTo) :
+                new ObjectParameter("UserIdToShareTo", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ShareLocation", locationIdToShareParameter, userIdToShareToParameter);
+        }
+    
+        public virtual int UpdateLocation(Nullable<int> iD, string name, string description, string streetAddress, string cityTown, string state, Nullable<int> zipcode, string lattitudeDirection, Nullable<double> lattitude, string longitudeDirection, Nullable<double> longitude)
         {
             var iDParameter = iD.HasValue ?
                 new ObjectParameter("ID", iD) :
@@ -587,7 +654,7 @@ namespace Common
     
             var lattitudeParameter = lattitude.HasValue ?
                 new ObjectParameter("Lattitude", lattitude) :
-                new ObjectParameter("Lattitude", typeof(decimal));
+                new ObjectParameter("Lattitude", typeof(double));
     
             var longitudeDirectionParameter = longitudeDirection != null ?
                 new ObjectParameter("LongitudeDirection", longitudeDirection) :
@@ -595,7 +662,7 @@ namespace Common
     
             var longitudeParameter = longitude.HasValue ?
                 new ObjectParameter("Longitude", longitude) :
-                new ObjectParameter("Longitude", typeof(decimal));
+                new ObjectParameter("Longitude", typeof(double));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateLocation", iDParameter, nameParameter, descriptionParameter, streetAddressParameter, cityTownParameter, stateParameter, zipcodeParameter, lattitudeDirectionParameter, lattitudeParameter, longitudeDirectionParameter, longitudeParameter);
         }
@@ -643,73 +710,6 @@ namespace Common
                 new ObjectParameter("OtherNotes", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateTrip", iDParameter, titleParameter, descriptionParameter, targetedSpeciesParameter, waterConditionsParameter, weatherConditionsParameter, dateOfTripParameter, fliesLuresUsedParameter, catchOfTheDayParameter, otherNotesParameter);
-        }
-    
-        public virtual int ShareLocation(Nullable<int> locationIdToShare, Nullable<int> userIdToShareTo)
-        {
-            var locationIdToShareParameter = locationIdToShare.HasValue ?
-                new ObjectParameter("LocationIdToShare", locationIdToShare) :
-                new ObjectParameter("LocationIdToShare", typeof(int));
-    
-            var userIdToShareToParameter = userIdToShareTo.HasValue ?
-                new ObjectParameter("UserIdToShareTo", userIdToShareTo) :
-                new ObjectParameter("UserIdToShareTo", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ShareLocation", locationIdToShareParameter, userIdToShareToParameter);
-        }
-    
-        public virtual ObjectResult<Nullable<int>> HowManyUnviewedSharedLocationsForUser(Nullable<int> userID)
-        {
-            var userIDParameter = userID.HasValue ?
-                new ObjectParameter("UserID", userID) :
-                new ObjectParameter("UserID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("HowManyUnviewedSharedLocationsForUser", userIDParameter);
-        }
-    
-        public virtual ObjectResult<GetSharedLocationsForUser_Result> GetSharedLocationsForUser(Nullable<int> userID)
-        {
-            var userIDParameter = userID.HasValue ?
-                new ObjectParameter("UserID", userID) :
-                new ObjectParameter("UserID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetSharedLocationsForUser_Result>("GetSharedLocationsForUser", userIDParameter);
-        }
-    
-        public virtual int MarkLocationAsViewed(Nullable<int> locationId)
-        {
-            var locationIdParameter = locationId.HasValue ?
-                new ObjectParameter("LocationId", locationId) :
-                new ObjectParameter("LocationId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("MarkLocationAsViewed", locationIdParameter);
-        }
-    
-        public virtual ObjectResult<Nullable<bool>> GetViewStatusOfLocation(Nullable<int> locationId)
-        {
-            var locationIdParameter = locationId.HasValue ?
-                new ObjectParameter("LocationId", locationId) :
-                new ObjectParameter("LocationId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<bool>>("GetViewStatusOfLocation", locationIdParameter);
-        }
-    
-        public virtual int DeleteLocation(Nullable<int> locationID)
-        {
-            var locationIDParameter = locationID.HasValue ?
-                new ObjectParameter("LocationID", locationID) :
-                new ObjectParameter("LocationID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteLocation", locationIDParameter);
-        }
-    
-        public virtual int DeleteTrip(Nullable<int> tripID)
-        {
-            var tripIDParameter = tripID.HasValue ?
-                new ObjectParameter("TripID", tripID) :
-                new ObjectParameter("TripID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteTrip", tripIDParameter);
         }
     }
 }

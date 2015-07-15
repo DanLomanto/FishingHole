@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="FishModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="FishModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Categories">
           <Key>
             <PropertyRef Name="ID" />
@@ -52,9 +52,9 @@
           <Property Name="State" Type="varchar" MaxLength="2" />
           <Property Name="Zipcode" Type="int" />
           <Property Name="LattitudeDirection" Type="varchar" MaxLength="1" />
-          <Property Name="Lattitude" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="Lattitude" Type="float" />
           <Property Name="LongitudeDirection" Type="varchar" MaxLength="1" />
-          <Property Name="Longitude" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="Longitude" Type="float" />
           <Property Name="CreateDate" Type="datetime" Nullable="false" />
           <Property Name="Shared" Type="bit" Nullable="false" />
           <Property Name="Viewed" Type="bit" Nullable="false" />
@@ -326,9 +326,9 @@
           <Parameter Name="State" Type="varchar" Mode="In" />
           <Parameter Name="Zipcode" Type="int" Mode="In" />
           <Parameter Name="LattitudeDirection" Type="varchar" Mode="In" />
-          <Parameter Name="Lattitude" Type="decimal" Mode="In" />
+          <Parameter Name="Lattitude" Type="float" Mode="In" />
           <Parameter Name="LongitudeDirection" Type="varchar" Mode="In" />
-          <Parameter Name="Longitude" Type="decimal" Mode="In" />
+          <Parameter Name="Longitude" Type="float" Mode="In" />
           <Parameter Name="Output_Result" Type="bigint" Mode="InOut" />
         </Function>
         <Function Name="CreatePendingFriendRequest" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -503,9 +503,9 @@
           <Parameter Name="State" Type="varchar" Mode="In" />
           <Parameter Name="Zipcode" Type="int" Mode="In" />
           <Parameter Name="LattitudeDirection" Type="varchar" Mode="In" />
-          <Parameter Name="Lattitude" Type="decimal" Mode="In" />
+          <Parameter Name="Lattitude" Type="float" Mode="In" />
           <Parameter Name="LongitudeDirection" Type="varchar" Mode="In" />
-          <Parameter Name="Longitude" Type="decimal" Mode="In" />
+          <Parameter Name="Longitude" Type="float" Mode="In" />
         </Function>
         <Function Name="UpdateTrip" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ID" Type="int" Mode="In" />
@@ -596,7 +596,8 @@
             <End Role="LocationToTrip" EntitySet="LocationToTrip" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="FishModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -655,15 +656,15 @@
           <Property Name="State" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
           <Property Name="Zipcode" Type="Int32" />
           <Property Name="LattitudeDirection" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="Lattitude" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Lattitude" Type="Double" />
           <Property Name="LongitudeDirection" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="Longitude" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Longitude" Type="Double" />
           <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Shared" Type="Boolean" Nullable="false" />
+          <Property Name="Viewed" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Comments" Relationship="Self.FK_Comments_Locations" FromRole="Locations" ToRole="Comments" />
           <NavigationProperty Name="User" Relationship="Self.FK_Locations_Users" FromRole="Locations" ToRole="Users" />
           <NavigationProperty Name="LocationToTrips" Relationship="Self.FK_TripToLocation_TripToLocation" FromRole="Locations" ToRole="LocationToTrip" />
-          <Property Name="Shared" Type="Boolean" Nullable="false" />
-          <Property Name="Viewed" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="LocationToTrip">
           <Key>
@@ -1029,9 +1030,9 @@
             <Parameter Name="State" Mode="In" Type="String" />
             <Parameter Name="Zipcode" Mode="In" Type="Int32" />
             <Parameter Name="LattitudeDirection" Mode="In" Type="String" />
-            <Parameter Name="Lattitude" Mode="In" Type="Decimal" />
+            <Parameter Name="Lattitude" Mode="In" Type="Double" />
             <Parameter Name="LongitudeDirection" Mode="In" Type="String" />
-            <Parameter Name="Longitude" Mode="In" Type="Decimal" />
+            <Parameter Name="Longitude" Mode="In" Type="Double" />
             <Parameter Name="Output_Result" Mode="InOut" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="CreatePendingFriendRequest">
@@ -1069,18 +1070,24 @@
             <Parameter Name="PrimaryUserId" Mode="In" Type="Int32" />
             <Parameter Name="AssocFriendId" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="DeleteLocation">
+            <Parameter Name="LocationID" Mode="In" Type="Int32" />
+          </FunctionImport>
           <FunctionImport Name="DeleteLocationForTrip">
-          <Parameter Name="TripID" Mode="In" Type="Int32" />
+            <Parameter Name="TripID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="DeletePendingFriendRequest">
             <Parameter Name="PrimaryUserId" Mode="In" Type="Int32" />
             <Parameter Name="AssocFriendId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="DeletePhoto">
-          <Parameter Name="PhotoId" Mode="In" Type="Int32" />
+            <Parameter Name="PhotoId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteTrip">
+            <Parameter Name="TripID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="DeleteTripForLocation">
-          <Parameter Name="LocationID" Mode="In" Type="Int32" />
+            <Parameter Name="LocationID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="DoesLoginExist" ReturnType="Collection(FishModel.DoesLoginExist_Result)">
             <Parameter Name="Email" Mode="In" Type="String" />
@@ -1091,48 +1098,51 @@
             <Parameter Name="Title" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetAllLocationsForUser" ReturnType="Collection(FishModel.GetAllLocationsForUser_Result)">
-          <Parameter Name="UserID" Mode="In" Type="Int32" />
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetAllThreads" ReturnType="Collection(FishModel.GetAllThreads_Result)" />
           <FunctionImport Name="GetAllTripsForUser" ReturnType="Collection(FishModel.GetAllTripsForUser_Result)">
-          <Parameter Name="UserID" Mode="In" Type="Int32" />
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetAssociatedLocationForTrip" ReturnType="Collection(Int32)">
-          <Parameter Name="TripID" Mode="In" Type="Int32" />
+            <Parameter Name="TripID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetAssociatedTripForLocation" ReturnType="Collection(Int32)">
-          <Parameter Name="LocationId" Mode="In" Type="Int32" />
+            <Parameter Name="LocationId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetCommentsForThread" ReturnType="Collection(FishModel.GetCommentsForThread_Result)">
-          <Parameter Name="ID" Mode="In" Type="Int32" />
+            <Parameter Name="ID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetFriendRequestsForUser" ReturnType="Collection(Int32)">
-          <Parameter Name="PrimaryUserId" Mode="In" Type="Int32" />
+            <Parameter Name="PrimaryUserId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetFriendsForUser" ReturnType="Collection(Int32)">
-          <Parameter Name="PrimaryUserId" Mode="In" Type="Int32" />
+            <Parameter Name="PrimaryUserId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetIdOfCategory" ReturnType="Collection(Int32)">
-          <Parameter Name="Category" Mode="In" Type="String" />
+            <Parameter Name="Category" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetImagesForUser" ReturnType="Collection(FishModel.GetImagesForUser_Result)">
-          <Parameter Name="UserID" Mode="In" Type="Int32" />
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetLocation" ReturnType="Collection(FishModel.GetLocation_Result)">
             <Parameter Name="UserID" Mode="In" Type="Int32" />
             <Parameter Name="Name" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetLocationById" ReturnType="Collection(FishModel.GetLocationById_Result)">
-          <Parameter Name="ID" Mode="In" Type="Int32" />
+            <Parameter Name="ID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetPhotosForTrip" ReturnType="Collection(FishModel.GetPhotosForTrip_Result)">
-          <Parameter Name="TripId" Mode="In" Type="Int32" />
+            <Parameter Name="TripId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetSharedLocationsForUser" ReturnType="Collection(FishModel.GetSharedLocationsForUser_Result)">
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetThreadById" ReturnType="Collection(FishModel.GetThreadById_Result)">
-          <Parameter Name="ID" Mode="In" Type="Int32" />
+            <Parameter Name="ID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetThreadCategoryById" ReturnType="Collection(String)">
-          <Parameter Name="ID" Mode="In" Type="Int32" />
+            <Parameter Name="ID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetTopicNames" ReturnType="Collection(String)" />
           <FunctionImport Name="GetTrip" ReturnType="Collection(FishModel.GetTrip_Result)">
@@ -1140,13 +1150,19 @@
             <Parameter Name="Title" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetTripById" ReturnType="Collection(FishModel.GetTripById_Result)">
-          <Parameter Name="ID" Mode="In" Type="Int32" />
+            <Parameter Name="ID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetUser" ReturnType="Collection(FishModel.GetUser_Result)">
-          <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="Email" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetUserById" ReturnType="Collection(FishModel.GetUserById_Result)">
-          <Parameter Name="ID" Mode="In" Type="Int32" />
+            <Parameter Name="ID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetViewStatusOfLocation" ReturnType="Collection(Boolean)">
+            <Parameter Name="LocationId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="HowManyUnviewedSharedLocationsForUser" ReturnType="Collection(Int32)">
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="InsertImagePath">
             <Parameter Name="UserID" Mode="In" Type="Int32" />
@@ -1165,15 +1181,22 @@
             <Parameter Name="ThreadId" Mode="In" Type="Int32" />
             <Parameter Name="LocationID" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="MarkLocationAsViewed">
+            <Parameter Name="LocationId" Mode="In" Type="Int32" />
+          </FunctionImport>
           <FunctionImport Name="SearchForThreadsByCategory" ReturnType="Collection(FishModel.SearchForThreadsByCategory_Result)">
-          <Parameter Name="Category" Mode="In" Type="String" />
+            <Parameter Name="Category" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SearchForUsers" ReturnType="Collection(FishModel.SearchForUsers_Result)">
             <Parameter Name="PrimaryUserId" Mode="In" Type="Int32" />
             <Parameter Name="SearchText" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SearchThreads" ReturnType="Collection(FishModel.SearchThreads_Result)">
-          <Parameter Name="SearchText" Mode="In" Type="String" />
+            <Parameter Name="SearchText" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ShareLocation">
+            <Parameter Name="LocationIdToShare" Mode="In" Type="Int32" />
+            <Parameter Name="UserIdToShareTo" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="UpdateLocation">
             <Parameter Name="ID" Mode="In" Type="Int32" />
@@ -1184,9 +1207,9 @@
             <Parameter Name="State" Mode="In" Type="String" />
             <Parameter Name="Zipcode" Mode="In" Type="Int32" />
             <Parameter Name="LattitudeDirection" Mode="In" Type="String" />
-            <Parameter Name="Lattitude" Mode="In" Type="Decimal" />
+            <Parameter Name="Lattitude" Mode="In" Type="Double" />
             <Parameter Name="LongitudeDirection" Mode="In" Type="String" />
-            <Parameter Name="Longitude" Mode="In" Type="Decimal" />
+            <Parameter Name="Longitude" Mode="In" Type="Double" />
           </FunctionImport>
           <FunctionImport Name="UpdateTrip">
             <Parameter Name="ID" Mode="In" Type="Int32" />
@@ -1199,28 +1222,6 @@
             <Parameter Name="FliesLuresUsed" Mode="In" Type="String" />
             <Parameter Name="CatchOfTheDay" Mode="In" Type="String" />
             <Parameter Name="OtherNotes" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="ShareLocation">
-            <Parameter Name="LocationIdToShare" Mode="In" Type="Int32" />
-            <Parameter Name="UserIdToShareTo" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="HowManyUnviewedSharedLocationsForUser" ReturnType="Collection(Int32)">
-          <Parameter Name="UserID" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="GetSharedLocationsForUser" ReturnType="Collection(FishModel.GetSharedLocationsForUser_Result)">
-          <Parameter Name="UserID" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="MarkLocationAsViewed">
-          <Parameter Name="LocationId" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="GetViewStatusOfLocation" ReturnType="Collection(Boolean)">
-          <Parameter Name="LocationId" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="DeleteLocation">
-            <Parameter Name="LocationID" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="DeleteTrip">
-            <Parameter Name="TripID" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="DoesLoginExist_Result">
@@ -1238,9 +1239,9 @@
           <Property Type="String" Name="State" Nullable="true" MaxLength="2" />
           <Property Type="Int32" Name="Zipcode" Nullable="true" />
           <Property Type="String" Name="LattitudeDirection" Nullable="true" MaxLength="1" />
-          <Property Type="Decimal" Name="Lattitude" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Double" Name="Lattitude" Nullable="true" />
           <Property Type="String" Name="LongitudeDirection" Nullable="true" MaxLength="1" />
-          <Property Type="Decimal" Name="Longitude" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Double" Name="Longitude" Nullable="true" />
           <Property Type="DateTime" Name="CreateDate" Nullable="false" Precision="23" />
         </ComplexType>
         <ComplexType Name="GetAllThreads_Result">
@@ -1282,9 +1283,9 @@
           <Property Type="String" Name="State" Nullable="true" MaxLength="2" />
           <Property Type="Int32" Name="Zipcode" Nullable="true" />
           <Property Type="String" Name="LattitudeDirection" Nullable="true" MaxLength="1" />
-          <Property Type="Decimal" Name="Lattitude" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Double" Name="Lattitude" Nullable="true" />
           <Property Type="String" Name="LongitudeDirection" Nullable="true" MaxLength="1" />
-          <Property Type="Decimal" Name="Longitude" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Double" Name="Longitude" Nullable="true" />
         </ComplexType>
         <ComplexType Name="GetLocationById_Result">
           <Property Type="String" Name="Name" Nullable="false" MaxLength="50" />
@@ -1294,13 +1295,27 @@
           <Property Type="String" Name="State" Nullable="true" MaxLength="2" />
           <Property Type="Int32" Name="Zipcode" Nullable="true" />
           <Property Type="String" Name="LattitudeDirection" Nullable="true" MaxLength="1" />
-          <Property Type="Decimal" Name="Lattitude" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Double" Name="Lattitude" Nullable="true" />
           <Property Type="String" Name="LongitudeDirection" Nullable="true" MaxLength="1" />
-          <Property Type="Decimal" Name="Longitude" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Double" Name="Longitude" Nullable="true" />
         </ComplexType>
         <ComplexType Name="GetPhotosForTrip_Result">
           <Property Type="Int32" Name="PhotoID" Nullable="false" />
           <Property Type="String" Name="ImagePath" Nullable="false" MaxLength="255" />
+        </ComplexType>
+        <ComplexType Name="GetSharedLocationsForUser_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Description" Nullable="true" MaxLength="Max" />
+          <Property Type="String" Name="StreetAddress" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="CityTown" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="State" Nullable="true" MaxLength="2" />
+          <Property Type="Int32" Name="Zipcode" Nullable="true" />
+          <Property Type="String" Name="LattitudeDirection" Nullable="true" MaxLength="1" />
+          <Property Type="Double" Name="Lattitude" Nullable="true" />
+          <Property Type="String" Name="LongitudeDirection" Nullable="true" MaxLength="1" />
+          <Property Type="Double" Name="Longitude" Nullable="true" />
+          <Property Type="DateTime" Name="CreateDate" Nullable="false" Precision="23" />
         </ComplexType>
         <ComplexType Name="GetThreadById_Result">
           <Property Type="Int32" Name="ID" Nullable="false" />
@@ -1370,20 +1385,6 @@
           <Property Type="Int32" Name="ThreadCategory" Nullable="false" />
           <Property Type="DateTime" Name="CreateDate" Nullable="false" Precision="23" />
         </ComplexType>
-        <ComplexType Name="GetSharedLocationsForUser_Result">
-          <Property Type="Int32" Name="ID" Nullable="false" />
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="Description" Nullable="true" MaxLength="Max" />
-          <Property Type="String" Name="StreetAddress" Nullable="true" MaxLength="255" />
-          <Property Type="String" Name="CityTown" Nullable="true" MaxLength="255" />
-          <Property Type="String" Name="State" Nullable="true" MaxLength="2" />
-          <Property Type="Int32" Name="Zipcode" Nullable="true" />
-          <Property Type="String" Name="LattitudeDirection" Nullable="true" MaxLength="1" />
-          <Property Type="Decimal" Name="Lattitude" Nullable="true" Precision="18" Scale="0" />
-          <Property Type="String" Name="LongitudeDirection" Nullable="true" MaxLength="1" />
-          <Property Type="Decimal" Name="Longitude" Nullable="true" Precision="18" Scale="0" />
-          <Property Type="DateTime" Name="CreateDate" Nullable="false" Precision="23" />
-        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1431,8 +1432,6 @@
           <EntitySetMapping Name="Locations">
             <EntityTypeMapping TypeName="FishModel.Location">
               <MappingFragment StoreEntitySet="Locations">
-                <ScalarProperty Name="Viewed" ColumnName="Viewed" />
-                <ScalarProperty Name="Shared" ColumnName="Shared" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -1446,6 +1445,8 @@
                 <ScalarProperty Name="LongitudeDirection" ColumnName="LongitudeDirection" />
                 <ScalarProperty Name="Longitude" ColumnName="Longitude" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Shared" ColumnName="Shared" />
+                <ScalarProperty Name="Viewed" ColumnName="Viewed" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1525,9 +1526,11 @@
           <FunctionImportMapping FunctionImportName="CreateUpdateLocationToTrip" FunctionName="FishModel.Store.CreateUpdateLocationToTrip" />
           <FunctionImportMapping FunctionImportName="CreateUser" FunctionName="FishModel.Store.CreateUser" />
           <FunctionImportMapping FunctionImportName="DeleteFriendAssociation" FunctionName="FishModel.Store.DeleteFriendAssociation" />
+          <FunctionImportMapping FunctionImportName="DeleteLocation" FunctionName="FishModel.Store.DeleteLocation" />
           <FunctionImportMapping FunctionImportName="DeleteLocationForTrip" FunctionName="FishModel.Store.DeleteLocationForTrip" />
           <FunctionImportMapping FunctionImportName="DeletePendingFriendRequest" FunctionName="FishModel.Store.DeletePendingFriendRequest" />
           <FunctionImportMapping FunctionImportName="DeletePhoto" FunctionName="FishModel.Store.DeletePhoto" />
+          <FunctionImportMapping FunctionImportName="DeleteTrip" FunctionName="FishModel.Store.DeleteTrip" />
           <FunctionImportMapping FunctionImportName="DeleteTripForLocation" FunctionName="FishModel.Store.DeleteTripForLocation" />
           <FunctionImportMapping FunctionImportName="DoesLoginExist" FunctionName="FishModel.Store.DoesLoginExist">
             <ResultMapping>
@@ -1650,6 +1653,24 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetSharedLocationsForUser" FunctionName="FishModel.Store.GetSharedLocationsForUser">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="FishModel.GetSharedLocationsForUser_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="StreetAddress" ColumnName="StreetAddress" />
+                <ScalarProperty Name="CityTown" ColumnName="CityTown" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Zipcode" ColumnName="Zipcode" />
+                <ScalarProperty Name="LattitudeDirection" ColumnName="LattitudeDirection" />
+                <ScalarProperty Name="Lattitude" ColumnName="Lattitude" />
+                <ScalarProperty Name="LongitudeDirection" ColumnName="LongitudeDirection" />
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="GetThreadById" FunctionName="FishModel.Store.GetThreadById">
             <ResultMapping>
               <ComplexTypeMapping TypeName="FishModel.GetThreadById_Result">
@@ -1718,9 +1739,12 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetViewStatusOfLocation" FunctionName="FishModel.Store.GetViewStatusOfLocation" />
+          <FunctionImportMapping FunctionImportName="HowManyUnviewedSharedLocationsForUser" FunctionName="FishModel.Store.HowManyUnviewedSharedLocationsForUser" />
           <FunctionImportMapping FunctionImportName="InsertImagePath" FunctionName="FishModel.Store.InsertImagePath" />
           <FunctionImportMapping FunctionImportName="InsertThread" FunctionName="FishModel.Store.InsertThread" />
           <FunctionImportMapping FunctionImportName="InsertThreadComment" FunctionName="FishModel.Store.InsertThreadComment" />
+          <FunctionImportMapping FunctionImportName="MarkLocationAsViewed" FunctionName="FishModel.Store.MarkLocationAsViewed" />
           <FunctionImportMapping FunctionImportName="SearchForThreadsByCategory" FunctionName="FishModel.Store.SearchForThreadsByCategory">
             <ResultMapping>
               <ComplexTypeMapping TypeName="FishModel.SearchForThreadsByCategory_Result">
@@ -1755,32 +1779,9 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ShareLocation" FunctionName="FishModel.Store.ShareLocation" />
           <FunctionImportMapping FunctionImportName="UpdateLocation" FunctionName="FishModel.Store.UpdateLocation" />
           <FunctionImportMapping FunctionImportName="UpdateTrip" FunctionName="FishModel.Store.UpdateTrip" />
-          <FunctionImportMapping FunctionImportName="ShareLocation" FunctionName="FishModel.Store.ShareLocation" />
-          <FunctionImportMapping FunctionImportName="HowManyUnviewedSharedLocationsForUser" FunctionName="FishModel.Store.HowManyUnviewedSharedLocationsForUser" />
-          <FunctionImportMapping FunctionImportName="GetSharedLocationsForUser" FunctionName="FishModel.Store.GetSharedLocationsForUser">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="FishModel.GetSharedLocationsForUser_Result">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="StreetAddress" ColumnName="StreetAddress" />
-                <ScalarProperty Name="CityTown" ColumnName="CityTown" />
-                <ScalarProperty Name="State" ColumnName="State" />
-                <ScalarProperty Name="Zipcode" ColumnName="Zipcode" />
-                <ScalarProperty Name="LattitudeDirection" ColumnName="LattitudeDirection" />
-                <ScalarProperty Name="Lattitude" ColumnName="Lattitude" />
-                <ScalarProperty Name="LongitudeDirection" ColumnName="LongitudeDirection" />
-                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="MarkLocationAsViewed" FunctionName="FishModel.Store.MarkLocationAsViewed" />
-          <FunctionImportMapping FunctionImportName="GetViewStatusOfLocation" FunctionName="FishModel.Store.GetViewStatusOfLocation" />
-          <FunctionImportMapping FunctionImportName="DeleteLocation" FunctionName="FishModel.Store.DeleteLocation" />
-          <FunctionImportMapping FunctionImportName="DeleteTrip" FunctionName="FishModel.Store.DeleteTrip" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

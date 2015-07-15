@@ -81,8 +81,8 @@ namespace FishingHole
 			}
 			else if (locationType.Value == "Coordinates")
 			{
-				if (string.IsNullOrWhiteSpace(Lattitude.Value.Trim()) ||
-					string.IsNullOrWhiteSpace(LattitudeDropDown.Value.Trim()) ||
+				if (string.IsNullOrWhiteSpace(Latitude.Value.Trim()) ||
+					string.IsNullOrWhiteSpace(LatitudeDropDown.Value.Trim()) ||
 					string.IsNullOrWhiteSpace(Longitude.Value.Trim()) ||
 					string.IsNullOrWhiteSpace(LongitudeDropDown.Value.Trim()))
 				{
@@ -108,8 +108,8 @@ namespace FishingHole
 				location.State = States.Value;
 				location.Zipcode = Convert.ToInt32(ZipCode.Value);
 
-				location.Lattitude = null;
-				location.LattitudeDirection = null;
+				location.Latitude = null;
+				location.LatitudeDirection = null;
 				location.Longitude = null;
 				location.LongitudeDirection = null;
 			}
@@ -120,9 +120,9 @@ namespace FishingHole
 				location.State = null;
 				location.Zipcode = null;
 
-				location.Lattitude = Convert.ToDecimal(Lattitude.Value);
-				location.LattitudeDirection = LattitudeDropDown.Value;
-				location.Longitude = Convert.ToDecimal(Longitude.Value);
+				location.Latitude = Convert.ToDouble(Latitude.Value);
+				location.LatitudeDirection = LatitudeDropDown.Value;
+				location.Longitude = Convert.ToDouble(Longitude.Value);
 				location.LongitudeDirection = LongitudeDropDown.Value;
 			}
 
@@ -217,8 +217,8 @@ namespace FishingHole
 					CityTown.Value = location.CityTown;
 					States.SelectedIndex = States.Items.IndexOf(States.Items.FindByValue(location.State));
 					ZipCode.Value = location.Zipcode.ToString();
-					Lattitude.Value = location.Lattitude.ToString();
-					LattitudeDropDown.SelectedIndex = LattitudeDropDown.Items.IndexOf(LattitudeDropDown.Items.FindByValue(location.LattitudeDirection));
+					Latitude.Value = location.Latitude.ToString();
+					LatitudeDropDown.SelectedIndex = LatitudeDropDown.Items.IndexOf(LatitudeDropDown.Items.FindByValue(location.LatitudeDirection));
 					Longitude.Value = location.Longitude.ToString();
 					LongitudeDropDown.SelectedIndex = LongitudeDropDown.Items.IndexOf(LongitudeDropDown.Items.FindByValue(location.LongitudeDirection));
 
@@ -235,14 +235,14 @@ namespace FishingHole
 					if (!string.IsNullOrWhiteSpace(location.StreetAddress))
 					{
 						locationType.SelectedIndex = 1;
-						Lattitude.Value = string.Empty;
-						LattitudeDropDown.SelectedIndex = 0;
+						Latitude.Value = string.Empty;
+						LatitudeDropDown.SelectedIndex = 0;
 						Longitude.Value = string.Empty;
 						LongitudeDropDown.SelectedIndex = 0;
 
 						SetGoogleMapsUrl(location);
 					}
-					else if (location.Lattitude != null || location.Lattitude > 0)
+					else if (location.Latitude != null || location.Latitude > 0)
 					{
 						locationType.SelectedIndex = 2;
 						StreetAddress.Value = string.Empty;
@@ -255,8 +255,8 @@ namespace FishingHole
 					else
 					{
 						locationType.SelectedIndex = 0;
-						Lattitude.Value = string.Empty;
-						LattitudeDropDown.SelectedIndex = 0;
+						Latitude.Value = string.Empty;
+						LatitudeDropDown.SelectedIndex = 0;
 						Longitude.Value = string.Empty;
 						LongitudeDropDown.SelectedIndex = 0;
 						StreetAddress.Value = string.Empty;

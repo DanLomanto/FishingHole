@@ -50,8 +50,8 @@ namespace FishingHole
 													"<a class=\"btn-sm btn-default\" style=\"text-decoration:none;\" href=\"#\" data-toggle=\"modal\" data-target=\"#confirmLocationDeletion\" onclick=\"document.getElementById('MainContent_locationToDelete').value = '" + loc.ID.ToString() + "';\"><span><i class=\"fa fa-trash-o\"></i>&nbsp;Delete</span></a>" +
 												"</td>" +
 												"<td>" + loc.Name + "</td>" +
-												"<td>" + loc.LattitudeDirection + "</td>" +
-												"<td>" + loc.Lattitude + "</td>" +
+												"<td>" + loc.LatitudeDirection + "</td>" +
+												"<td>" + loc.Latitude + "</td>" +
 												"<td>" + loc.LongitudeDirection + "</td>" +
 												"<td>" + loc.Longitude + "</td>" +
 												"<td>" + loc.StreetAddress + "</td>" +
@@ -96,8 +96,8 @@ namespace FishingHole
 					sharedLocationsTableBody.InnerHtml = sharedLocationsTableBody.InnerHtml + "<td>" + loc.Name + "&nbsp;<span class=\"label label-primary\"><i class=\"fa fa-star\"></i>&nbsp;New&nbsp;<i class=\"fa fa-star\"></i></span></td>";
 				}
 
-				sharedLocationsTableBody.InnerHtml = sharedLocationsTableBody.InnerHtml + "<td>" + loc.LattitudeDirection + "</td>" +
-												"<td>" + loc.Lattitude + "</td>" +
+				sharedLocationsTableBody.InnerHtml = sharedLocationsTableBody.InnerHtml + "<td>" + loc.LatitudeDirection + "</td>" +
+												"<td>" + loc.Latitude + "</td>" +
 												"<td>" + loc.LongitudeDirection + "</td>" +
 												"<td>" + loc.Longitude + "</td>" +
 												"<td>" + loc.StreetAddress + "</td>" +
