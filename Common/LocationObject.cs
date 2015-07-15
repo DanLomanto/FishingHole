@@ -183,12 +183,12 @@ namespace Common
 		{
 			List<LocationObject> allLocations = GetLocationsForUser(userId);
 
-			if (allLocations.Count < 5)
+			if (allLocations.Count > 5)
 			{
-				return allLocations.GetRange(0, allLocations.Count);
+				allLocations.GetRange(0, 5);
 			}
 
-			return allLocations.GetRange(0, 5);
+			return allLocations;
 		}
 
 		/// <summary>

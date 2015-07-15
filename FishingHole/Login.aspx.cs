@@ -46,6 +46,7 @@ namespace FishingHole
 			{
 				if (UserActions.DoesLoginExist(emailInput.Value.Trim(), passwordInput.Value.Trim()))
 				{
+					Session.Clear();
 					Session.Add("Email", emailInput.Value.Trim());
 					Response.Redirect("Dashboard.aspx");
 				}

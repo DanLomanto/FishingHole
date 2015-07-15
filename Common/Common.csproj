@@ -107,6 +107,10 @@
     <Compile Include="DoesLoginExist_Result.cs">
       <DependentUpon>FishModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ErrorHandling.cs" />
+    <Compile Include="ErrorLog.cs">
+      <DependentUpon>FishModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="FieldValidationMethods.cs" />
     <Compile Include="FishModel.Context.cs">
       <AutoGen>True</AutoGen>

@@ -140,7 +140,12 @@ namespace Common
 		public static List<TripObject> GetTopFiveTripsForUser(int userId)
 		{
 			List<TripObject> allTrips = GetTripsForUser(userId);
-			return allTrips.GetRange(0, 5);
+			if (allTrips.Count > 5)
+			{
+				return allTrips.GetRange(0, 5);
+			}
+
+			return allTrips;
 		}
 
 		/// <summary>

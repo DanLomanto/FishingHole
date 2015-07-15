@@ -38,6 +38,7 @@ namespace Common
         public virtual DbSet<Trip> Trips { get; set; }
         public virtual DbSet<TripsToPhoto> TripsToPhotos { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<ErrorLog> ErrorLogs { get; set; }
     
         public virtual int CreateFriendAssociation(Nullable<int> primaryUserId, Nullable<int> assocFriendId)
         {
@@ -710,6 +711,19 @@ namespace Common
                 new ObjectParameter("OtherNotes", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateTrip", iDParameter, titleParameter, descriptionParameter, targetedSpeciesParameter, waterConditionsParameter, weatherConditionsParameter, dateOfTripParameter, fliesLuresUsedParameter, catchOfTheDayParameter, otherNotesParameter);
+        }
+    
+        public virtual int CreateError(string referringPage, string errorText)
+        {
+            var referringPageParameter = referringPage != null ?
+                new ObjectParameter("ReferringPage", referringPage) :
+                new ObjectParameter("ReferringPage", typeof(string));
+    
+            var errorTextParameter = errorText != null ?
+                new ObjectParameter("ErrorText", errorText) :
+                new ObjectParameter("ErrorText", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CreateError", referringPageParameter, errorTextParameter);
         }
     }
 }

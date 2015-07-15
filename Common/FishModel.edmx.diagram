@@ -32,6 +32,7 @@
         <AssociationConnector Association="FishModel.FK_Threads_Users" ManuallyRouted="false" />
         <AssociationConnector Association="FishModel.FK_Trips_Users" ManuallyRouted="false" />
         <AssociationConnector Association="FishModel.FK_TripsToPhotos_Trips" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="FishModel.ErrorLog" Width="1.5" PointX="0.75" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

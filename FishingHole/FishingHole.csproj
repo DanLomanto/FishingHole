@@ -159,6 +159,7 @@
     <Content Include="Content\thumbnail-gallery.css" />
     <Content Include="Content\ui.jqgrid.css" />
     <Content Include="Dashboard.aspx" />
+    <Content Include="Error.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="FindFriends.aspx" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -263,6 +264,13 @@
     </Compile>
     <Compile Include="Dashboard.aspx.designer.cs">
       <DependentUpon>Dashboard.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Error.aspx.cs">
+      <DependentUpon>Error.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Error.aspx.designer.cs">
+      <DependentUpon>Error.aspx</DependentUpon>
     </Compile>
     <Compile Include="FindFriends.aspx.cs">
       <DependentUpon>FindFriends.aspx</DependentUpon>

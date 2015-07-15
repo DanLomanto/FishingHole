@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="FishModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="FishModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Categories">
           <Key>
             <PropertyRef Name="ID" />
@@ -22,6 +22,14 @@
           <Property Name="CreateDate" Type="datetime" Nullable="false" />
           <Property Name="ThreadId" Type="int" Nullable="false" />
           <Property Name="LocationId" Type="int" />
+        </EntityType>
+        <EntityType Name="ErrorLog">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ReferringPage" Type="varchar" MaxLength="50" />
+          <Property Name="ErrorText" Type="varchar" MaxLength="1000" />
         </EntityType>
         <EntityType Name="FriendAssociations">
           <Key>
@@ -313,6 +321,10 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="CreateError" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ReferringPage" Type="varchar" Mode="In" />
+          <Parameter Name="ErrorText" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="CreateFriendAssociation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="PrimaryUserId" Type="int" Mode="In" />
           <Parameter Name="AssocFriendId" Type="int" Mode="In" />
@@ -522,6 +534,7 @@
         <EntityContainer Name="FishModelStoreContainer">
           <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Comments" EntityType="Self.Comments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ErrorLog" EntityType="Self.ErrorLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FriendAssociations" EntityType="Self.FriendAssociations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ImagePaths" EntityType="Self.ImagePaths" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Locations" EntityType="Self.Locations" Schema="dbo" store:Type="Tables" />
@@ -596,8 +609,7 @@
             <End Role="LocationToTrip" EntitySet="LocationToTrip" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="FishModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1071,23 +1083,23 @@
             <Parameter Name="AssocFriendId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="DeleteLocation">
-            <Parameter Name="LocationID" Mode="In" Type="Int32" />
+          <Parameter Name="LocationID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="DeleteLocationForTrip">
-            <Parameter Name="TripID" Mode="In" Type="Int32" />
+          <Parameter Name="TripID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="DeletePendingFriendRequest">
             <Parameter Name="PrimaryUserId" Mode="In" Type="Int32" />
             <Parameter Name="AssocFriendId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="DeletePhoto">
-            <Parameter Name="PhotoId" Mode="In" Type="Int32" />
+          <Parameter Name="PhotoId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="DeleteTrip">
-            <Parameter Name="TripID" Mode="In" Type="Int32" />
+          <Parameter Name="TripID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="DeleteTripForLocation">
-            <Parameter Name="LocationID" Mode="In" Type="Int32" />
+          <Parameter Name="LocationID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="DoesLoginExist" ReturnType="Collection(FishModel.DoesLoginExist_Result)">
             <Parameter Name="Email" Mode="In" Type="String" />
@@ -1098,51 +1110,51 @@
             <Parameter Name="Title" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetAllLocationsForUser" ReturnType="Collection(FishModel.GetAllLocationsForUser_Result)">
-            <Parameter Name="UserID" Mode="In" Type="Int32" />
+          <Parameter Name="UserID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetAllThreads" ReturnType="Collection(FishModel.GetAllThreads_Result)" />
           <FunctionImport Name="GetAllTripsForUser" ReturnType="Collection(FishModel.GetAllTripsForUser_Result)">
-            <Parameter Name="UserID" Mode="In" Type="Int32" />
+          <Parameter Name="UserID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetAssociatedLocationForTrip" ReturnType="Collection(Int32)">
-            <Parameter Name="TripID" Mode="In" Type="Int32" />
+          <Parameter Name="TripID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetAssociatedTripForLocation" ReturnType="Collection(Int32)">
-            <Parameter Name="LocationId" Mode="In" Type="Int32" />
+          <Parameter Name="LocationId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetCommentsForThread" ReturnType="Collection(FishModel.GetCommentsForThread_Result)">
-            <Parameter Name="ID" Mode="In" Type="Int32" />
+          <Parameter Name="ID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetFriendRequestsForUser" ReturnType="Collection(Int32)">
-            <Parameter Name="PrimaryUserId" Mode="In" Type="Int32" />
+          <Parameter Name="PrimaryUserId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetFriendsForUser" ReturnType="Collection(Int32)">
-            <Parameter Name="PrimaryUserId" Mode="In" Type="Int32" />
+          <Parameter Name="PrimaryUserId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetIdOfCategory" ReturnType="Collection(Int32)">
-            <Parameter Name="Category" Mode="In" Type="String" />
+          <Parameter Name="Category" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetImagesForUser" ReturnType="Collection(FishModel.GetImagesForUser_Result)">
-            <Parameter Name="UserID" Mode="In" Type="Int32" />
+          <Parameter Name="UserID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetLocation" ReturnType="Collection(FishModel.GetLocation_Result)">
             <Parameter Name="UserID" Mode="In" Type="Int32" />
             <Parameter Name="Name" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetLocationById" ReturnType="Collection(FishModel.GetLocationById_Result)">
-            <Parameter Name="ID" Mode="In" Type="Int32" />
+          <Parameter Name="ID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetPhotosForTrip" ReturnType="Collection(FishModel.GetPhotosForTrip_Result)">
-            <Parameter Name="TripId" Mode="In" Type="Int32" />
+          <Parameter Name="TripId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetSharedLocationsForUser" ReturnType="Collection(FishModel.GetSharedLocationsForUser_Result)">
-            <Parameter Name="UserID" Mode="In" Type="Int32" />
+          <Parameter Name="UserID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetThreadById" ReturnType="Collection(FishModel.GetThreadById_Result)">
-            <Parameter Name="ID" Mode="In" Type="Int32" />
+          <Parameter Name="ID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetThreadCategoryById" ReturnType="Collection(String)">
-            <Parameter Name="ID" Mode="In" Type="Int32" />
+          <Parameter Name="ID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetTopicNames" ReturnType="Collection(String)" />
           <FunctionImport Name="GetTrip" ReturnType="Collection(FishModel.GetTrip_Result)">
@@ -1150,19 +1162,19 @@
             <Parameter Name="Title" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetTripById" ReturnType="Collection(FishModel.GetTripById_Result)">
-            <Parameter Name="ID" Mode="In" Type="Int32" />
+          <Parameter Name="ID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetUser" ReturnType="Collection(FishModel.GetUser_Result)">
-            <Parameter Name="Email" Mode="In" Type="String" />
+          <Parameter Name="Email" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetUserById" ReturnType="Collection(FishModel.GetUserById_Result)">
-            <Parameter Name="ID" Mode="In" Type="Int32" />
+          <Parameter Name="ID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetViewStatusOfLocation" ReturnType="Collection(Boolean)">
-            <Parameter Name="LocationId" Mode="In" Type="Int32" />
+          <Parameter Name="LocationId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="HowManyUnviewedSharedLocationsForUser" ReturnType="Collection(Int32)">
-            <Parameter Name="UserID" Mode="In" Type="Int32" />
+          <Parameter Name="UserID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="InsertImagePath">
             <Parameter Name="UserID" Mode="In" Type="Int32" />
@@ -1182,17 +1194,17 @@
             <Parameter Name="LocationID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="MarkLocationAsViewed">
-            <Parameter Name="LocationId" Mode="In" Type="Int32" />
+          <Parameter Name="LocationId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SearchForThreadsByCategory" ReturnType="Collection(FishModel.SearchForThreadsByCategory_Result)">
-            <Parameter Name="Category" Mode="In" Type="String" />
+          <Parameter Name="Category" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SearchForUsers" ReturnType="Collection(FishModel.SearchForUsers_Result)">
             <Parameter Name="PrimaryUserId" Mode="In" Type="Int32" />
             <Parameter Name="SearchText" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SearchThreads" ReturnType="Collection(FishModel.SearchThreads_Result)">
-            <Parameter Name="SearchText" Mode="In" Type="String" />
+          <Parameter Name="SearchText" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="ShareLocation">
             <Parameter Name="LocationIdToShare" Mode="In" Type="Int32" />
@@ -1222,6 +1234,11 @@
             <Parameter Name="FliesLuresUsed" Mode="In" Type="String" />
             <Parameter Name="CatchOfTheDay" Mode="In" Type="String" />
             <Parameter Name="OtherNotes" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="ErrorLogs" EntityType="FishModel.ErrorLog" />
+          <FunctionImport Name="CreateError">
+            <Parameter Name="ReferringPage" Mode="In" Type="String" />
+            <Parameter Name="ErrorText" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="DoesLoginExist_Result">
@@ -1385,6 +1402,14 @@
           <Property Type="Int32" Name="ThreadCategory" Nullable="false" />
           <Property Type="DateTime" Name="CreateDate" Nullable="false" Precision="23" />
         </ComplexType>
+        <EntityType Name="ErrorLog">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ReferringPage" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ErrorText" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1782,6 +1807,16 @@
           <FunctionImportMapping FunctionImportName="ShareLocation" FunctionName="FishModel.Store.ShareLocation" />
           <FunctionImportMapping FunctionImportName="UpdateLocation" FunctionName="FishModel.Store.UpdateLocation" />
           <FunctionImportMapping FunctionImportName="UpdateTrip" FunctionName="FishModel.Store.UpdateTrip" />
+          <EntitySetMapping Name="ErrorLogs">
+            <EntityTypeMapping TypeName="FishModel.ErrorLog">
+              <MappingFragment StoreEntitySet="ErrorLog">
+                <ScalarProperty Name="ErrorText" ColumnName="ErrorText" />
+                <ScalarProperty Name="ReferringPage" ColumnName="ReferringPage" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="CreateError" FunctionName="FishModel.Store.CreateError" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
