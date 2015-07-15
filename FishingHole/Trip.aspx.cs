@@ -67,10 +67,7 @@ namespace FishingHole
 			}
 			else
 			{
-				NoPhotosAttachedMessage.Visible = true;
-				CarouselContainer.Visible = false;
-				leftCarouselControl.Visible = false;
-				rightCarouselControl.Visible = false;
+				DisplayNoImagesAttachedYetMessage();
 			}
 
 			if (!Page.IsPostBack)
@@ -169,6 +166,23 @@ namespace FishingHole
 					BindErrorList(new List<string> { "You must select a valid location first." });
 				}
 			}
+		}
+
+		/// <summary>
+		/// Handles the Click event of the SaveAndCreateLocation control.
+		/// </summary>
+		/// <param name="sender">The source of the event.</param>
+		/// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+		protected void SaveAndCreateLocation_Click(object sender, EventArgs e)
+		{
+			int tripId = SaveTrip();
+
+			if (tripId > 0)
+			{
+				Response.Redirect("Location.aspx?id=0&tripId=" + tripId.ToString());
+			}
+
+			BindErrorList(new List<string> { "You must select a valid location first." });
 		}
 
 		#region Private Methods
@@ -308,6 +322,12 @@ namespace FishingHole
 				numberOfImagesInCarousel = CarouselImages.Controls.Count;
 			}
 
+			if (usersPhotoGallery.Count == 0)
+			{
+				DisplayNoImagesAttachedYetMessage();
+				return;
+			}
+
 			// Add the images we want to display in the carousel.
 			foreach (KeyValuePair<int, string> imageInfo in usersPhotoGallery)
 			{
@@ -359,18 +379,14 @@ namespace FishingHole
 			return 0;
 		}
 
-		#endregion Private Methods
-
-		protected void SaveAndCreateLocation_Click(object sender, EventArgs e)
+		private void DisplayNoImagesAttachedYetMessage()
 		{
-			int tripId = SaveTrip();
-
-			if (tripId > 0)
-			{
-				Response.Redirect("Location.aspx?id=0&tripId=" + tripId.ToString());
-			}
-
-			BindErrorList(new List<string> { "You must select a valid location first." });
+			NoPhotosAttachedMessage.Visible = true;
+			CarouselContainer.Visible = false;
+			leftCarouselControl.Visible = false;
+			rightCarouselControl.Visible = false;
 		}
+
+		#endregion Private Methods
 	}
 }
