@@ -86,83 +86,83 @@
                                 </div>
                                 <div id="LocationAccordian" class="panel-collapse collapse" aria-expanded="false">
                                     <div class="panel-body">
-                                        <div class="container-fluid">
-                                            <div class="row col-md-offset-1 top-buffer">
-                                                <label for="AttachedLocation" class="control-label col-xs-12 col-md-4">Attached Location:</label>
-                                            </div>
-                                            <div class="row">
-                                                <div class="form-inline col-md-8 col-md-offset-2 text-center">
+                                        <div class="form-horizontal">
+                                            <div class="form-group">
+                                                <label class="control-label col-xs-12 col-md-3 col-md-offset-1">Attached Location:</label>
+                                                <div class="col-xs-12 col-md-4">
                                                     <asp:DropDownList ID="AttachedLocation" runat="server" class="form-control"></asp:DropDownList>
-                                                    <asp:LinkButton ID="SaveAndViewLocationBtn" runat="server" CssClass="btn btn-primary" OnClick="SaveAndViewLocationBtn_Click">Save & view location&nbsp;<i class="glyphicon glyphicon-expand"></i></asp:LinkButton>
+                                                </div>
+                                                <div class="col-xs-12 col-md-4">
+                                                    <asp:LinkButton ID="SaveAndViewLocationBtn" runat="server" CssClass="btn btn-primary" OnClick="SaveAndViewLocationBtn_Click">View location&nbsp;<i class="glyphicon glyphicon-expand"></i></asp:LinkButton>
                                                 </div>
                                             </div>
-                                            <div class="row text-center top-buffer">
+                                            <div class="form-group text-center">
                                                 <span><strong>Or</strong></span>
                                             </div>
-                                            <div class="row top-buffer">
-                                                <div class="col-md-offset-3 col-md-6">
-                                                    <asp:LinkButton ID="SaveAndCreateLocation" runat="server" CssClass="btn btn-info btn-block" OnClick="SaveAndCreateLocation_Click">Save & create location&nbsp;<i class="glyphicon glyphicon-expand"></i></asp:LinkButton>
-                                                </div>
+                                            <div class="form-group text-center">
+                                                <asp:LinkButton ID="SaveAndCreateLocation" runat="server" CssClass="btn btn-info" OnClick="SaveAndCreateLocation_Click">Create location&nbsp;<i class="glyphicon glyphicon-expand"></i></asp:LinkButton>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="panel panel-default">
-                                <div id="AttachPhotosHeader" class="panel-heading" data-toggle="collapse" data-target="#PhotosAccordian" data-parent="#accordion">
-                                    <h4 class="panel-title">Upload or Attach Photos
-                                    </h4>
-                                </div>
-                                <div id="PhotosAccordian" class="panel-collapse collapse" aria-expanded="false">
-                                    <div class="panel-body">
-                                        <div class="container-fluid">
-                                            <div class="row col-md-offset-1">
-                                                <label>Attached Photo(s):</label>
-                                            </div>
-                                            <div class="row col-xs-12 col-md-8 col-md-offset-2">
-                                                <p id="NoPhotosAttachedMessage" runat="server" visible="false"><em>You have not attached any photos to this trip yet...</em></p>
-                                            </div>
-                                            <div class="row">
-                                                <div id="CarouselContainer" runat="server" class="carousel slide col-md-offset-2 col-md-8">
-                                                    <div id="CarouselImages" runat="server" class="carousel-inner" role="listbox">
-                                                    </div>
-                                                    <a class="left carousel-control" href="#myCarousel" data-slide="prev"><span runat="server" id="leftCarouselControl" class="glyphicon glyphicon-chevron-left"></span></a>
-                                                    <a class="right carousel-control" href="#myCarousel" data-slide="next"><span runat="server" id="rightCarouselControl" class="glyphicon glyphicon-chevron-right"></span></a>
+                                <div class="panel panel-default">
+                                    <div id="AttachPhotosHeader" class="panel-heading" data-toggle="collapse" data-target="#PhotosAccordian" data-parent="#accordion">
+                                        <h4 class="panel-title">Upload or Attach Photos
+                                        </h4>
+                                    </div>
+                                    <div id="PhotosAccordian" class="panel-collapse collapse" aria-expanded="false">
+                                        <div class="panel-body">
+                                            <div class="container-fluid">
+                                                <div class="row col-md-offset-1">
+                                                    <label>Attached Photo(s):</label>
                                                 </div>
-                                            </div>
-                                            <div class="row top-buffer">
-                                                <div class="form-horizontal">
-                                                    <div class="form-group">
-                                                        <label for="photoUploader" class="control-label col-xs-12 col-md-4">Upload Photo(s):</label>
-                                                        <div class="col-xs-8">
-                                                            <span class="btn btn-default btn-file"><i class="fa fa-folder-open-o"></i>&nbsp;Browse
+                                                <div class="row col-xs-12 col-md-8 col-md-offset-2">
+                                                    <p id="NoPhotosAttachedMessage" runat="server" visible="false"><em>You have not attached any photos to this trip yet...</em></p>
+                                                </div>
+                                                <div class="row">
+                                                    <div id="CarouselContainer" runat="server" class="carousel slide col-md-offset-2 col-md-8">
+                                                        <div id="CarouselImages" runat="server" class="carousel-inner" role="listbox">
+                                                        </div>
+                                                        <a class="left carousel-control" href="#myCarousel" data-slide="prev"><span runat="server" id="leftCarouselControl" class="glyphicon glyphicon-chevron-left"></span></a>
+                                                        <a class="right carousel-control" href="#myCarousel" data-slide="next"><span runat="server" id="rightCarouselControl" class="glyphicon glyphicon-chevron-right"></span></a>
+                                                    </div>
+                                                </div>
+                                                <div class="row top-buffer">
+                                                    <div class="form-horizontal">
+                                                        <div class="form-group">
+                                                            <label for="photoUploader" class="control-label col-xs-12 col-md-4 col-md-offset-1">Upload Photo(s):</label>
+                                                            <div class="col-xs-12 col-md-2">
+                                                                <span class="btn btn-default btn-file"><i class="fa fa-folder-open-o"></i>&nbsp;Browse
                                                                 <asp:FileUpload runat="server" ID="photoUploader" AllowMultiple="true" CssClass="form-control col-xs-12 col-md-5" />
-                                                            </span>
-                                                            <asp:LinkButton CssClass="btn btn-primary" runat="server" ID="uploadPhotoButton" OnClick="UploadPhoto"><i class="glyphicon glyphicon-cloud-upload"></i>&nbsp;Upload Photo(s)</asp:LinkButton>
+                                                                </span>
+                                                            </div>
+                                                            <div class="col-xs-12 col-md-4">
+                                                                <asp:LinkButton CssClass="btn btn-primary" runat="server" ID="uploadPhotoButton" OnClick="UploadPhoto"><i class="glyphicon glyphicon-cloud-upload"></i>&nbsp;Upload</asp:LinkButton>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <div id="returnMessage" runat="server" class="col-md-8 text-center"></div>
+                                                        </div>
+                                                        <div class="form-group text-center">
+                                                            <span><strong>Or</strong></span>
+                                                        </div>
+                                                        <div class="form-group text-center">
+                                                            <asp:LinkButton ID="SaveAndCreatePhotos" runat="server" OnClick="SaveAndCreatePhotos_Click" CssClass="btn btn-info">Attach pictures&nbsp;<i class="glyphicon glyphicon-expand"></i></asp:LinkButton>
                                                         </div>
                                                     </div>
-                                                    <div class="form-group">
-                                                        <div id="returnMessage" runat="server" class="col-md-8 text-center"></div>
-                                                    </div>
-                                                    <div class="form-group text-center">
-                                                        <span><strong>Or</strong></span>
-                                                    </div>
-                                                    <div class="form-group text-center">
-                                                        <asp:LinkButton ID="SaveAndCreatePhotos" runat="server" OnClick="SaveAndCreatePhotos_Click" CssClass="btn btn-info">Attach pictures&nbsp;<i class="glyphicon glyphicon-expand"></i></asp:LinkButton>
-                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="container-fluid top-buffer col-md-10 col-md-offset-1">
-                            <div class="form-group">
-                                <div class="text-center">
-                                    <div class="top-buffer">
-                                        <asp:Button ID="SaveButton" runat="server" Text="Save" CssClass="btn btn-m btn-primary" OnClick="SaveButton_Click"></asp:Button>
-                                        <asp:Button ID="CancelButton" runat="server" Text="Cancel" CssClass="btn btn-m btn-default" OnClick="CancelButton_Click"></asp:Button>
+                            <div class="container-fluid top-buffer col-md-10 col-md-offset-1">
+                                <div class="form-group">
+                                    <div class="text-center">
+                                        <div class="top-buffer">
+                                            <asp:Button ID="SaveButton" runat="server" Text="Save" CssClass="btn btn-m btn-primary" OnClick="SaveButton_Click"></asp:Button>
+                                            <asp:Button ID="CancelButton" runat="server" Text="Cancel" CssClass="btn btn-m btn-default" OnClick="CancelButton_Click"></asp:Button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -170,83 +170,84 @@
                     </div>
                 </div>
             </div>
-            <div id="lightbox" class="modal fade text-center" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-body">
-                            <img src="#" />
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>
-                        </div>
+        </div>
+        <div id="lightbox" class="modal fade text-center" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <img src="#" />
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>
                     </div>
                 </div>
             </div>
-            <script type="text/javascript">
-                $(document).ready(function () {
+        </div>
+        <script type="text/javascript">
+            $(document).ready(function () {
 
-                    $('#AttachLocationHeader').on('click', function () {
-                        $($(this).data('target')).collapse('toggle');
-                    });
-
-                    $('#AttachPhotosHeader').on('click', function () {
-                        $($(this).data('target')).collapse('toggle');
-                    });
-
-                    var $lightbox = $('#lightbox');
-
-                    $('[data-target="#lightbox"]').on('click', function (event) {
-                        var $img = $(this),
-                            src = $img.attr('src'),
-                            alt = $img.attr('alt'),
-                            css = {
-                                'maxWidth': $(window).width() - 300,
-                                'maxHeight': $(window).height() - 300
-                            };
-
-                        $lightbox.find('.close').addClass('hidden');
-                        $lightbox.find('img').attr('src', src);
-                        $lightbox.find('img').attr('alt', alt);
-                        $lightbox.find('img').css(css);
-                    });
-
-                    $lightbox.on('shown.bs.modal', function (e) {
-                        var $img = $lightbox;
-
-                        $lightbox.find('.modal-dialog').css({ 'width': $img.width() });
-                        $lightbox.find('.close').removeClass('hidden');
-                    });
-
-                    $('.carousel').carousel({
-                        wrap: false,
-                        interval: 0
-                    });
+                $('#AttachLocationHeader').on('click', function () {
+                    $($(this).data('target')).collapse('toggle');
                 });
 
-                $('#MainContent_TripDate').datepicker();
-
-                $('#MainContent_TripDate').on("change", function () {
-                    var id = $(this).attr("id");
-                    var val = $("label[for='" + id + "']").text();
-                    $("#msg").text(val + " changed");
+                $('#AttachPhotosHeader').on('click', function () {
+                    $($(this).data('target')).collapse('toggle');
                 });
 
-                function validate(evt) {
-                    var theEvent = evt || window.event;
-                    var key = theEvent.keyCode || theEvent.which;
-                    key = String.fromCharCode(key);
-                    var regex = /[0-9]/;
-                    if (!regex.test(key)) {
-                        theEvent.returnValue = false;
-                        if (theEvent.preventDefault) theEvent.preventDefault();
-                    }
+                var $lightbox = $('#lightbox');
+
+                $('[data-target="#lightbox"]').on('click', function (event) {
+                    var $img = $(this),
+                        src = $img.attr('src'),
+                        alt = $img.attr('alt'),
+                        css = {
+                            'maxWidth': $(window).width() - 300,
+                            'maxHeight': $(window).height() - 300
+                        };
+
+                    $lightbox.find('.close').addClass('hidden');
+                    $lightbox.find('img').attr('src', src);
+                    $lightbox.find('img').attr('alt', alt);
+                    $lightbox.find('img').css(css);
+                });
+
+                $lightbox.on('shown.bs.modal', function (e) {
+                    var $img = $lightbox;
+
+                    $lightbox.find('.modal-dialog').css({ 'width': $img.width() });
+                    $lightbox.find('.close').removeClass('hidden');
+                });
+
+                $('.carousel').carousel({
+                    wrap: false,
+                    interval: 0
+                });
+            });
+
+            $('#MainContent_TripDate').datepicker();
+
+            $('#MainContent_TripDate').on("change", function () {
+                var id = $(this).attr("id");
+                var val = $("label[for='" + id + "']").text();
+                $("#msg").text(val + " changed");
+            });
+
+            function validate(evt) {
+                var theEvent = evt || window.event;
+                var key = theEvent.keyCode || theEvent.which;
+                key = String.fromCharCode(key);
+                var regex = /[0-9]/;
+                if (!regex.test(key)) {
+                    theEvent.returnValue = false;
+                    if (theEvent.preventDefault) theEvent.preventDefault();
                 }
+            }
 
-                $(document).on('change', '.btn-file :file', function () {
-                    var input = $(this),
-                        numFiles = input.get(0).files ? input.get(0).files.length : 1,
-                        label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
-                    input.trigger('fileselect', [numFiles, label]);
-                });
-            </script>
+            $(document).on('change', '.btn-file :file', function () {
+                var input = $(this),
+                    numFiles = input.get(0).files ? input.get(0).files.length : 1,
+                    label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+                input.trigger('fileselect', [numFiles, label]);
+            });
+        </script>
 </asp:Content>
