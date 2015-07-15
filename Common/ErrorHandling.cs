@@ -14,6 +14,14 @@
 		public int ID { get; set; }
 
 		/// <summary>
+		/// Gets or sets the user identifier.
+		/// </summary>
+		/// <value>
+		/// The user identifier.
+		/// </value>
+		public int UserId { get; set; }
+
+		/// <summary>
 		/// Gets or sets the referring page.
 		/// </summary>
 		/// <value>
@@ -30,12 +38,20 @@
 		public string ErrorText { get; set; }
 
 		/// <summary>
+		/// Gets or sets the stack trace.
+		/// </summary>
+		/// <value>
+		/// The stack trace.
+		/// </value>
+		public string StackTrace { get; set; }
+
+		/// <summary>
 		/// Logs the error in database.
 		/// </summary>
 		public void LogErrorInDb()
 		{
 			FishEntities fishDB = new FishEntities();
-			fishDB.CreateError(this.ReferringPage, this.ErrorText);
+			fishDB.CreateError(this.UserId, this.ReferringPage, this.ErrorText, this.StackTrace);
 		}
 	}
 }

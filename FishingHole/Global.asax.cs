@@ -22,8 +22,19 @@ namespace FishingHole
 				Exception ex = Server.GetLastError().GetBaseException();
 
 				ErrorHandling error = new ErrorHandling();
-				error.ReferringPage = ex.Source;
 				error.ErrorText = ex.Message;
+				error.StackTrace = ex.StackTrace;
+
+				if (Session["Email"] != null)
+				{
+					UserInformation user = UserActions.GetUserInfo(Session["Email"].ToString());
+					error.UserId = user.ID;
+				}
+
+				if (HttpContext.Current != null)
+				{
+					error.ReferringPage = (HttpContext.Current.Handler as System.Web.UI.Page).ToString();
+				}
 
 				error.LogErrorInDb();
 			}

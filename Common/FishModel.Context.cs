@@ -29,6 +29,7 @@ namespace Common
     
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Comment> Comments { get; set; }
+        public virtual DbSet<ErrorLog> ErrorLogs { get; set; }
         public virtual DbSet<FriendAssociation> FriendAssociations { get; set; }
         public virtual DbSet<ImagePath> ImagePaths { get; set; }
         public virtual DbSet<Location> Locations { get; set; }
@@ -38,7 +39,27 @@ namespace Common
         public virtual DbSet<Trip> Trips { get; set; }
         public virtual DbSet<TripsToPhoto> TripsToPhotos { get; set; }
         public virtual DbSet<User> Users { get; set; }
-        public virtual DbSet<ErrorLog> ErrorLogs { get; set; }
+    
+        public virtual int CreateError(Nullable<int> userId, string referringPage, string errorText, string stackTrace)
+        {
+            var userIdParameter = userId.HasValue ?
+                new ObjectParameter("UserId", userId) :
+                new ObjectParameter("UserId", typeof(int));
+    
+            var referringPageParameter = referringPage != null ?
+                new ObjectParameter("ReferringPage", referringPage) :
+                new ObjectParameter("ReferringPage", typeof(string));
+    
+            var errorTextParameter = errorText != null ?
+                new ObjectParameter("ErrorText", errorText) :
+                new ObjectParameter("ErrorText", typeof(string));
+    
+            var stackTraceParameter = stackTrace != null ?
+                new ObjectParameter("StackTrace", stackTrace) :
+                new ObjectParameter("StackTrace", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CreateError", userIdParameter, referringPageParameter, errorTextParameter, stackTraceParameter);
+        }
     
         public virtual int CreateFriendAssociation(Nullable<int> primaryUserId, Nullable<int> assocFriendId)
         {
@@ -711,19 +732,6 @@ namespace Common
                 new ObjectParameter("OtherNotes", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateTrip", iDParameter, titleParameter, descriptionParameter, targetedSpeciesParameter, waterConditionsParameter, weatherConditionsParameter, dateOfTripParameter, fliesLuresUsedParameter, catchOfTheDayParameter, otherNotesParameter);
-        }
-    
-        public virtual int CreateError(string referringPage, string errorText)
-        {
-            var referringPageParameter = referringPage != null ?
-                new ObjectParameter("ReferringPage", referringPage) :
-                new ObjectParameter("ReferringPage", typeof(string));
-    
-            var errorTextParameter = errorText != null ?
-                new ObjectParameter("ErrorText", errorText) :
-                new ObjectParameter("ErrorText", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CreateError", referringPageParameter, errorTextParameter);
         }
     }
 }

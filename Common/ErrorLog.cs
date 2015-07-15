@@ -15,7 +15,9 @@ namespace Common
     public partial class ErrorLog
     {
         public int ID { get; set; }
+        public Nullable<int> UserId { get; set; }
         public string ReferringPage { get; set; }
         public string ErrorText { get; set; }
+        public string StackTrace { get; set; }
     }
 }
