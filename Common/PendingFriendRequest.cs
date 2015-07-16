@@ -15,8 +15,8 @@ namespace Common
     public partial class PendingFriendRequest
     {
         public int ID { get; set; }
-        public int PrimaryUserId { get; set; }
-        public int AssocFriendId { get; set; }
+        public int RequestorId { get; set; }
+        public int PotentialFriendId { get; set; }
     
         public virtual User User { get; set; }
         public virtual User User1 { get; set; }

@@ -11,56 +11,56 @@ namespace Common
 		/// <summary>
 		/// Creates the friend association.
 		/// </summary>
-		/// <param name="primaryUserId">The primary user identifier.</param>
+		/// <param name="initiatorId">The primary user identifier.</param>
 		/// <param name="assocFriendId">The assoc friend identifier.</param>
-		public static void CreateFriendAssociation(int primaryUserId, int assocFriendId)
+		public static void CreateFriendAssociation(int initiatorId, int assocFriendId)
 		{
 			FishEntities fishDB = new FishEntities();
-			var result = fishDB.CreateFriendAssociation(primaryUserId, assocFriendId);
+			var result = fishDB.CreateFriendAssociation(initiatorId, assocFriendId);
 		}
 
 		/// <summary>
 		/// Deletes the friend association.
 		/// </summary>
-		/// <param name="primaryUserId">The primary user identifier.</param>
+		/// <param name="initiatorId">The primary user identifier.</param>
 		/// <param name="assocFriendId">The assoc friend identifier.</param>
-		public static void DeleteFriendAssociation(int primaryUserId, int assocFriendId)
+		public static void DeleteFriendAssociation(int initiatorId, int assocFriendId)
 		{
 			FishEntities fishDB = new FishEntities();
-			var result = fishDB.DeleteFriendAssociation(primaryUserId, assocFriendId);
+			var result = fishDB.DeleteFriendAssociation(initiatorId, assocFriendId);
 		}
 
 		/// <summary>
 		/// Creates the pending friend request.
 		/// </summary>
-		/// <param name="primaryUserId">The primary user identifier. This is the person who's getting the request.</param>
-		/// <param name="assocFriendId">The assoc friend identifier. This is the person who's sending the request.</param>
-		public static void CreatePendingFriendRequest(int primaryUserId, int assocFriendId)
+		/// <param name="requestorId">The primary user identifier. This is the person who's getting the request.</param>
+		/// <param name="potentialFriendId">The assoc friend identifier. This is the person who's sending the request.</param>
+		public static void CreatePendingFriendRequest(int requestorId, int potentialFriendId)
 		{
 			FishEntities fishDB = new FishEntities();
-			var result = fishDB.CreatePendingFriendRequest(primaryUserId, assocFriendId);
+			var result = fishDB.CreatePendingFriendRequest(requestorId, potentialFriendId);
 		}
 
 		/// <summary>
 		/// Deletes the pending friend request.
 		/// </summary>
-		/// <param name="primaryUserId">The primary user identifier.</param>
-		/// <param name="assocFriendId">The assoc friend identifier.</param>
-		public static void DeletePendingFriendRequest(int primaryUserId, int assocFriendId)
+		/// <param name="requestorId">The requestor identifier.</param>
+		/// <param name="potentialFriendId">The assoc friend identifier.</param>
+		public static void DeletePendingFriendRequest(int requestorId, int potentialFriendId)
 		{
 			FishEntities fishDB = new FishEntities();
-			var result = fishDB.DeletePendingFriendRequest(primaryUserId, assocFriendId);
+			var result = fishDB.DeletePendingFriendRequest(requestorId, potentialFriendId);
 		}
 
 		/// <summary>
 		/// Gets the friends for user.
 		/// </summary>
-		/// <param name="primaryUserId">The primary user identifier.</param>
+		/// <param name="associatedFriend">The primary user identifier.</param>
 		/// <returns></returns>
-		public static List<UserInformation> GetFriendsForUser(int primaryUserId)
+		public static List<UserInformation> GetFriendsForUser(int associatedFriend)
 		{
 			FishEntities fishDB = new FishEntities();
-			var result = fishDB.GetFriendsForUser(primaryUserId);
+			var result = fishDB.GetFriendsForUser(associatedFriend);
 
 			List<UserInformation> friends = new List<UserInformation>();
 
@@ -97,13 +97,13 @@ namespace Common
 		/// <summary>
 		/// Makes the pending friend actual friend.
 		/// </summary>
-		/// <param name="primaryUserId">The primary user identifier.</param>
+		/// <param name="initiatorId">The primary user identifier.</param>
 		/// <param name="assocFriendId">The assoc friend identifier.</param>
-		public static void MakePendingFriendActualFriend(int primaryUserId, int assocFriendId)
+		public static void MakePendingFriendActualFriend(int initiatorId, int assocFriendId)
 		{
-			CreateFriendAssociation(primaryUserId, assocFriendId);
+			CreateFriendAssociation(initiatorId, assocFriendId);
 
-			DeletePendingFriendRequest(primaryUserId, assocFriendId);
+			DeletePendingFriendRequest(initiatorId, assocFriendId);
 		}
 
 		/// <summary>
@@ -111,10 +111,10 @@ namespace Common
 		/// </summary>
 		/// <param name="searchText">The search text.</param>
 		/// <returns></returns>
-		public static List<UserInformation> SearchForUsers(int primaryUserId, string searchText)
+		public static List<UserInformation> SearchForUsers(int userThatsSearching, string searchText)
 		{
 			FishEntities fishDB = new FishEntities();
-			var result = fishDB.SearchForUsers(primaryUserId, searchText);
+			var result = fishDB.SearchForUsers(userThatsSearching, searchText);
 
 			List<UserInformation> searchResults = new List<UserInformation>();
 			foreach (SearchForUsers_Result item in result)

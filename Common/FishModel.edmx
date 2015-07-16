@@ -38,7 +38,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="PrimaryUserId" Type="int" Nullable="false" />
+          <Property Name="InitiatorId" Type="int" Nullable="false" />
           <Property Name="AssocFriendId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="ImagePaths">
@@ -82,8 +82,8 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="PrimaryUserId" Type="int" Nullable="false" />
-          <Property Name="AssocFriendId" Type="int" Nullable="false" />
+          <Property Name="RequestorId" Type="int" Nullable="false" />
+          <Property Name="PotentialFriendId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Threads">
           <Key>
@@ -175,7 +175,7 @@
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="FriendAssociations">
-              <PropertyRef Name="PrimaryUserId" />
+              <PropertyRef Name="InitiatorId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -223,7 +223,7 @@
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="PendingFriendRequests">
-              <PropertyRef Name="PrimaryUserId" />
+              <PropertyRef Name="RequestorId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -235,7 +235,7 @@
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="PendingFriendRequests">
-              <PropertyRef Name="AssocFriendId" />
+              <PropertyRef Name="PotentialFriendId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -330,7 +330,7 @@
           <Parameter Name="StackTrace" Type="varchar" Mode="In" />
         </Function>
         <Function Name="CreateFriendAssociation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="PrimaryUserId" Type="int" Mode="In" />
+          <Parameter Name="InitiatorId" Type="int" Mode="In" />
           <Parameter Name="AssocFriendId" Type="int" Mode="In" />
         </Function>
         <Function Name="CreateLocation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -348,8 +348,8 @@
           <Parameter Name="Output_Result" Type="bigint" Mode="InOut" />
         </Function>
         <Function Name="CreatePendingFriendRequest" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="PrimaryUserId" Type="int" Mode="In" />
-          <Parameter Name="AssocFriendId" Type="int" Mode="In" />
+          <Parameter Name="RequestorId" Type="int" Mode="In" />
+          <Parameter Name="PotentialFriendId" Type="int" Mode="In" />
         </Function>
         <Function Name="CreateTrip" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="UserID" Type="int" Mode="In" />
@@ -379,7 +379,7 @@
           <Parameter Name="Password" Type="varchar" Mode="In" />
         </Function>
         <Function Name="DeleteFriendAssociation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="PrimaryUserId" Type="int" Mode="In" />
+          <Parameter Name="InitiatorId" Type="int" Mode="In" />
           <Parameter Name="AssocFriendId" Type="int" Mode="In" />
         </Function>
         <Function Name="DeleteLocation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -389,8 +389,8 @@
           <Parameter Name="TripID" Type="int" Mode="In" />
         </Function>
         <Function Name="DeletePendingFriendRequest" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="PrimaryUserId" Type="int" Mode="In" />
-          <Parameter Name="AssocFriendId" Type="int" Mode="In" />
+          <Parameter Name="RequestorId" Type="int" Mode="In" />
+          <Parameter Name="PotentialFriendId" Type="int" Mode="In" />
         </Function>
         <Function Name="DeletePhoto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="PhotoId" Type="int" Mode="In" />
@@ -426,10 +426,10 @@
           <Parameter Name="ID" Type="int" Mode="In" />
         </Function>
         <Function Name="GetFriendRequestsForUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="PrimaryUserId" Type="int" Mode="In" />
+          <Parameter Name="PotentialFriendId" Type="int" Mode="In" />
         </Function>
         <Function Name="GetFriendsForUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="PrimaryUserId" Type="int" Mode="In" />
+          <Parameter Name="AssocFriendId" Type="int" Mode="In" />
         </Function>
         <Function Name="GetIdOfCategory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Category" Type="varchar" Mode="In" />
@@ -500,7 +500,7 @@
           <Parameter Name="Category" Type="varchar" Mode="In" />
         </Function>
         <Function Name="SearchForUsers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="PrimaryUserId" Type="int" Mode="In" />
+          <Parameter Name="PotentialFriendId" Type="int" Mode="In" />
           <Parameter Name="SearchText" Type="varchar" Mode="In" />
         </Function>
         <Function Name="SearchThreads" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -655,7 +655,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="PrimaryUserId" Type="Int32" Nullable="false" />
+          <Property Name="InitiatorId" Type="Int32" Nullable="false" />
           <Property Name="AssocFriendId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="User" Relationship="Self.FK_FriendAssociations_Users" FromRole="FriendAssociations" ToRole="Users" />
           <NavigationProperty Name="User1" Relationship="Self.FK_FriendAssociations_Users1" FromRole="FriendAssociations" ToRole="Users" />
@@ -708,8 +708,8 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="PrimaryUserId" Type="Int32" Nullable="false" />
-          <Property Name="AssocFriendId" Type="Int32" Nullable="false" />
+          <Property Name="RequestorId" Type="Int32" Nullable="false" />
+          <Property Name="PotentialFriendId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="User" Relationship="Self.FK_PendingFriendRequests_Users" FromRole="PendingFriendRequests" ToRole="Users" />
           <NavigationProperty Name="User1" Relationship="Self.FK_PendingFriendRequests_Users1" FromRole="PendingFriendRequests" ToRole="Users" />
         </EntityType>
@@ -832,7 +832,7 @@
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="FriendAssociations">
-              <PropertyRef Name="PrimaryUserId" />
+              <PropertyRef Name="InitiatorId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -916,7 +916,7 @@
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="PendingFriendRequests">
-              <PropertyRef Name="PrimaryUserId" />
+              <PropertyRef Name="RequestorId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -928,7 +928,7 @@
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="PendingFriendRequests">
-              <PropertyRef Name="AssocFriendId" />
+              <PropertyRef Name="PotentialFriendId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1052,7 +1052,7 @@
             <Parameter Name="StackTrace" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="CreateFriendAssociation">
-            <Parameter Name="PrimaryUserId" Mode="In" Type="Int32" />
+            <Parameter Name="InitiatorId" Mode="In" Type="Int32" />
             <Parameter Name="AssocFriendId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="CreateLocation">
@@ -1070,8 +1070,8 @@
             <Parameter Name="Output_Result" Mode="InOut" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="CreatePendingFriendRequest">
-            <Parameter Name="PrimaryUserId" Mode="In" Type="Int32" />
-            <Parameter Name="AssocFriendId" Mode="In" Type="Int32" />
+            <Parameter Name="RequestorId" Mode="In" Type="Int32" />
+            <Parameter Name="PotentialFriendId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="CreateTrip">
             <Parameter Name="UserID" Mode="In" Type="Int32" />
@@ -1101,7 +1101,7 @@
             <Parameter Name="Password" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="DeleteFriendAssociation">
-            <Parameter Name="PrimaryUserId" Mode="In" Type="Int32" />
+            <Parameter Name="InitiatorId" Mode="In" Type="Int32" />
             <Parameter Name="AssocFriendId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="DeleteLocation">
@@ -1111,8 +1111,8 @@
             <Parameter Name="TripID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="DeletePendingFriendRequest">
-            <Parameter Name="PrimaryUserId" Mode="In" Type="Int32" />
-            <Parameter Name="AssocFriendId" Mode="In" Type="Int32" />
+            <Parameter Name="RequestorId" Mode="In" Type="Int32" />
+            <Parameter Name="PotentialFriendId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="DeletePhoto">
             <Parameter Name="PhotoId" Mode="In" Type="Int32" />
@@ -1148,10 +1148,10 @@
             <Parameter Name="ID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetFriendRequestsForUser" ReturnType="Collection(Int32)">
-            <Parameter Name="PrimaryUserId" Mode="In" Type="Int32" />
+            <Parameter Name="PotentialFriendId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetFriendsForUser" ReturnType="Collection(Int32)">
-            <Parameter Name="PrimaryUserId" Mode="In" Type="Int32" />
+            <Parameter Name="AssocFriendId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetIdOfCategory" ReturnType="Collection(Int32)">
             <Parameter Name="Category" Mode="In" Type="String" />
@@ -1222,7 +1222,7 @@
             <Parameter Name="Category" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SearchForUsers" ReturnType="Collection(FishModel.SearchForUsers_Result)">
-            <Parameter Name="PrimaryUserId" Mode="In" Type="Int32" />
+            <Parameter Name="PotentialFriendId" Mode="In" Type="Int32" />
             <Parameter Name="SearchText" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SearchThreads" ReturnType="Collection(FishModel.SearchThreads_Result)">
@@ -1460,7 +1460,7 @@
             <EntityTypeMapping TypeName="FishModel.FriendAssociation">
               <MappingFragment StoreEntitySet="FriendAssociations">
                 <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="PrimaryUserId" ColumnName="PrimaryUserId" />
+                <ScalarProperty Name="InitiatorId" ColumnName="InitiatorId" />
                 <ScalarProperty Name="AssocFriendId" ColumnName="AssocFriendId" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1508,8 +1508,8 @@
             <EntityTypeMapping TypeName="FishModel.PendingFriendRequest">
               <MappingFragment StoreEntitySet="PendingFriendRequests">
                 <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="PrimaryUserId" ColumnName="PrimaryUserId" />
-                <ScalarProperty Name="AssocFriendId" ColumnName="AssocFriendId" />
+                <ScalarProperty Name="RequestorId" ColumnName="RequestorId" />
+                <ScalarProperty Name="PotentialFriendId" ColumnName="PotentialFriendId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

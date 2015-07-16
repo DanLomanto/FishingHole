@@ -15,7 +15,7 @@ namespace Common
     public partial class FriendAssociation
     {
         public int ID { get; set; }
-        public int PrimaryUserId { get; set; }
+        public int InitiatorId { get; set; }
         public int AssocFriendId { get; set; }
     
         public virtual User User { get; set; }
