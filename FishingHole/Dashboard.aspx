@@ -8,7 +8,7 @@
     <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-offset-1 col-md-5 col-xs-offset-1 col-xs-10">
+            <div class="col-md-offset-1 col-md-5 col-xs-12">
                 <div class="panel panel-default">
                     <div class="panel-heading clearfix">
                         <div class="btn-group pull-right" style="padding-top: 15px;">
@@ -26,7 +26,7 @@
                                     <span>You have not added any Photos yet...</span>
                                 </div>
                             </div>
-                            <div class="row col-md-12 col-xs-12" id="photoDiv" runat="server">
+                            <div class="row" id="photoDiv" runat="server">
                             </div>
                             <div class="row top-buffer col-md-offset-1 col-md-10 col-xs-10">
                                 <a href="PhotoGallery.aspx">View all photos</a>
@@ -35,7 +35,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-offset-0 col-md-5 col-xs-offset-1 col-xs-10">
+            <div class="col-md-offset-0 col-md-5 col-xs-12">
                 <asp:Panel ID="TripsPanel" runat="server">
                     <div class="panel panel-default">
                         <div class="panel-heading clearfix">
@@ -80,7 +80,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-offset-1 col-md-5 col-xs-offset-1 col-xs-10">
+            <div class="col-md-offset-1 col-md-5 col-xs-12">
                 <asp:Panel ID="LocationsPanel" runat="server">
                     <div class="panel panel-default">
                         <div class="panel-heading clearfix">
